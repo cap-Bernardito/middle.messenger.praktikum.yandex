@@ -1,22 +1,26 @@
+import { renderLayoutCentered } from "shared/ui/layouts/centered/centered";
+
 import { loginPage } from "../pages";
 
-const pages: { [K: string]: string } = {
-  "/login": loginPage,
+import "./styles/index.scss";
+
+const pages: { [K: string]: { title: string; component: string } } = {
+  "/login": { title: "Авторизация", component: loginPage },
 };
 
 const currentRoute = location.pathname;
 let html = "";
 
 if (!pages[currentRoute]) {
-  const indexPage = Object.keys(pages)
-    .map((url) => `<li><a href="${url}">${url}</a></li>`)
+  const indexPage = Object.entries(pages)
+    .map(([url, { title }]) => `<li><a href="${url}">${title}</a></li>`)
     .join("");
 
-  html = `<ul>${indexPage}</ul>`;
+  html = `<ul class="list-intro">${indexPage}</ul>`;
 } else {
-  html = pages[currentRoute];
+  html = pages[currentRoute]["component"];
 }
 
 const root = document.querySelector("#root") as HTMLDivElement;
 
-root.innerHTML = html;
+root.innerHTML = renderLayoutCentered({ body: html });

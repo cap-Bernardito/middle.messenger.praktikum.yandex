@@ -1,0 +1,31 @@
+// Импорт переменных
+// @use "../../app/styles/variables.scss" as *;
+
+// Colors
+$white: #fff;
+$black: #1e1e1e;
+$primary: #3369f3;
+$secondary: #8585ad;
+$success: #00cccc;
+$error: #e52b1a;
+
+// Spacer
+$spacer: 0.4rem;
+
+// Grid
+$containerPadding: $spacer * 5;
+
+// Box-shadow
+$boxShadow-1: 0 0 0.6rem rgba(0, 0, 0, 0.14);
+
+// Border-radius
+$border-radius-sm: 0.8rem;
+$border-radius: 1.5rem;
+
+// Fonts
+$text-sm: 1.3rem;
+$text-base: 1.5rem;
+$text-lg: 1.7rem;
+
+$h1: 2rem;
+$h2: 1.8rem;

@@ -1,1 +1,11 @@
-<input type="text">
+<div class="form-control {{#if className}}{{className}}{{/if}}">
+  <input class="form-control__input"
+  {{#if type}} type={{type}}  {{/if}}
+  {{#if placeholder}} placeholder={{placeholder}}  {{/if}}
+  {{#if name}} name={{name}}  {{/if}}
+  {{#if value}} value={{value}}  {{/if}}
+  {{#if required}} required {{/if}}
+  {{#if disabled}} disabled {{/if}}
+>
+<label for={{name}} class="form-control__label">{{label}}</label>
+</div>

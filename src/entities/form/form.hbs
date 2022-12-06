@@ -1,0 +1,21 @@
+<form class="form">
+  {{#if title}}
+    <h1 class="form__title">
+      {{{title}}}
+    </h1>
+  {{/if}}
+
+  <div class="form__fields">
+    {{{fields}}}
+  </div>
+
+  <div class="form__button">
+    {{{button}}}
+  </div>
+
+  {{#if meta}}
+    <div class="form__meta">
+      {{{meta}}}
+    </div>
+  {{/if}}
+</form>

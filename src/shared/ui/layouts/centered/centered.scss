@@ -1,0 +1,14 @@
+@use "../../../../app/styles/variables.scss" as *;
+
+.layout-centered {
+  min-height: calc(100vh - #{$containerPadding * 2});
+  padding: $containerPadding 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &__container {
+    flex: 1 1 34rem;
+    max-width: 34rem + $containerPadding * 2;
+  }
+}

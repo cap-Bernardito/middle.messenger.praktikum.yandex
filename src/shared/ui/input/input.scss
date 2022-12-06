@@ -1,0 +1,37 @@
+@use "../../../app/styles/variables.scss" as *;
+
+.form-control {
+  $root: &;
+
+  position: relative;
+
+  &__label {
+    display: block;
+    position: absolute;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+    font-size: $text-sm;
+    color: lighten($black, 50%);
+    transition: all 0.3s;
+  }
+
+  &__input {
+    width: 100%;
+    padding: 0.8rem 0;
+    border: none;
+    border-bottom: 0.1rem solid $primary;
+
+    // Расскомментировать, когда у инпута будет привязанное состояние
+    // &:not([value=""]),
+    &:focus {
+      border-color: darken($primary, 20%);
+      outline: none;
+
+      & + #{$root}__label {
+        transform: translate(-10%, -190%) scale(0.9);
+        color: $black;
+      }
+    }
+  }
+}

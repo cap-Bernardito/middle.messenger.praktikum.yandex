@@ -1,0 +1,79 @@
+*,
+::after,
+::before {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+body {
+  font-family: "Inter", "Helvetica Neue", Arial, sans-serif;
+  font-weight: 500;
+  font-size: $text-base;
+  background: $white;
+  color: $black;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: 500;
+}
+
+// Layout
+.container {
+  margin-right: auto;
+  margin-left: auto;
+  padding-right: $containerPadding;
+  padding-left: $containerPadding;
+}
+// End Layout
+
+// Common
+.text {
+  &-sm {
+    font-size: $text-sm;
+  }
+
+  &-base {
+    font-size: $text-base;
+  }
+
+  &-lg {
+    font-size: $text-lg;
+  }
+}
+
+a {
+  &,
+  &:link,
+  &:visited {
+    color: $primary;
+    text-decoration: none;
+    transition: color 0.25s;
+  }
+
+  &:hover,
+  &:active {
+    color: $primary;
+    text-decoration: underline;
+  }
+}
+// End Common
+
+.list-intro {
+  margin-bottom: 0;
+  padding-left: 0;
+  list-style: none;
+  display: table;
+  margin-inline: auto;
+
+  li {
+    margin-bottom: $spacer * 3;
+  }
+}

@@ -27,10 +27,7 @@ h6 {
 
 // Layout
 .container {
-  margin-right: auto;
-  margin-left: auto;
-  padding-right: $containerPadding;
-  padding-left: $containerPadding;
+  margin-inline: auto;
 }
 // End Layout
 

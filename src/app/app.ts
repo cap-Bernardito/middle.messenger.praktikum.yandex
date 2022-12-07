@@ -1,11 +1,12 @@
 import { renderLayoutCentered } from "shared/ui/layouts/centered/centered";
 
-import { loginPage } from "../pages";
+import { loginPage, registerPage } from "../pages";
 
 import "./styles/index.scss";
 
 const pages: { [K: string]: { title: string; component: string } } = {
   "/login": { title: "Авторизация", component: loginPage },
+  "/register": { title: "Регистрация", component: registerPage },
 };
 
 const currentRoute = location.pathname;

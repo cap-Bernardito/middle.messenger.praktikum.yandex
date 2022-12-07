@@ -39,6 +39,7 @@ $gaps: map-merge(
     "8": $spacer * 8,
     "9": $spacer * 9,
     "10": $spacer * 10,
+    "15": $spacer * 15,
   ),
   $gaps
 );
@@ -84,6 +85,10 @@ $gaps: map-merge(
 
 // Common
 .text {
+  &-danger {
+    color: $danger !important;
+  }
+
   &-center {
     text-align: center;
   }

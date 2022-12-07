@@ -1,6 +1,8 @@
 @use "../../../../app/styles/variables.scss" as *;
 
 .layout-centered {
+  $root: &;
+
   min-height: calc(100vh - #{$containerPadding * 2});
   padding: $containerPadding 0;
   display: flex;
@@ -9,6 +11,17 @@
 
   &__container {
     flex: 1 1 1rem;
-    max-width: 34rem;
+  }
+
+  &_sm {
+    #{$root}__container {
+      max-width: 34rem;
+    }
+  }
+
+  &_md {
+    #{$root}__container {
+      max-width: 51rem;
+    }
   }
 }

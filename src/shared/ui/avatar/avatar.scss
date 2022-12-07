@@ -1,0 +1,44 @@
+@use "../../../app/styles/variables.scss" as *;
+
+.avatar {
+  $root: &;
+
+  position: relative;
+  padding: 2rem;
+  width: 13rem;
+  height: 13rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: lighten($secondary, 36%);
+  transition: background-color 0.25s;
+  cursor: pointer;
+
+  &__img {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  &__title {
+    position: relative;
+    // font-size: $text-sm;
+    z-index: 2;
+    color: $white;
+    opacity: 0;
+  }
+
+  &:hover {
+    background-color: lighten($black, 36%);
+
+    #{$root}__img {
+      opacity: 0.3;
+    }
+
+    #{$root}__title {
+      opacity: 1;
+    }
+  }
+}

@@ -1,4 +1,4 @@
-import { renderLayoutCentered } from "shared/ui/layouts/centered/centered";
+import { renderLayoutCentered } from "shared/ui/layouts/centered";
 
 import { chatPage, loginPage, page_404, page_500, profilePage, registerPage } from "../pages";
 

@@ -1,8 +1,8 @@
 import { templateUserInfo, TUserInfoProps } from "entities/user-info";
 
-import { renderAvatar } from "shared/ui/avatar/avatar";
-import { renderLayoutCentered } from "shared/ui/layouts/centered/centered";
-import { renderListV1 } from "shared/ui/list-v1/list-v1";
+import { renderAvatar } from "shared/ui/avatar";
+import { renderLayoutCentered } from "shared/ui/layouts/centered";
+import { renderListV1 } from "shared/ui/list-v1";
 import { renderCreator } from "shared/utils/utils";
 
 import source from "./profile.hbs";

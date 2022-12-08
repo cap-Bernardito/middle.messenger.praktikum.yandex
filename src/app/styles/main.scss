@@ -49,31 +49,31 @@ $gaps: map-merge(
   }
 
   .mt-#{$index} {
-    margin-bottom: $size;
+    margin-top: $size;
   }
 
   .mr-#{$index} {
-    margin-bottom: $size;
+    margin-right: $size;
   }
 
   .ml-#{$index} {
-    margin-bottom: $size;
+    margin-left: $size;
   }
 
   .pb-#{$index} {
-    margin-bottom: $size;
+    padding-bottom: $size;
   }
 
   .pt-#{$index} {
-    margin-bottom: $size;
+    padding-top: $size;
   }
 
   .pr-#{$index} {
-    margin-bottom: $size;
+    padding-right: $size;
   }
 
   .pl-#{$index} {
-    margin-bottom: $size;
+    padding-left: $size;
   }
 }
 

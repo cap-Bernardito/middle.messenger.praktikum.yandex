@@ -11,6 +11,7 @@ type TInputProps = {
   value?: string;
   placeholder?: string;
   className?: string;
+  classNameInput?: string;
 };
 
 const renderHtml = renderCreator<TInputProps>(source, {
@@ -20,6 +21,7 @@ const renderHtml = renderCreator<TInputProps>(source, {
   name: "",
   value: "",
   className: "",
+  classNameInput: "",
 });
 
 export { renderHtml as renderInput, TInputProps };

@@ -1,4 +1,4 @@
-import { templateForm, TFormProps } from "entities/form";
+import { renderForm } from "entities/form";
 
 import { renderButton } from "shared/ui/button";
 import { renderInput, TInputProps } from "shared/ui/input";
@@ -40,14 +40,14 @@ const inputs: TInputProps[] = [
   },
 ];
 
-const renderFormRegister = renderCreator<TFormProps>(templateForm, {
+const formRegister = renderForm({
   title: "Регистрация",
   fields: inputs.map((input) => renderInput(input)).join(""),
   button: renderButton({ value: "Зарегистрироваться", className: "btn-primary btn-block" }),
   meta: '<a href="/login" class="text-sm">Войти</a>',
 });
 
-const pageContent = renderCreator(source, { body: renderFormRegister() })();
+const pageContent = renderCreator(source, { body: formRegister })();
 const html = renderLayoutCentered({ body: pageContent });
 
 export { html as registerPage };

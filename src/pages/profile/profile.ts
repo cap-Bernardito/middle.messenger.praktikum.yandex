@@ -51,7 +51,7 @@ const controlsProps = {
 };
 
 const renderUserInfo = renderCreator<TUserInfoProps>(templateUserInfo, {
-  avatar: renderAvatar(),
+  avatar: renderAvatar({ editable: true }),
   title: "Вася",
   info: renderListV1(infoProps),
   controls: renderListV1(controlsProps),

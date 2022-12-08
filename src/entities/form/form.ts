@@ -11,6 +11,7 @@ type TFormProps = {
   title?: string;
   meta?: string;
   className?: string;
+  decorated?: boolean;
 };
 
 const renderHtml = renderCreator<TFormProps>(source, {
@@ -20,6 +21,7 @@ const renderHtml = renderCreator<TFormProps>(source, {
   button: "",
   meta: "",
   className: "",
+  decorated: true,
 });
 
 export { renderHtml as renderForm, source as templateForm, TFormProps };

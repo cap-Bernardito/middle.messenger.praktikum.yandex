@@ -25,13 +25,14 @@
 
     // Расскомментировать, когда у инпута будет привязанное состояние
     // &:not([value=""]),
+    &_filled,
     &:focus {
       border-color: darken($primary, 20%);
       outline: none;
 
       & + #{$root}__label {
-        transform: translate(-10%, -190%) scale(0.9);
-        color: $black;
+        transform: translate(-8%, -180%) scale(0.9);
+        color: $primary;
       }
     }
   }

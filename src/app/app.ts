@@ -1,6 +1,6 @@
 import { renderLayoutCentered } from "shared/ui/layouts/centered";
 
-import { chatPage, loginPage, page_404, page_500, profilePage, registerPage } from "../pages";
+import { chatPage, loginPage, page_404, page_500, profileEditInfoPage, profilePage, registerPage } from "../pages";
 
 import "./styles/index.scss";
 
@@ -8,6 +8,7 @@ const pages: { [K: string]: { title: string; component: string } } = {
   "/login": { title: "Авторизация", component: loginPage },
   "/register": { title: "Регистрация", component: registerPage },
   "/profile": { title: "Профиль", component: profilePage },
+  "/profile_edit_info": { title: "Изменить данные", component: profileEditInfoPage },
   "/chat": { title: "Чат", component: chatPage },
   "/404": { title: "404", component: page_404 },
   "/500": { title: "500", component: page_500 },

@@ -4,6 +4,16 @@ import { chatPage } from "./chat/chat";
 import { loginPage } from "./login/login";
 import { profilePage } from "./profile/profile";
 import { profileEditInfoPage } from "./profile/profile_edit_info";
+import { profileEditPasswordPage } from "./profile/profile_edit_password";
 import { registerPage } from "./register/register";
 
-export { chatPage, loginPage, page_404, page_500, profileEditInfoPage, profilePage, registerPage };
+export {
+  chatPage,
+  loginPage,
+  page_404,
+  page_500,
+  profileEditInfoPage,
+  profileEditPasswordPage,
+  profilePage,
+  registerPage,
+};

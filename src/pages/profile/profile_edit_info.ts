@@ -1,5 +1,5 @@
 import { renderForm } from "entities/form";
-import { templateUserInfo, TUserInfoProps } from "entities/user-info";
+import { renderUserInfo } from "entities/user-info";
 
 import { renderAvatar } from "shared/ui/avatar";
 import { renderButton } from "shared/ui/button";
@@ -14,6 +14,7 @@ const inputs: TInputProps[] = [
     label: "Почта",
     value: "pochta@yandex.ru",
     name: "email",
+    type: "email",
     classNameInput: "form-control__input_filled",
   },
   {
@@ -44,11 +45,14 @@ const inputs: TInputProps[] = [
     label: "Телефон",
     value: "+79099673030",
     name: "phone",
+    type: "tel",
     classNameInput: "form-control__input_filled",
   },
 ];
 
-const renderUserInfo = renderCreator<TUserInfoProps>(templateUserInfo, {
+const pageBody = renderUserInfo({
+  title: undefined,
+  controls: undefined,
   avatar: renderAvatar(),
   info: renderForm({
     fields: inputs.map((input) => renderInput(input)).join(""),
@@ -57,7 +61,7 @@ const renderUserInfo = renderCreator<TUserInfoProps>(templateUserInfo, {
   }),
 });
 
-const pageContent = renderCreator(source, { body: renderUserInfo })();
+const pageContent = renderCreator(source, { body: pageBody })();
 const html = renderLayoutCentered({ body: pageContent, className: "layout-centered_md" });
 
 export { html as profileEditInfoPage };

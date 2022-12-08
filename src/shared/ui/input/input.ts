@@ -7,7 +7,7 @@ import "./input.scss";
 type TInputProps = {
   label: string;
   name: string;
-  type?: "text" | "number" | "password" | "email";
+  type?: "text" | "number" | "password" | "email" | "tel";
   value?: string;
   placeholder?: string;
   className?: string;

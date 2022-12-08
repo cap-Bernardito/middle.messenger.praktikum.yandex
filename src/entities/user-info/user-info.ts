@@ -16,4 +16,4 @@ const renderHtml = renderCreator<TUserInfoProps>(source, {
   controls: "list controls",
 });
 
-export { renderHtml as renderFormProfile, source as templateUserInfo, TUserInfoProps };
+export { renderHtml as renderUserInfo, source as templateUserInfo, TUserInfoProps };

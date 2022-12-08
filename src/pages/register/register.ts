@@ -11,6 +11,7 @@ const inputs: TInputProps[] = [
   {
     label: "Почта",
     name: "email",
+    type: "email",
   },
   {
     label: "Логин",
@@ -27,6 +28,7 @@ const inputs: TInputProps[] = [
   {
     label: "Телефон",
     name: "phone",
+    type: "tel",
   },
   {
     label: "Пароль",

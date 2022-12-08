@@ -39,10 +39,10 @@ const infoProps = {
 const controlsProps = {
   items: [
     {
-      name: '<a href="#">Изменить данные</a>',
+      name: '<a href="/profile_edit_info">Изменить данные</a>',
     },
     {
-      name: '<a href="#">Изменить пароль</a>',
+      name: '<a href="/profile_edit_password">Изменить пароль</a>',
     },
     {
       name: '<a href="#" class="text-danger">Выйти</a>',

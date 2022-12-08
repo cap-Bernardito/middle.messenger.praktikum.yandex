@@ -36,4 +36,10 @@
       }
     }
   }
+
+  &_file {
+    #{$root}__label {
+      display: none;
+    }
+  }
 }

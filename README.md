@@ -4,6 +4,22 @@
 
 Для организации структуры папок проекта использована методология [FSD](https://feature-sliced.design/ru/docs/reference/units/layers).
 
+## Полезные команды
+
+```bash
+// Установка зависимостей
+$ npm install
+
+// Запуск проекта в режиме разработки
+$ npm run watch
+
+// Сборка проекта в папку `dist`
+$ npm run build
+
+// Сборка проекта в папку `dist` и раздача статики из нее с помощью `express`
+$ npm run start
+```
+
 ## Макет
 
 [Ссылка на figma](<https://www.figma.com/file/bYQeIVt2njYJojwwSm4nzl/Chat_external_link-(Copy)?node-id=0%3A1&t=haIGWNStj51CJYTA-1>)

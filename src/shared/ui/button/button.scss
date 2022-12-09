@@ -1,0 +1,26 @@
+@use "../../../app/styles/variables.scss" as *;
+
+.btn {
+  box-shadow: none;
+  padding: $spacer * 3 $spacer * 10;
+  border: none;
+  border-radius: $border-radius-sm;
+  cursor: pointer;
+  outline: none;
+  transition: 0.25s all;
+
+  &-primary {
+    border: 0.1rem solid $primary;
+    background: $primary;
+    color: $white;
+
+    &:hover {
+      background: darken($primary, 10%);
+    }
+  }
+
+  &-block {
+    display: block;
+    width: 100%;
+  }
+}

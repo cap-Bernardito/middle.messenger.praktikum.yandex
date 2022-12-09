@@ -1,0 +1,101 @@
+@use "../../app/styles/variables.scss" as *;
+
+.user-card {
+  $root: &;
+
+  display: flex;
+  font-size: $text-sm;
+  gap: $spacer * 2;
+
+  &:not(.not-interactive) {
+    position: relative;
+    padding: 0.7em 0.5em 0.7em 0.4em;
+    margin-bottom: 1px;
+    border-radius: 0.7rem;
+    cursor: pointer;
+    transition: all 0.25s;
+
+    &::before {
+      content: "";
+      display: block;
+      position: absolute;
+      top: -1px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 95%;
+      border-top: 1px solid $gray-300;
+    }
+  }
+
+  &__avatar {
+    flex: 0 1 47px;
+  }
+
+  &__body {
+    flex: 1 1 100px;
+  }
+
+  &__meta {
+    flex: 0 1 30px;
+    font-size: 11px;
+    color: $secondary;
+    text-align: center;
+  }
+
+  &:not(.not-interactive).active {
+    background: $primary;
+    color: $white;
+
+    #{$root}__meta {
+      color: $white;
+    }
+
+    .card-body__message {
+      color: $white;
+    }
+
+    .card-meta__counter {
+      background: $white;
+      color: $primary;
+    }
+  }
+
+  &:hover:not(&.active):not(&.not-interactive) {
+    background: $gray-300;
+  }
+}
+
+.card-body {
+  display: flex;
+  flex-direction: column;
+
+  &__title {
+    flex: 1 1 1px;
+    font-weight: 600;
+    margin-bottom: 0.2em;
+
+    display: flex;
+    align-items: center;
+  }
+
+  &__message {
+    flex: 1 1 10px;
+    color: $secondary;
+  }
+}
+
+.card-meta {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: end;
+
+  &__counter {
+    width: 1.7em;
+    height: 1.7em;
+    line-height: 1.7;
+    border-radius: 50%;
+    background: $primary;
+    color: $white;
+  }
+}

@@ -1,0 +1,44 @@
+// Импорт переменных
+// @use "../../app/styles/variables.scss" as *;
+
+// Colors
+$gray-100: #f2f2f2;
+$gray-200: #e8e8e8;
+$gray-300: #e1e1e1;
+$gray-400: #cecece;
+$gray-500: #aaaaaa;
+$gray-600: #7a7a7a;
+$gray-700: #535353;
+$gray-800: #404040;
+$gray-900: #2a2a2a;
+
+$white: #fff;
+$black: #1e1e1e;
+$primary: #3369f3;
+$secondary: $gray-600;
+$success: #00cccc;
+$danger: #e52b1a;
+$error: #e52b1a;
+
+// Spacer
+$spacer: 0.4rem;
+
+// Grid
+$containerPadding: $spacer * 2;
+
+// Box-shadow
+$boxShadow-1: 0 0 0.6rem rgba(0, 0, 0, 0.14);
+
+// Border-radius
+$border-radius-sm: 0.8rem;
+$border-radius: 1.5rem;
+
+// Fonts
+$text-sm: 1.3rem;
+$text-base: 1.5rem;
+$text-lg: 1.7rem;
+
+$h1: 2rem;
+$h2: 1.8rem;
+
+$display-1: 7rem;

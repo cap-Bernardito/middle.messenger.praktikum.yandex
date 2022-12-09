@@ -1,0 +1,29 @@
+@use "../../../../app/styles/variables.scss" as *;
+
+.layout-full-screen {
+  $root: &;
+
+  min-height: 100vh;
+  display: flex;
+
+  &__secondary {
+    position: relative;
+    flex: 0 0 31rem;
+    margin-right: 0.6rem;
+
+    &::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      right: -0.5rem;
+      border-right: 0.3rem solid $gray-200;
+      height: 100%;
+    }
+    background: $gray-100;
+  }
+
+  &__primary {
+    min-height: 100%;
+    flex: 1 1 1rem;
+  }
+}

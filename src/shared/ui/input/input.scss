@@ -12,7 +12,7 @@
     left: 0;
     transform: translateY(-50%);
     font-size: $text-sm;
-    color: lighten($black, 50%);
+    color: $gray-500;
     transition: all 0.3s;
     pointer-events: none;
   }

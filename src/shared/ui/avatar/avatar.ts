@@ -1,9 +1,12 @@
-import img from "shared/assets/svg/icon-empty.svg";
-import { renderCreator } from "shared/utils/utils";
+import { mdiImageOutline } from "@mdi/js";
+import { renderIcon } from "shared/ui/icon";
+import { registerPartial, renderCreator } from "shared/utils/utils";
 
 import source from "./avatar.hbs";
 
 import "./avatar.scss";
+
+registerPartial("icon-image-empty", renderIcon({ value: mdiImageOutline }));
 
 type TAvatar = {
   img?: string;
@@ -13,7 +16,6 @@ type TAvatar = {
 };
 
 const renderHtml = renderCreator<TAvatar>(source, {
-  img: img,
   title: "Загрузить аватар",
   editable: false,
 });

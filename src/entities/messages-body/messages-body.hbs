@@ -1,0 +1,13 @@
+<div class="messages-body custom-scroll">
+  <div class="messages-body__inner">
+    {{#if messages}}
+      {{#each messages}}
+        {{{this}}}
+      {{/each}}
+    {{else}}
+    <div class="messages-body__placeholder">
+      {{placeholder}}
+    </div>
+    {{/if}}
+  </div>
+</div>

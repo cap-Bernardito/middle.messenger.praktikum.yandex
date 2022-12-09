@@ -61,6 +61,7 @@
     "typescript": "^4.9.3"
   },
   "dependencies": {
+    "@mdi/js": "^7.0.96",
     "express": "^4.18.2",
     "normalize.css": "^8.0.1"
   }

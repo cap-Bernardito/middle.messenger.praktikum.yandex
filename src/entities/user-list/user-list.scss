@@ -1,0 +1,26 @@
+@use "../../app/styles/variables.scss" as *;
+
+.user-list {
+  max-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  padding: $spacer 0 $spacer $spacer;
+
+  &__header {
+    padding-bottom: $spacer * 5;
+  }
+
+  &__body {
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+}
+
+.list-header {
+  &__link {
+    margin-bottom: $spacer * 3;
+    padding: $spacer * 2 0;
+    text-align: right;
+    color: $secondary;
+  }
+}

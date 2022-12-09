@@ -1,0 +1,19 @@
+@use "../../../app/styles/variables.scss" as *;
+
+.form-control {
+  &__textarea {
+    min-width: 100%;
+    max-width: 100%;
+    min-height: 3.5rem;
+    padding: 0.8rem 1.5rem;
+    border: 1px solid $gray-300;
+    border-radius: $border-radius;
+    background: $gray-100;
+    resize: none;
+
+    &:focus {
+      border-color: darken($primary, 20%);
+      outline: none;
+    }
+  }
+}

@@ -18,3 +18,11 @@ export const renderCreator: TRenderCreator = (source, defaultContext, options) =
     options
   );
 };
+
+export const registerPartial = (name: string, template: string): void => {
+  Handlebars.registerPartial(name, template);
+};
+
+export const registerHelper = (name: string, fn: (value: unknown) => boolean): void => {
+  Handlebars.registerHelper(name, fn);
+};

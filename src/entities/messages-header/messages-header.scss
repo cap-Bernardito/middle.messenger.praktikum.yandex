@@ -1,0 +1,15 @@
+@use "../../app/styles/variables.scss" as *;
+
+.messages-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  &__left {
+    flex: 1 1 100px;
+  }
+
+  &__right {
+    flex: 0 0 auto;
+  }
+}

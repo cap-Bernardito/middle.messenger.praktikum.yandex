@@ -8,6 +8,11 @@ declare module "*.svg" {
   export default source;
 }
 
+declare module "*.jpg" {
+  const source: string;
+  export default source;
+}
+
 declare type TRenderContext = { [K: string]: string | boolean };
 
 declare type TRenderProps = {

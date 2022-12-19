@@ -2,9 +2,9 @@
 
 .messages-footer {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
   gap: $spacer * 4;
+  align-items: center;
+  justify-content: space-between;
 
   &__left {
     flex: 0 0 auto;
@@ -26,15 +26,15 @@
 
     &-clip {
       svg {
-        color: $gray-500;
         transform: rotate(40deg) scale(1.2);
+        color: $gray-500;
       }
     }
 
     &-submit {
       svg {
-        color: $primary;
         transform: scale(1.2);
+        color: $primary;
       }
     }
   }

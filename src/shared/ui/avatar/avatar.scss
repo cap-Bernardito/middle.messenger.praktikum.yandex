@@ -4,16 +4,20 @@
   $root: &;
 
   position: relative;
-  padding: 2rem;
-  width: 13rem;
-  height: 13rem;
+
+  overflow: hidden;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  border-radius: 50%;
+
+  width: 13rem;
+  height: 13rem;
+  padding: 2rem;
+
   background: $gray-200;
+  border-radius: 50%;
+
   transition: all 0.25s;
-  overflow: hidden;
 
   &__img,
   svg {
@@ -21,9 +25,12 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    object-fit: cover;
+
     width: 100%;
+
     color: $secondary;
+
+    object-fit: cover;
   }
 
   svg {

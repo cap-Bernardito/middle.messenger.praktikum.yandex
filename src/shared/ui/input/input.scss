@@ -6,15 +6,19 @@
   position: relative;
 
   &__label {
-    display: block;
+    pointer-events: none;
+
     position: absolute;
     top: 50%;
     left: 0;
     transform: translateY(-50%);
+
+    display: block;
+
     font-size: $text-sm;
     color: $gray-500;
+
     transition: all 0.3s;
-    pointer-events: none;
   }
 
   &__input {
@@ -27,7 +31,7 @@
     // &:not([value=""]),
     &_filled,
     &:focus {
-      border-color: darken($primary, 20%);
+      border-color: color.adjust($primary, $lightness: -20%);
       outline: none;
 
       & + #{$root}__label {

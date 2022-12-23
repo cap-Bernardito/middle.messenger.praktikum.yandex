@@ -1,3 +1,5 @@
+@use "sass:map" as map;
+
 *,
 ::after,
 ::before {
@@ -28,7 +30,7 @@ h6 {
 }
 
 $grays: ();
-$grays: merge(
+$grays: map.merge(
   (
     "100": $gray-100,
     "200": $gray-200,
@@ -50,7 +52,7 @@ $grays: merge(
 }
 
 $gaps: ();
-$gaps: merge(
+$gaps: map.merge(
   (
     "1": $spacer,
     "2": $spacer * 2,

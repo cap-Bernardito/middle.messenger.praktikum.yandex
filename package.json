@@ -4,8 +4,8 @@
   "description": "Messenger pet-project",
   "scripts": {
     "clear": "del-cli dist/**/* .parcel-cache",
-    "watch": "npm run clear && parcel src/index.html -p 3000 --no-cache",
-    "build": "npm run clear && parcel build src/index.html --no-cache",
+    "watch": "npm run clear && parcel src/index.html -p 3000 --no-cache --cache-dir \"node_modules/.cache/parcel-cache\"",
+    "build": "npm run clear && parcel build src/index.html --no-cache --cache-dir \"node_modules/.cache/parcel-cache\"",
     "start": "npm run clear && npm run build && node ./server.js",
     "lint:prettier": "prettier --list-different .",
     "lint:js": "eslint --cache --ext \".js,.jsx,.ts,.tsx\" .",

@@ -1,9 +1,8 @@
-import { renderForm } from "entities/form";
+import { Form } from "entities/form_block";
 
-import { renderButton } from "shared/ui/button";
-import { renderInput, TInputProps } from "shared/ui/input";
-import { renderLayoutCentered } from "shared/ui/layouts/centered";
-import { renderCreator } from "shared/utils/utils";
+import { Block, registerComponent } from "shared/core";
+import { Button } from "shared/ui/button_block";
+import { Input, TInputProps } from "shared/ui/input_block";
 
 import source from "./login.hbs";
 
@@ -19,14 +18,23 @@ const inputs: TInputProps[] = [
   },
 ];
 
-const formLogin = renderForm({
-  title: "Вход",
-  fields: inputs.map((input) => renderInput(input)).join(""),
-  button: renderButton({ value: "Войти", className: "btn-primary btn-block" }),
-  meta: '<a href="/register" class="text-sm">Зарегистрироваться</a>',
-});
+export class LoginPage extends Block {
+  static cName = "LoginPage";
 
-const pageContent = renderCreator(source, { body: formLogin })();
-const html = renderLayoutCentered({ body: pageContent });
+  constructor() {
+    super({
+      body: new Form({
+        title: "Вход",
+        fields: inputs.map((inputProps) => new Input(inputProps)),
+        button: new Button({ value: "Войти", className: "btn-primary btn-block" }),
+        meta: '<a href="/register" class="text-sm">Зарегистрироваться</a>',
+      }),
+    });
+  }
 
-export { html as loginPage };
+  render() {
+    return source;
+  }
+}
+
+registerComponent(LoginPage);

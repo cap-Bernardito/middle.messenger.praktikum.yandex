@@ -1,0 +1,23 @@
+<form class="form {{#if decorated}}form_decorated{{/if}} {{#if className}}{{className}}{{/if}}">
+  {{#if title}}
+    <h1 class="form__title">
+      {{{title}}}
+    </h1>
+  {{/if}}
+
+  <div class="form__fields">
+    {{#each fields}}
+      {{{this}}}
+    {{/each}}
+  </div>
+
+  <div class="form__button">
+    {{{button}}}
+  </div>
+
+  {{#if meta}}
+    <div class="form__meta">
+      {{{meta}}}
+    </div>
+  {{/if}}
+</form>

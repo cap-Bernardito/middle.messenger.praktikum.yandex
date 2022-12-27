@@ -3,10 +3,6 @@ import { nanoid } from "nanoid";
 
 import { EventBus } from ".";
 
-interface BlockMeta<P = any> {
-  props: P;
-}
-
 type Events = Values<typeof Block.EVENTS>;
 
 export class Block<P extends Record<string, any> = any> {
@@ -17,25 +13,24 @@ export class Block<P extends Record<string, any> = any> {
   } as const;
 
   public id = nanoid(8);
-  private readonly _meta: BlockMeta;
 
   protected _element = this._createDocumentElement("div");
   protected readonly props: P;
-  protected children: { [id: string]: Block } = {};
+  protected _childrenForReplace: { [id: string]: Block } = {};
+  protected _childrenFromProps: { [propName: string]: Block } = {};
 
   eventBus: () => EventBus<Events>;
 
   protected state: any = {};
   protected refs: { [key: string]: HTMLElement } = {};
 
-  public constructor(props?: P) {
+  public constructor(propsAndChildren?: P) {
     const eventBus = new EventBus<Events>();
-
-    this._meta = {
-      props,
-    };
+    const { children, props } = this._getChildren(propsAndChildren);
 
     this.getStateFromProps(props);
+
+    this._childrenFromProps = children;
 
     this.props = this._makePropsProxy(props || ({} as P));
     this.state = this._makePropsProxy(this.state);
@@ -45,6 +40,34 @@ export class Block<P extends Record<string, any> = any> {
     this._registerEvents(eventBus);
 
     eventBus.emit(Block.EVENTS.FLOW_RENDER, this.props);
+  }
+
+  private _getChildren(propsAndChildren = {}) {
+    const children: { [key: string]: any } = {};
+    const props: { [key: string]: any } = {};
+
+    Object.entries(propsAndChildren).forEach(([key, value]) => {
+      if (Array.isArray(value)) {
+        children[key] = [];
+        props[key] = [];
+
+        value.forEach((element) => {
+          if (element instanceof Block) {
+            children[key].push(element);
+          } else {
+            props[key].push(element);
+          }
+        });
+      } else {
+        if (value instanceof Block) {
+          children[key] = value;
+        } else {
+          props[key] = value;
+        }
+      }
+    });
+
+    return { children, props };
   }
 
   _registerEvents(eventBus: EventBus<Events>) {
@@ -66,9 +89,9 @@ export class Block<P extends Record<string, any> = any> {
   componentDidMount(props: P) {}
 
   _componentDidUpdate(oldProps: P, newProps: P) {
-    const response = this.componentDidUpdate(oldProps, newProps);
+    const isRenderRequired = this.componentDidUpdate(oldProps, newProps);
 
-    if (!response) {
+    if (!isRenderRequired) {
       return;
     }
 
@@ -187,9 +210,34 @@ export class Block<P extends Record<string, any> = any> {
     const fragment = document.createElement("template");
     const template = Handlebars.compile(this.render());
 
-    fragment.innerHTML = template({ ...this.state, ...this.props, children: this.children, refs: this.refs });
+    const stubs: Record<string, string | string[]> = {};
 
-    Object.entries(this.children).forEach(([id, component]) => {
+    for (const [key, value] of Object.entries(this._childrenFromProps)) {
+      if (Array.isArray(value)) {
+        stubs[key] = [];
+        value.forEach((item) => {
+          if (item instanceof Block) {
+            (stubs[key] as string[]).push(`<div data-id="id-${item.id}"></div>`);
+            this._childrenForReplace[item.id] = item;
+          }
+        });
+      } else {
+        if (value instanceof Block) {
+          stubs[key] = `<div data-id="id-${value.id}"></div>`;
+          this._childrenForReplace[value.id] = value;
+        }
+      }
+    }
+
+    fragment.innerHTML = template({
+      ...this.state,
+      ...this.props,
+      ...stubs,
+      children: this._childrenForReplace,
+      refs: this.refs,
+    });
+
+    Object.entries(this._childrenForReplace).forEach(([id, component]) => {
       const stub = fragment.content.querySelector(`[data-id="id-${id}"]`);
 
       if (!stub) {

@@ -1,0 +1,39 @@
+@use "../../app/styles/variables.scss" as *;
+
+.form {
+  display: flex;
+  flex-direction: column;
+
+  min-height: 45rem;
+  padding: 4rem 3rem 3rem;
+
+  border-radius: $border-radius;
+
+  &_decorated {
+    box-shadow: $box-shadow-1;
+  }
+
+  &__title {
+    margin-bottom: $spacer * 10;
+    font-size: 2rem;
+    text-align: center;
+  }
+
+  &__fields {
+    margin-bottom: auto;
+  }
+
+  &__button {
+    margin-top: $spacer * 10;
+    text-align: center;
+  }
+
+  &__meta {
+    margin-top: $spacer * 3;
+    text-align: center;
+  }
+
+  .form-control {
+    margin-bottom: $spacer * 5;
+  }
+}

@@ -3,7 +3,7 @@ import { renderLayoutCentered } from "shared/ui/layouts/centered";
 
 import {
   chatPage,
-  loginPage,
+  LoginPage,
   page_404,
   Page_500,
   profileEditAvatarPage,
@@ -16,7 +16,7 @@ import {
 import "./styles/index.scss";
 
 const pages: { [K: string]: { title: string; component: string | Block } } = {
-  "/login": { title: "Авторизация", component: loginPage },
+  "/login": { title: "Авторизация", component: new LoginPage() },
   "/register": { title: "Регистрация", component: registerPage },
   "/profile": { title: "Профиль", component: profilePage },
   "/profile_edit_avatar": { title: "Изменить аватар", component: profileEditAvatarPage },

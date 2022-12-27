@@ -1,10 +1,11 @@
+import { Block, renderDOM } from "shared/core";
 import { renderLayoutCentered } from "shared/ui/layouts/centered";
 
 import {
   chatPage,
   loginPage,
   page_404,
-  page_500,
+  Page_500,
   profileEditAvatarPage,
   profileEditInfoPage,
   profileEditPasswordPage,
@@ -14,7 +15,7 @@ import {
 
 import "./styles/index.scss";
 
-const pages: { [K: string]: { title: string; component: string } } = {
+const pages: { [K: string]: { title: string; component: string | Block } } = {
   "/login": { title: "Авторизация", component: loginPage },
   "/register": { title: "Регистрация", component: registerPage },
   "/profile": { title: "Профиль", component: profilePage },
@@ -23,11 +24,17 @@ const pages: { [K: string]: { title: string; component: string } } = {
   "/profile_edit_password": { title: "Изменить пароль", component: profileEditPasswordPage },
   "/chat": { title: "Чат", component: chatPage },
   "/404": { title: "404", component: page_404 },
-  "/500": { title: "500", component: page_500 },
+  "/500": { title: "500", component: new Page_500() },
 };
 
 const currentRoute = location.pathname;
-let html = "";
+let html: string | Block = "";
+
+function renderString(str: string) {
+  const root = document.querySelector("#root") as HTMLDivElement;
+
+  root.innerHTML = str;
+}
 
 if (!pages[currentRoute]) {
   const indexPage = Object.entries(pages)
@@ -39,6 +46,8 @@ if (!pages[currentRoute]) {
   html = pages[currentRoute]["component"];
 }
 
-const root = document.querySelector("#root") as HTMLDivElement;
-
-root.innerHTML = html;
+if (html instanceof Block) {
+  renderDOM(html);
+} else {
+  renderString(html);
+}

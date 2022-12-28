@@ -13,6 +13,11 @@ export class LoginPage extends Block {
   constructor() {
     super({
       body: new Form({
+        onSubmit: (event) => {
+          const { isFormValid, formData } = formProcess.form.check(event, Object.values(this.getFormInputs()));
+
+          console.log(`Form is${isFormValid ? "" : " not"} valid. FormData: `, formData);
+        },
         ref: "loginForm",
         title: "Вход",
         fields: (

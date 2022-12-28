@@ -15,12 +15,14 @@ type TKeysCheck = keyof typeof checks;
 
 const isValidatedField = (fieldName: TKeysCheck | string): fieldName is TKeysCheck => fieldName in checks;
 
-const checkField = (event: Event, field: Block) => {
-  if (!event.target || !(field instanceof Block)) {
-    return;
-  }
+const getInputValue = (event: Event | null, field: Block): string => {
+  const target = event?.target as HTMLInputElement | undefined;
 
-  const value = (event.target as HTMLInputElement).value;
+  return target ? target.value : field.refs.inputRef.props.value || "";
+};
+
+const checkField = (event: Event | null, field: Block) => {
+  const value = getInputValue(event, field);
   const fieldName = field.props.name;
 
   if (!isValidatedField(fieldName)) {
@@ -30,11 +32,13 @@ const checkField = (event: Event, field: Block) => {
   const checkCase = checks[fieldName];
   let errorMessage = checks[fieldName].message;
 
-  if (checkCase.regex.test(value) || value.length === 0) {
+  if (checkCase.regex.test(value)) {
     errorMessage = "";
   }
 
   field.refs.errorRef.setProps({ text: errorMessage });
+
+  return { isValid: !errorMessage, fieldValue: value, fieldName };
 };
 
 const setValue = (event: Event, field: Block) => {
@@ -46,9 +50,31 @@ const setValue = (event: Event, field: Block) => {
   field.refs.inputRef.setProps({ value });
 };
 
+const checkForm = (event: Event, fields: Block[]) => {
+  event.preventDefault();
+
+  const formData: Record<string, unknown> = {};
+  let isFormValid = true;
+
+  fields.forEach((field) => {
+    const { isValid, fieldName, fieldValue } = checkField(null, field);
+
+    formData[fieldName] = fieldValue;
+
+    if (!isValid) {
+      isFormValid = false;
+    }
+  });
+
+  return { isFormValid, formData };
+};
+
 export const formProcess = {
   field: {
     check: checkField,
     setValue,
+  },
+  form: {
+    check: checkForm,
   },
 };

@@ -42,12 +42,23 @@
   }
 
   &__error {
-    position: absolute;
-    top: 110%;
-    left: 0;
+    position: relative;
 
-    font-size: 0.8em;
-    color: $danger;
+    &_inner {
+      position: absolute;
+      z-index: 1;
+      top: 2px;
+      left: 0;
+
+      font-size: 0.7em;
+      color: $danger;
+
+      background: #fff;
+    }
+
+    &.active {
+      margin-bottom: 30px;
+    }
   }
 
   &_file {

@@ -3,6 +3,7 @@ import { Form } from "entities/form_block";
 import { Block, registerComponent } from "shared/core";
 import { Button } from "shared/ui/button_block";
 import { Input, TInputProps } from "shared/ui/input_block";
+import { formProcess } from "shared/utils/form-processing";
 
 import source from "./login.hbs";
 
@@ -21,23 +22,25 @@ export class LoginPage extends Block {
               name: "login",
               ref: "loginInput",
               onInput: (event) => {
-                if (!event.target) {
-                  return;
-                }
-
-                const input = event.target as HTMLInputElement;
-                const { loginInput } = this.getFormInputs();
-
-                loginInput.refs.errorRef.setProps({ text: input.value });
+                formProcess.field.check(event, this.getFormInputs().loginInput);
               },
-              // onBlur: (e) => console.log(),
-              // onFocus: () => console.log(),
+              onBlur: (event) => {
+                formProcess.field.check(event, this.getFormInputs().loginInput);
+                formProcess.field.setValue(event, this.getFormInputs().loginInput);
+              },
             },
             {
               label: "Пароль",
               type: "password",
               name: "password",
               ref: "passwordInput",
+              onInput: (event) => {
+                formProcess.field.check(event, this.getFormInputs().passwordInput);
+              },
+              onBlur: (event) => {
+                formProcess.field.check(event, this.getFormInputs().passwordInput);
+                formProcess.field.setValue(event, this.getFormInputs().passwordInput);
+              },
             },
           ] as TInputProps[]
         ).map((inputProps) => new Input(inputProps)),
@@ -58,38 +61,3 @@ export class LoginPage extends Block {
 }
 
 registerComponent(LoginPage);
-
-/*
-`
-{{#LayoutCentered}}
-{{{Input
-  onInput=onInput
-  onFocus=onFocus
-  onBlur=onBlur
-  className="ddddddddddd"
-  classNameInput="aaaaaaaaa"
-  value=value
-  label="Имя"
-  ref="login"
-  name="login"
-  type="text"
-  placeholder="Login"
-}}}
-  ${FormTemplate}
-{{/LayoutCentered}}
-    `
-
-{{{Input
-  onInput=onInput
-  onFocus=onFocus
-  onBlur=onBlur
-  className="ddddddddddd"
-  classNameInput="aaaaaaaaa"
-  value=""
-  label="Имя"
-  ref="login"
-  name="login"
-  type="text"
-  placeholder="Login"
-}}}
-*/

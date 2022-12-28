@@ -14,9 +14,9 @@ export class Block<P extends Record<string, any> = any> {
 
   public id = nanoid(8);
   public refs: { [key: string]: Block } = {};
+  public readonly props: P;
 
   protected _element = this._createDocumentElement("div");
-  protected readonly props: P;
   protected _childrenForReplace: { [id: string]: Block } = {};
   protected _childrenFromProps: { [propName: string]: Block } = {};
 

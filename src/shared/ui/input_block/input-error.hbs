@@ -1,6 +1,8 @@
-<div class="form-control__error {{className}}">
-  {{#if text}}
-    {{text}}
-  {{/if}}
+<div class="form-control__error {{#if text}}active{{/if}} {{className}}">
+  <div class="form-control__error_inner">
+    {{#if text}}
+      {{text}}
+    {{/if}}
+  </div>
 </div>
 

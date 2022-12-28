@@ -2,10 +2,10 @@ import Handlebars, { HelperOptions } from "handlebars";
 
 import { Block } from ".";
 
-interface BlockConstructable<Props = any> {
+type BlockConstructable<Props = any> = {
   cName: string;
   new (props: Props): Block;
-}
+};
 
 export function registerComponent<Props>(Component: BlockConstructable<Props>) {
   Handlebars.registerHelper(
@@ -23,6 +23,20 @@ export function registerComponent<Props>(Component: BlockConstructable<Props>) {
 
       (Object.keys(hash) as any).forEach((key: keyof Props) => {
         if (this[key] && typeof this[key] === "string") {
+          if (typeof hash[key] === "undefined") {
+            throw new Error(
+              `Property "${String(key)}" in "${
+                Component.cName
+              }" component is undefined. Available values: ${Object.keys(this as Record<string, any>).join(", ")}`
+            );
+          }
+
+          if (typeof hash[key] === "function") {
+            throw new Error(
+              `Property "${String(key)}" in "${Component.cName}" component must be a string. Function received.`
+            );
+          }
+
           hash[key] = hash[key].replace(new RegExp(`{{${String(key)}}}`, "i"), this[key]);
         }
       });
@@ -32,7 +46,7 @@ export function registerComponent<Props>(Component: BlockConstructable<Props>) {
       children[component.id] = component;
 
       if (ref) {
-        refs[ref] = component.getContent();
+        refs[ref] = component;
       }
 
       const contents = fn ? fn(this) : "";

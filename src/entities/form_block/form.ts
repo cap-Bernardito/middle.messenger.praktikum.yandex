@@ -4,20 +4,20 @@ import source from "./form.hbs";
 
 import "./form.scss";
 
-export type TFormProps = {
+export type TFormProps = TPropsWithRef<{
   fields: Block[];
   button: Block;
   title?: string;
   meta?: string;
   className?: string;
   decorated?: boolean;
-};
+}>;
 
 export class Form extends Block<TFormProps> {
   static cName = "Form";
 
-  constructor({ fields, button, title = "", meta = "", className = "", decorated = true }: TFormProps) {
-    super({ fields, button, title, meta, className, decorated });
+  constructor({ decorated = true, ...props }: TFormProps) {
+    super({ ...props, decorated });
   }
 
   render() {

@@ -28,8 +28,7 @@
     border: none;
     border-bottom: 0.1rem solid $primary;
 
-    // Расскомментировать, когда у инпута будет привязанное состояние
-    // &:not([value=""]),
+    &:not([value=""]),
     &_filled,
     &:focus {
       border-color: color.adjust($primary, $lightness: -20%);
@@ -40,6 +39,15 @@
         color: $primary;
       }
     }
+  }
+
+  &__error {
+    position: absolute;
+    top: 110%;
+    left: 0;
+
+    font-size: 0.8em;
+    color: $danger;
   }
 
   &_file {

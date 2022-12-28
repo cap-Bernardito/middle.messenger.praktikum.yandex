@@ -4,7 +4,7 @@ import source from "./input.hbs";
 
 import "./input.scss";
 
-export type TInputProps = {
+export type TInputProps = TPropsWithRef<{
   label: string;
   name: string;
   type?: "text" | "number" | "password" | "email" | "tel" | "file";
@@ -12,21 +12,16 @@ export type TInputProps = {
   placeholder?: string;
   className?: string;
   classNameInput?: string;
-};
+  onInput?: (event: Event) => void;
+  onBlur?: (event: Event) => void;
+  onFocus?: (event: Event) => void;
+}>;
 
 export class Input extends Block<TInputProps> {
   static cName = "Input";
 
-  constructor({
-    label = "",
-    name = "",
-    type = "text",
-    value = "",
-    placeholder = "",
-    className = "",
-    classNameInput = "",
-  }: TInputProps) {
-    super({ label, name, type, value, placeholder, className, classNameInput });
+  constructor({ type = "text", ...props }: TInputProps) {
+    super({ type, ...props });
   }
 
   render() {

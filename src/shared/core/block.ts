@@ -3,7 +3,7 @@ import { nanoid } from "nanoid";
 
 import { EventBus } from ".";
 
-type Events = Values<typeof Block.EVENTS>;
+type EventBusEvents = TValues<typeof Block.EVENTS>;
 
 export class Block<P extends Record<string, any> = any> {
   static EVENTS = {
@@ -13,24 +13,26 @@ export class Block<P extends Record<string, any> = any> {
   } as const;
 
   public id = nanoid(8);
+  public refs: { [key: string]: Block } = {};
 
   protected _element = this._createDocumentElement("div");
   protected readonly props: P;
   protected _childrenForReplace: { [id: string]: Block } = {};
   protected _childrenFromProps: { [propName: string]: Block } = {};
 
-  eventBus: () => EventBus<Events>;
+  eventBus: () => EventBus<EventBusEvents>;
 
   protected state: any = {};
-  protected refs: { [key: string]: HTMLElement } = {};
 
   public constructor(propsAndChildren?: P) {
-    const eventBus = new EventBus<Events>();
-    const { children, props } = this._getChildren(propsAndChildren);
+    const eventBus = new EventBus<EventBusEvents>();
+
+    const { children, props, refs } = this._getChildren(propsAndChildren);
 
     this.getStateFromProps(props);
 
     this._childrenFromProps = children;
+    this.refs = refs;
 
     this.props = this._makePropsProxy(props || ({} as P));
     this.state = this._makePropsProxy(this.state);
@@ -45,6 +47,7 @@ export class Block<P extends Record<string, any> = any> {
   private _getChildren(propsAndChildren = {}) {
     const children: { [key: string]: any } = {};
     const props: { [key: string]: any } = {};
+    const refs: typeof this.refs = {};
 
     Object.entries(propsAndChildren).forEach(([key, value]) => {
       if (Array.isArray(value)) {
@@ -54,6 +57,10 @@ export class Block<P extends Record<string, any> = any> {
         value.forEach((element) => {
           if (element instanceof Block) {
             children[key].push(element);
+
+            if (element.props.ref) {
+              refs[element.props.ref] = element;
+            }
           } else {
             props[key].push(element);
           }
@@ -61,16 +68,20 @@ export class Block<P extends Record<string, any> = any> {
       } else {
         if (value instanceof Block) {
           children[key] = value;
+
+          if (value.props.ref) {
+            refs[value.props.ref] = value;
+          }
         } else {
           props[key] = value;
         }
       }
     });
 
-    return { children, props };
+    return { children, props, refs };
   }
 
-  _registerEvents(eventBus: EventBus<Events>) {
+  _registerEvents(eventBus: EventBus<EventBusEvents>) {
     eventBus.on(Block.EVENTS.FLOW_CDM, this._componentDidMount.bind(this));
     eventBus.on(Block.EVENTS.FLOW_CDU, this._componentDidUpdate.bind(this));
     eventBus.on(Block.EVENTS.FLOW_RENDER, this._render.bind(this));
@@ -87,6 +98,10 @@ export class Block<P extends Record<string, any> = any> {
 
   // eslint-disable-next-line @typescript-eslint/no-empty-function, @typescript-eslint/no-unused-vars
   componentDidMount(props: P) {}
+
+  dispatchComponentDidMount(): void {
+    this.eventBus().emit(Block.EVENTS.FLOW_CDM);
+  }
 
   _componentDidUpdate(oldProps: P, newProps: P) {
     const isRenderRequired = this.componentDidUpdate(oldProps, newProps);
@@ -165,10 +180,12 @@ export class Block<P extends Record<string, any> = any> {
           throw new Error("Нет прав");
         }
 
+        // TODO: улучшить клонирование
+        const oldProps = { ...target };
+
         Reflect.set(target, prop, value);
 
-        // TODO: Плохой cloneDeep. В след итерации улучшить
-        this.eventBus().emit(Block.EVENTS.FLOW_CDU, { ...target }, target);
+        this.eventBus().emit(Block.EVENTS.FLOW_CDU, oldProps, target);
 
         return true;
       },
@@ -183,31 +200,35 @@ export class Block<P extends Record<string, any> = any> {
   }
 
   _removeEvents() {
-    const events: Record<string, () => void> = (this.props as any).events;
+    const events: TEvents = this.props.events;
 
     if (!events) {
       return;
     }
 
     Object.entries(events).forEach(([event, listener]) => {
-      this._element.removeEventListener(event, listener);
+      if (listener) {
+        this._element.removeEventListener(event, listener);
+      }
     });
   }
 
   _addEvents() {
-    const events: Record<string, () => void> = (this.props as any).events;
+    const events: TEvents = this.props.events;
 
     if (!events) {
       return;
     }
 
     Object.entries(events).forEach(([event, listener]) => {
-      this._element.addEventListener(event, listener);
+      if (listener) {
+        this._element.addEventListener(event, listener);
+      }
     });
   }
 
   _compile(): HTMLElement {
-    const fragment = document.createElement("template");
+    const fragment = this._createDocumentElement("template") as HTMLTemplateElement;
     const template = Handlebars.compile(this.render());
 
     const stubs: Record<string, string | string[]> = {};
@@ -215,6 +236,7 @@ export class Block<P extends Record<string, any> = any> {
     for (const [key, value] of Object.entries(this._childrenFromProps)) {
       if (Array.isArray(value)) {
         stubs[key] = [];
+
         value.forEach((item) => {
           if (item instanceof Block) {
             (stubs[key] as string[]).push(`<div data-id="id-${item.id}"></div>`);

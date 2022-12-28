@@ -14,10 +14,18 @@ declare global {
     export default source;
   }
 
-  export type Nullable<T> = T | null;
+  export type TNullable<T> = T | null;
 
-  export type Keys<T extends Record<string, unknown>> = keyof T;
-  export type Values<T extends Record<string, unknown>> = T[Keys<T>];
+  export type TKeys<T extends Record<string, unknown>> = keyof T;
+  export type TValues<T extends Record<string, unknown>> = T[TKeys<T>];
+
+  export type TEvents = Record<Event["type"], ((event: Event) => void) | undefined>;
+  export type TPropsWithEvents<T extends Record<string, unknown>> = T & {
+    events?: TEvents;
+  };
+  export type TPropsWithRef<T extends Record<string, unknown>> = T & {
+    ref?: string;
+  };
 
   export type TRenderContext = { [K: string]: string | boolean };
 

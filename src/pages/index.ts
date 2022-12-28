@@ -1,4 +1,4 @@
-import { page_404 } from "./404/404";
+import { Page_404 } from "./404/404";
 import { Page_500 } from "./500/500";
 import { chatPage } from "./chat/chat";
 import { LoginPage } from "./login/login";
@@ -11,7 +11,7 @@ import { RegisterPage } from "./register/register";
 export {
   chatPage,
   LoginPage,
-  page_404,
+  Page_404,
   Page_500,
   profileEditAvatarPage,
   profileEditInfoPage,

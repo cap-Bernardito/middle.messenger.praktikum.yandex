@@ -1,9 +1,13 @@
-import { renderLayoutCentered } from "shared/ui/layouts/centered";
-import { renderCreator } from "shared/utils/utils";
+import { Block, registerComponent } from "shared/core";
 
 import source from "./404.hbs";
 
-const pageContent = renderCreator(source)();
-const html = renderLayoutCentered({ body: pageContent });
+export class Page_404 extends Block {
+  static cName = "Page_404";
 
-export { html as page_404 };
+  render() {
+    return source;
+  }
+}
+
+registerComponent(Page_404);

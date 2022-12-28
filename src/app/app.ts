@@ -4,7 +4,7 @@ import { renderLayoutCentered } from "shared/ui/layouts/centered";
 import {
   chatPage,
   LoginPage,
-  page_404,
+  Page_404,
   Page_500,
   profileEditAvatarPage,
   profileEditInfoPage,
@@ -23,7 +23,7 @@ const pages: { [K: string]: { title: string; component: string | Block } } = {
   "/profile_edit_info": { title: "Изменить данные", component: profileEditInfoPage },
   "/profile_edit_password": { title: "Изменить пароль", component: profileEditPasswordPage },
   "/chat": { title: "Чат", component: chatPage },
-  "/404": { title: "404", component: page_404 },
+  "/404": { title: "404", component: new Page_404() },
   "/500": { title: "500", component: new Page_500() },
 };
 

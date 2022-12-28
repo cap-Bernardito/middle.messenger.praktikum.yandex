@@ -1,55 +1,131 @@
-import { renderForm } from "entities/form";
+import { Form } from "entities/form_block";
 
-import { renderButton } from "shared/ui/button";
-import { renderInput, TInputProps } from "shared/ui/input";
-import { renderLayoutCentered } from "shared/ui/layouts/centered";
-import { renderCreator } from "shared/utils/utils";
+import { Block, registerComponent } from "shared/core";
+import { Button } from "shared/ui/button_block";
+import { Input, TInputProps } from "shared/ui/input_block";
+import { formProcess } from "shared/utils/form-processing";
 
 import source from "./register.hbs";
 
-const inputs: TInputProps[] = [
-  {
-    label: "Почта",
-    name: "email",
-    type: "email",
-  },
-  {
-    label: "Логин",
-    name: "login",
-  },
-  {
-    label: "Имя",
-    name: "first_name",
-  },
-  {
-    label: "Фамилия",
-    name: "second_name",
-  },
-  {
-    label: "Телефон",
-    name: "phone",
-    type: "tel",
-  },
-  {
-    label: "Пароль",
-    type: "password",
-    name: "password",
-  },
-  {
-    label: "Пароль (ещё раз)",
-    type: "password",
-    name: "password_confirm",
-  },
-];
+export class RegisterPage extends Block {
+  static cName = "RegisterPage";
 
-const formRegister = renderForm({
-  title: "Регистрация",
-  fields: inputs.map((input) => renderInput(input)).join(""),
-  button: renderButton({ value: "Зарегистрироваться", className: "btn-primary btn-block" }),
-  meta: '<a href="/login" class="text-sm">Войти</a>',
-});
+  constructor() {
+    super({
+      body: new Form({
+        onSubmit: (event) => {
+          const { isFormValid, formData } = formProcess.form.check(event, Object.values(this.getFormInputs()));
 
-const pageContent = renderCreator(source, { body: formRegister })();
-const html = renderLayoutCentered({ body: pageContent });
+          console.log(`Form is${isFormValid ? "" : " not"} valid. FormData: `, formData);
+        },
+        ref: "registerForm",
+        title: "Регистрация",
+        fields: (
+          [
+            {
+              label: "Почта",
+              name: "email",
+              type: "email",
+              ref: "emailInput",
+              onInput: (event) => {
+                formProcess.field.check(event, this.getFormInputs().emailInput);
+              },
+              onBlur: (event) => {
+                formProcess.field.check(event, this.getFormInputs().emailInput);
+                formProcess.field.setValue(event, this.getFormInputs().emailInput);
+              },
+            },
+            {
+              label: "Логин",
+              name: "login",
+              ref: "loginInput",
+              onInput: (event) => {
+                formProcess.field.check(event, this.getFormInputs().loginInput);
+              },
+              onBlur: (event) => {
+                formProcess.field.check(event, this.getFormInputs().loginInput);
+                formProcess.field.setValue(event, this.getFormInputs().loginInput);
+              },
+            },
+            {
+              label: "Имя",
+              name: "first_name",
+              ref: "first_nameInput",
+              onInput: (event) => {
+                formProcess.field.check(event, this.getFormInputs().first_nameInput);
+              },
+              onBlur: (event) => {
+                formProcess.field.check(event, this.getFormInputs().first_nameInput);
+                formProcess.field.setValue(event, this.getFormInputs().first_nameInput);
+              },
+            },
+            {
+              label: "Фамилия",
+              name: "second_name",
+              ref: "second_nameInput",
+              onInput: (event) => {
+                formProcess.field.check(event, this.getFormInputs().second_nameInput);
+              },
+              onBlur: (event) => {
+                formProcess.field.check(event, this.getFormInputs().second_nameInput);
+                formProcess.field.setValue(event, this.getFormInputs().second_nameInput);
+              },
+            },
+            {
+              label: "Телефон",
+              name: "phone",
+              type: "tel",
+              ref: "phoneInput",
+              onInput: (event) => {
+                formProcess.field.check(event, this.getFormInputs().phoneInput);
+              },
+              onBlur: (event) => {
+                formProcess.field.check(event, this.getFormInputs().phoneInput);
+                formProcess.field.setValue(event, this.getFormInputs().phoneInput);
+              },
+            },
+            {
+              label: "Пароль",
+              type: "password",
+              name: "password",
+              ref: "passwordInput",
+              onInput: (event) => {
+                formProcess.field.check(event, this.getFormInputs().passwordInput);
+              },
+              onBlur: (event) => {
+                formProcess.field.check(event, this.getFormInputs().passwordInput);
+                formProcess.field.setValue(event, this.getFormInputs().passwordInput);
+              },
+            },
+            {
+              label: "Пароль (ещё раз)",
+              type: "password",
+              name: "password_confirm",
+              ref: "password_confirmInput",
+              onInput: (event) => {
+                formProcess.field.check(event, this.getFormInputs().password_confirmInput);
+              },
+              onBlur: (event) => {
+                formProcess.field.check(event, this.getFormInputs().password_confirmInput);
+                formProcess.field.setValue(event, this.getFormInputs().password_confirmInput);
+              },
+            },
+          ] as TInputProps[]
+        ).map((inputProps) => new Input(inputProps)),
+        button: new Button({ value: "Зарегистрироваться", className: "btn-primary btn-block" }),
+        meta: '<a href="/login" class="text-sm">Войти</a>',
+        decorated: true,
+      }),
+    });
+  }
 
-export { html as registerPage };
+  getFormInputs = () => {
+    return this.refs.registerForm.refs || {};
+  };
+
+  render() {
+    return source;
+  }
+}
+
+registerComponent(RegisterPage);

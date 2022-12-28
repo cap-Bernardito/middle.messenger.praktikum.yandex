@@ -1,5 +1,7 @@
 import { Block } from "shared/core/block";
 
+type TFormData = Record<string, string>;
+
 const checks = {
   login: {
     regex: /^(?=.*[a-zA-Z])([a-zA-Z0-9-_]){3,20}$/,
@@ -8,6 +10,28 @@ const checks = {
   password: {
     regex: /^(?=.*[A-Z])(?=.*[0-9])[a-zA-Z0-9]{8,40}$/,
     message: "от 8 знаков (EN), прописные, заглавные, цифры",
+  },
+  password_confirm: {
+    regex: /^(?=.*[A-Z])(?=.*[0-9])[a-zA-Z0-9]{8,40}$/,
+    message: "от 8 знаков (EN), прописные, заглавные, цифры",
+  },
+  email: {
+    // eslint-disable-next-line no-useless-escape
+    regex: /^[a-zA-Z0-9-_\/=+(){}\[\]$!]+@[a-zA-Z]+\.[a-zA-Z0-9]+$/,
+    message: "(EN), непробельные знаки, @..., .домен",
+  },
+  first_name: {
+    regex: /^[А-ЯA-Z][А-ЯA-Zа-яa-z-]+$/,
+    message: "(RU/EN), первая буква прописная, -",
+  },
+  second_name: {
+    regex: /^[А-ЯA-Z][А-ЯA-Zа-яa-z-]+$/,
+    message: "(RU/EN), первая буква прописная, -",
+  },
+  phone: {
+    // eslint-disable-next-line no-useless-escape
+    regex: /^[\+]?[0-9]{10,15}$/,
+    message: 'от 10 до 15 знаков, можно начать с "+"',
   },
 };
 
@@ -18,7 +42,7 @@ const isValidatedField = (fieldName: TKeysCheck | string): fieldName is TKeysChe
 const getInputValue = (event: Event | null, field: Block): string => {
   const target = event?.target as HTMLInputElement | undefined;
 
-  return target ? target.value : field.refs.inputRef.props.value || "";
+  return target ? target.value : field.refs.inputRef.getContent().getAttribute("value") || "";
 };
 
 const checkField = (event: Event | null, field: Block) => {
@@ -47,13 +71,32 @@ const setValue = (event: Event, field: Block) => {
   }
 
   const value = (event.target as HTMLInputElement).value;
-  field.refs.inputRef.setProps({ value });
+
+  field.refs.inputRef.getContent().setAttribute("value", value);
+};
+
+const checkPasswords = (formData: TFormData) => {
+  const { password, password_confirm } = formData;
+
+  if (typeof password === "undefined" || typeof password_confirm === "undefined") {
+    return true;
+  }
+
+  return password === password_confirm;
+};
+
+const showPasswordsError = (fields: Block[]) => {
+  const passwordFields = fields.filter((field) => field.props.name.includes("password"));
+
+  passwordFields.forEach((field) => {
+    field.refs.errorRef.setProps({ text: "Пароли не совпадают" });
+  });
 };
 
 const checkForm = (event: Event, fields: Block[]) => {
   event.preventDefault();
 
-  const formData: Record<string, unknown> = {};
+  const formData: TFormData = {};
   let isFormValid = true;
 
   fields.forEach((field) => {
@@ -65,6 +108,11 @@ const checkForm = (event: Event, fields: Block[]) => {
       isFormValid = false;
     }
   });
+
+  if (!checkPasswords(formData)) {
+    isFormValid = false;
+    showPasswordsError(fields);
+  }
 
   return { isFormValid, formData };
 };

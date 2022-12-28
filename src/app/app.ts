@@ -10,14 +10,14 @@ import {
   profileEditInfoPage,
   profileEditPasswordPage,
   profilePage,
-  registerPage,
+  RegisterPage,
 } from "../pages";
 
 import "./styles/index.scss";
 
 const pages: { [K: string]: { title: string; component: string | Block } } = {
   "/login": { title: "Авторизация", component: new LoginPage() },
-  "/register": { title: "Регистрация", component: registerPage },
+  "/register": { title: "Регистрация", component: new RegisterPage() },
   "/profile": { title: "Профиль", component: profilePage },
   "/profile_edit_avatar": { title: "Изменить аватар", component: profileEditAvatarPage },
   "/profile_edit_info": { title: "Изменить данные", component: profileEditInfoPage },

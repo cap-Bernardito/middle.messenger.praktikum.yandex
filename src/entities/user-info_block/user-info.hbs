@@ -1,0 +1,17 @@
+<div class="user-info">
+  {{#if avatar}}
+  <div class="user-info__avatar text-center mb-4">{{{avatar}}}</div>
+  {{/if}}
+
+  {{#if title}}
+  <h1 class="user-info__title text-h1 text-center mb-15">{{title}}</h1>
+  {{/if}}
+
+  {{#if info}}
+  <div class="user-info__info mb-10">{{{info}}}</div>
+  {{/if}}
+
+  {{#if controls}}
+  <div class="user-info__controls">{{{controls}}}</div>
+  {{/if}}
+</div>

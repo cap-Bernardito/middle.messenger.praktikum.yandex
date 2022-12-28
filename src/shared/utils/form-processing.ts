@@ -1,6 +1,7 @@
 import { Block } from "shared/core/block";
 
 type TFormData = Record<string, string>;
+type TKeysCheck = keyof typeof checks;
 
 const checks = {
   login: {
@@ -21,11 +22,11 @@ const checks = {
     message: "(EN), непробельные знаки, @..., .домен",
   },
   first_name: {
-    regex: /^[А-ЯA-Z][А-ЯA-Zа-яa-z-]+$/,
+    regex: /^[А-ЯA-ZЁ][А-ЯA-Zа-яa-z-ёЁ]+$/,
     message: "(RU/EN), первая буква прописная, -",
   },
   second_name: {
-    regex: /^[А-ЯA-Z][А-ЯA-Zа-яa-z-]+$/,
+    regex: /^[А-ЯA-ZЁ][А-ЯA-Zа-яa-z-ёЁ]+$/,
     message: "(RU/EN), первая буква прописная, -",
   },
   phone: {
@@ -35,7 +36,7 @@ const checks = {
   },
 };
 
-type TKeysCheck = keyof typeof checks;
+const checksIgnoreFields = ["display_name"];
 
 const isValidatedField = (fieldName: TKeysCheck | string): fieldName is TKeysCheck => fieldName in checks;
 
@@ -48,6 +49,10 @@ const getInputValue = (event: Event | null, field: Block): string => {
 const checkField = (event: Event | null, field: Block) => {
   const value = getInputValue(event, field);
   const fieldName = field.props.name;
+
+  if (checksIgnoreFields.includes(field.props.name)) {
+    return { isValid: true, fieldValue: value, fieldName };
+  }
 
   if (!isValidatedField(fieldName)) {
     throw new Error(`There are no validation rules for the field "${fieldName}"`);

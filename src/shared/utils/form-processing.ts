@@ -1,6 +1,6 @@
 import { Block } from "shared/core/block";
 
-type TFormData = Record<string, string>;
+type TFormData = Record<string, string | FileList>;
 type TKeysCheck = keyof typeof checks;
 
 const passwordCheck = {
@@ -36,22 +36,31 @@ const checks = {
   },
 };
 
-const checksIgnoreFields = ["display_name"];
+const checksIgnoreFields = ["display_name", "avatar"];
 
 const isValidatedField = (fieldName: TKeysCheck | string): fieldName is TKeysCheck => fieldName in checks;
 
-const getInputValue = (event: Event | null, field: Block): string => {
-  const target = event?.target as HTMLInputElement | undefined;
+const getInputValue = (event: Event | null, field: Block) => {
+  const target = (event?.target || field.refs.inputRef.getContent()) as HTMLInputElement | undefined;
+  const defaultValue = "";
 
-  return target ? target.value : field.refs.inputRef.getContent().getAttribute("value") || "";
+  if (!target) {
+    return { value: defaultValue };
+  }
+
+  if (target["type"] === "file") {
+    return { value: defaultValue, files: target.files };
+  }
+
+  return { value: target.value };
 };
 
 const checkField = (event: Event | null, field: Block) => {
-  const value = getInputValue(event, field);
+  const { value, files } = getInputValue(event, field);
   const fieldName = field.props.name;
 
-  if (checksIgnoreFields.includes(field.props.name)) {
-    return { isValid: true, fieldValue: value, fieldName };
+  if (checksIgnoreFields.includes(field.props.name) || field.props.type === "file") {
+    return { isValid: true, fieldValue: value, fieldFiles: files, fieldName };
   }
 
   if (!isValidatedField(fieldName)) {
@@ -75,9 +84,15 @@ const setValue = (event: Event, field: Block) => {
     return;
   }
 
-  const value = (event.target as HTMLInputElement).value;
+  const input = event.target as HTMLInputElement;
+  const value = input.value;
+  const files = input.files;
 
   field.refs.inputRef.getContent().setAttribute("value", value);
+
+  if ("files" in input) {
+    (field.refs.inputRef.getContent() as HTMLInputElement).files = files;
+  }
 };
 
 const checkPasswords = (formData: TFormData) => {
@@ -111,9 +126,9 @@ const checkForm = (event: Event, fields: Block[]) => {
   let isFormValid = true;
 
   fields.forEach((field) => {
-    const { isValid, fieldName, fieldValue } = checkField(null, field);
+    const { isValid, fieldName, fieldValue, fieldFiles } = checkField(null, field);
 
-    formData[fieldName] = fieldValue;
+    formData[fieldName] = fieldFiles ? fieldFiles : fieldValue;
 
     if (!isValid) {
       isFormValid = false;

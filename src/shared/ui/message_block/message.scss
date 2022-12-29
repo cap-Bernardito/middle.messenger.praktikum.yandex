@@ -1,0 +1,58 @@
+@use "../../../app/styles/variables.scss" as *;
+@use "sass:color";
+
+.message {
+  $root: &;
+
+  padding: $spacer * 4;
+
+  &_date {
+    align-self: center;
+
+    margin-top: $spacer * 4;
+    margin-bottom: $spacer * 3;
+    padding: $spacer * 2 $spacer * 4;
+
+    color: $secondary;
+    text-align: center;
+
+    background: $gray-100;
+    border-radius: $border-radius;
+  }
+
+  &_in {
+    max-width: 60%;
+    margin-right: auto;
+    background: color.adjust($success, $lightness: 55%);
+    border-radius: 0 $border-radius $border-radius $border-radius;
+
+    #{$root}__date {
+      float: right;
+
+      margin-top: $spacer * 3;
+      margin-left: $spacer * 2;
+
+      font-size: 1rem;
+      color: $secondary;
+      text-align: right;
+    }
+  }
+
+  &_out {
+    max-width: 60%;
+    margin-left: auto;
+    background: color.adjust($primary, $lightness: 37%);
+    border-radius: $border-radius $border-radius 0 $border-radius;
+
+    #{$root}__date {
+      float: right;
+
+      margin-top: $spacer * 3;
+      margin-left: $spacer * 2;
+
+      font-size: 1rem;
+      color: $secondary;
+      text-align: right;
+    }
+  }
+}

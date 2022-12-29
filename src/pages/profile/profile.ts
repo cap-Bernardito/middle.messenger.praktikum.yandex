@@ -54,10 +54,6 @@ export class ProfilePage extends Block<TUserInfoProps> {
     });
   }
 
-  getFormInputs = () => {
-    return this.refs.form.refs || {};
-  };
-
   render() {
     return `
 {{#LayoutCentered className="layout-centered_md"}}

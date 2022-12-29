@@ -1,0 +1,44 @@
+@use "../../app/styles/variables.scss" as *;
+
+.messages-footer {
+  display: flex;
+  gap: $spacer * 4;
+  align-items: center;
+  justify-content: space-between;
+
+  &__left {
+    flex: 0 0 auto;
+  }
+
+  &__middle {
+    flex: 1 1 100px;
+  }
+
+  &__right {
+    flex: 0 0 auto;
+  }
+
+  .link-icon {
+    svg {
+      width: 3rem !important;
+      height: 3rem !important;
+    }
+
+    &-clip {
+      svg {
+        transform: rotate(40deg) scale(1.2);
+        color: $gray-500;
+      }
+    }
+
+    &-submit {
+      padding: 0;
+      background: transparent;
+
+      svg {
+        transform: scale(1.2);
+        color: $primary;
+      }
+    }
+  }
+}

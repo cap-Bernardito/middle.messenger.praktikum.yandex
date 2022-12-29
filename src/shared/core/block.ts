@@ -271,7 +271,9 @@ export class Block<P extends Record<string, any> = any> {
 
       stub.replaceWith(content);
 
-      const layoutContent = content.querySelector("[data-layout-body]");
+      const layoutContent = content.hasAttribute("data-layout-body")
+        ? content
+        : content.querySelector("[data-layout-body]");
 
       if (layoutContent && stubChilds.length) {
         layoutContent.append(...stubChilds);

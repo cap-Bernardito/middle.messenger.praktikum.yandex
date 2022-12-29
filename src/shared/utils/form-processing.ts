@@ -34,6 +34,10 @@ const checks = {
     regex: /^[\+]?[0-9]{10,15}$/,
     message: 'от 10 до 15 знаков, можно начать с "+"',
   },
+  message: {
+    regex: /.*\S.*/,
+    message: "Пустое поле",
+  },
 };
 
 const checksIgnoreFields = ["display_name", "avatar"];
@@ -74,7 +78,7 @@ const checkField = (event: Event | null, field: Block) => {
     errorMessage = "";
   }
 
-  field.refs.errorRef.setProps({ text: errorMessage });
+  field.refs?.errorRef?.setProps({ text: errorMessage });
 
   return { isValid: !errorMessage, fieldValue: value, fieldName };
 };

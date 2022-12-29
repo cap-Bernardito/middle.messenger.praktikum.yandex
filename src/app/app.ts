@@ -2,7 +2,7 @@ import { Block, renderDOM } from "shared/core";
 import { renderLayoutCentered } from "shared/ui/layouts/centered";
 
 import {
-  chatPage,
+  ChatPage,
   LoginPage,
   Page_404,
   Page_500,
@@ -24,7 +24,7 @@ const pages: { [K: string]: { title: string; component: string | Block } } = {
   "/profile_edit_avatar": { title: "Изменить аватар", component: new ProfileAvatarPage() },
   "/profile_edit_info": { title: "Изменить данные", component: new ProfileEditInfoPage() },
   "/profile_edit_password": { title: "Изменить пароль", component: new ProfileEditPasswordPage() },
-  "/chat": { title: "Чат", component: chatPage },
+  "/chat": { title: "Чат", component: new ChatPage() },
   "/404": { title: "404", component: new Page_404() },
   "/500": { title: "500", component: new Page_500() },
 };

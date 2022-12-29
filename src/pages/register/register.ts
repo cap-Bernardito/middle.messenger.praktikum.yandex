@@ -1,6 +1,6 @@
 import { Form } from "entities/form_block";
 
-import { Block, registerComponent } from "shared/core";
+import { Block } from "shared/core";
 import { Button } from "shared/ui/button_block";
 import { Input, TInputProps } from "shared/ui/input_block";
 import { formProcess } from "shared/utils/form-processing";
@@ -127,5 +127,3 @@ export class RegisterPage extends Block {
     return source;
   }
 }
-
-registerComponent(RegisterPage);

@@ -1,7 +1,7 @@
 import { Form } from "entities/form_block";
 import { templateUserInfo, TUserInfoProps } from "entities/user-info_block";
 
-import { Block, registerComponent } from "shared/core";
+import { Block } from "shared/core";
 import { Avatar } from "shared/ui/avatar_block";
 import { Button } from "shared/ui/button_block";
 import { Input, TInputProps } from "shared/ui/input_block";
@@ -53,5 +53,3 @@ export class ProfileAvatarPage extends Block<TUserInfoProps> {
     `;
   }
 }
-
-registerComponent(ProfileAvatarPage);

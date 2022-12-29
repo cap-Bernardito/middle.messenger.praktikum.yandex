@@ -1,4 +1,4 @@
-import { Block, registerComponent } from "shared/core";
+import { Block } from "shared/core";
 
 import source from "./form.hbs";
 
@@ -33,5 +33,3 @@ export class Form extends Block<TFormProps> {
     return source;
   }
 }
-
-registerComponent(Form);

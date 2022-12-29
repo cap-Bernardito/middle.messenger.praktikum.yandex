@@ -1,3 +1,5 @@
+import { Block } from "shared/core/block";
+
 declare global {
   export module "*.hbs" {
     const source: string;
@@ -13,6 +15,11 @@ declare global {
     const source: string;
     export default source;
   }
+
+  export type BlockConstructable<Props = any> = {
+    cName: string;
+    new (props: Props): Block;
+  };
 
   export type TNullable<T> = T | null;
 

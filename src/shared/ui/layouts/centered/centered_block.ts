@@ -1,4 +1,4 @@
-import { Block, registerComponent } from "shared/core";
+import { Block } from "shared/core";
 
 import source from "./centered_block.hbs";
 
@@ -19,5 +19,3 @@ export class LayoutCentered extends Block<TCenteredProps> {
     return source;
   }
 }
-
-registerComponent(LayoutCentered);

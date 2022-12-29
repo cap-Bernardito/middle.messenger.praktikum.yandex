@@ -1,4 +1,4 @@
-import { Block, registerComponent } from "shared/core";
+import { Block } from "shared/core";
 
 import source from "./input-label.hbs";
 
@@ -18,5 +18,3 @@ export class InputLabel extends Block<TInputLabelProps> {
     return source;
   }
 }
-
-registerComponent(InputLabel);

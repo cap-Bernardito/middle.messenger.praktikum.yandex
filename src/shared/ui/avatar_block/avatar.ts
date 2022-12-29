@@ -1,5 +1,5 @@
 import { mdiImageOutline } from "@mdi/js";
-import { Block, registerComponent } from "shared/core";
+import { Block } from "shared/core";
 
 import source from "./avatar.hbs";
 
@@ -28,5 +28,3 @@ export class Avatar extends Block<TAvatarProps> {
     return source;
   }
 }
-
-registerComponent(Avatar);

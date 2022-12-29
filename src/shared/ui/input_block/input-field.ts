@@ -1,4 +1,4 @@
-import { Block, registerComponent } from "shared/core";
+import { Block } from "shared/core";
 
 import source from "./input-field.hbs";
 
@@ -32,5 +32,3 @@ export class InputField extends Block<TInputFieldProps> {
     return source;
   }
 }
-
-registerComponent(InputField);

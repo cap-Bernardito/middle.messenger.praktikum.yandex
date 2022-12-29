@@ -9,16 +9,18 @@ import {
   ProfileAvatarPage,
   ProfileEditInfoPage,
   ProfileEditPasswordPage,
-  profilePage,
+  ProfilePage,
   RegisterPage,
 } from "../pages";
 
 import "./styles/index.scss";
 
+import "./registerComponents";
+
 const pages: { [K: string]: { title: string; component: string | Block } } = {
   "/login": { title: "Авторизация", component: new LoginPage() },
   "/register": { title: "Регистрация", component: new RegisterPage() },
-  "/profile": { title: "Профиль", component: profilePage },
+  "/profile": { title: "Профиль", component: new ProfilePage() },
   "/profile_edit_avatar": { title: "Изменить аватар", component: new ProfileAvatarPage() },
   "/profile_edit_info": { title: "Изменить данные", component: new ProfileEditInfoPage() },
   "/profile_edit_password": { title: "Изменить пароль", component: new ProfileEditPasswordPage() },

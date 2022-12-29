@@ -1,4 +1,4 @@
-import { Block, registerComponent } from "shared/core";
+import { Block } from "shared/core";
 
 import source from "./icon.hbs";
 
@@ -22,5 +22,3 @@ export class Icon extends Block<TIconProps> {
     return source;
   }
 }
-
-registerComponent(Icon);

@@ -1,4 +1,4 @@
-import { Block, registerComponent } from "shared/core";
+import { Block } from "shared/core";
 
 import source from "./input-error.hbs";
 
@@ -17,5 +17,3 @@ export class InputError extends Block<TInputErrorProps> {
     return source;
   }
 }
-
-registerComponent(InputError);

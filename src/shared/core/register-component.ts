@@ -1,12 +1,5 @@
 import Handlebars, { HelperOptions } from "handlebars";
 
-import { Block } from ".";
-
-type BlockConstructable<Props = any> = {
-  cName: string;
-  new (props: Props): Block;
-};
-
 export function registerComponent<Props>(Component: BlockConstructable<Props>) {
   Handlebars.registerHelper(
     Component.cName,

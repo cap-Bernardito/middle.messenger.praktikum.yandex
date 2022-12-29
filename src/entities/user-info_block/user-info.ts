@@ -1,4 +1,4 @@
-import { Block, registerComponent } from "shared/core";
+import { Block } from "shared/core";
 
 import source from "./user-info.hbs";
 
@@ -6,7 +6,7 @@ export type TUserInfoProps = {
   avatar?: Block;
   title?: string;
   info?: Block | string;
-  controls?: string;
+  controls?: Block | string;
 };
 
 export class UserInfo extends Block<TUserInfoProps> {
@@ -22,7 +22,5 @@ export class UserInfo extends Block<TUserInfoProps> {
     return source;
   }
 }
-
-registerComponent(UserInfo);
 
 export { source as templateUserInfo };

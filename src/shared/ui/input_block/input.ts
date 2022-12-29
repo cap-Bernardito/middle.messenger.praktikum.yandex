@@ -1,4 +1,4 @@
-import { Block, registerComponent } from "shared/core";
+import { Block } from "shared/core";
 
 import source from "./input.hbs";
 
@@ -28,5 +28,3 @@ export class Input extends Block<TInputProps> {
     return source;
   }
 }
-
-registerComponent(Input);

@@ -1,12 +1,11 @@
 import { Block } from "shared/core";
-import { TButtonProps } from "shared/ui/button";
-import { TTextareaProps } from "shared/ui/textarea";
+import { TButtonProps, TTextareaProps } from "shared/ui";
 
 import source from "./messages-footer.hbs";
 
 import "./messages-footer.scss";
 
-type TMessagesFooterProps = TPropsWithEvents<
+export type TMessagesFooterProps = TPropsWithEvents<
   TPropsWithRef<{
     file: string;
     text: Block<TTextareaProps>;

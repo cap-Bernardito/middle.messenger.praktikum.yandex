@@ -4,7 +4,7 @@ import source from "./icon.hbs";
 
 // Иконки отсюда - https://materialdesignicons.com/
 
-type TIconProps = {
+export type TIconProps = {
   value: string;
   className?: string;
 };

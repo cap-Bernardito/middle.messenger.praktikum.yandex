@@ -1,4 +1,5 @@
 import { Block } from "shared/core";
+import { TButtonProps, TInputProps } from "shared/ui";
 
 import source from "./form.hbs";
 
@@ -6,8 +7,8 @@ import "./form.scss";
 
 export type TFormProps = TPropsWithEvents<
   TPropsWithRef<{
-    fields: Block[];
-    button: Block;
+    fields: Block<TInputProps>[];
+    button: Block<TButtonProps>;
     title?: string;
     meta?: string;
     className?: string;

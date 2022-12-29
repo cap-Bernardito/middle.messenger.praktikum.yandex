@@ -1,4 +1,5 @@
 import { Block } from "shared/core/block";
+import { TInputProps } from "shared/ui";
 
 type TFormData = Record<string, string | FileList>;
 type TKeysCheck = keyof typeof checks;
@@ -44,7 +45,7 @@ const checksIgnoreFields = ["display_name", "avatar"];
 
 const isValidatedField = (fieldName: TKeysCheck | string): fieldName is TKeysCheck => fieldName in checks;
 
-const getInputValue = (event: Event | null, field: Block) => {
+const getInputValue = (event: Event | null, field: Block<TInputProps>) => {
   const target = (event?.target || field.refs.inputRef.getContent()) as HTMLInputElement | undefined;
   const defaultValue = "";
 
@@ -59,7 +60,7 @@ const getInputValue = (event: Event | null, field: Block) => {
   return { value: target.value };
 };
 
-const checkField = (event: Event | null, field: Block) => {
+const checkField = (event: Event | null, field: Block<TInputProps>) => {
   const { value, files } = getInputValue(event, field);
   const fieldName = field.props.name;
 
@@ -83,7 +84,7 @@ const checkField = (event: Event | null, field: Block) => {
   return { isValid: !errorMessage, fieldValue: value, fieldName };
 };
 
-const setValue = (event: Event, field: Block) => {
+const setValue = (event: Event, field: Block<TInputProps>) => {
   if (!event.target || !(field instanceof Block)) {
     return;
   }
@@ -123,7 +124,7 @@ const showPasswordsError = (fields: Block[]) => {
   });
 };
 
-const checkForm = (event: Event, fields: Block[]) => {
+const checkForm = (event: Event, fields: Block<TInputProps>[]) => {
   event.preventDefault();
 
   const formData: TFormData = {};

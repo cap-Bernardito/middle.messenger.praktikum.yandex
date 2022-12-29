@@ -27,7 +27,7 @@ export class ChatPage extends Block {
         header_link: `<a href="/profile" class="link-icon">Профиль ${renderIcon({ value: mdiChevronRight })}</a>`,
         header_search: new Search({ value: "" }),
         users: _.range(14).map(
-          (i, index) =>
+          (index) =>
             new UserCard({
               avatar: new Avatar({ className: "avatar_sm", img: index % 3 === 0 ? "" : img }),
               name: "Алексей",

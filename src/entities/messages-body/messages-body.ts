@@ -1,11 +1,12 @@
 import { Block } from "shared/core";
+import { TMessageProps } from "shared/ui";
 
 import source from "./messages-body.hbs";
 
 import "./messages-body.scss";
 
-type TMessagesBodyProps = {
-  messages: Block[];
+export type TMessagesBodyProps = {
+  messages: Block<TMessageProps>[];
   placeholder?: string;
 };
 

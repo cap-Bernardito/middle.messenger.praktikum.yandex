@@ -5,7 +5,7 @@ import source from "./avatar.hbs";
 
 import "./avatar.scss";
 
-type TAvatarProps = {
+export type TAvatarProps = {
   img?: string;
   title?: string;
   className?: string;

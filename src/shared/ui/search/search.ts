@@ -7,7 +7,7 @@ import source from "./search.hbs";
 
 import "./search.scss";
 
-type TSearchProps = {
+export type TSearchProps = {
   value: string;
   className?: string;
 };

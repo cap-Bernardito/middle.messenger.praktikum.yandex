@@ -1,11 +1,13 @@
+import { TUserCardProps } from "entities";
+
 import { Block } from "shared/core";
 
 import source from "./messages-header.hbs";
 
 import "./messages-header.scss";
 
-type TMessagesHeaderProps = {
-  left: Block | string;
+export type TMessagesHeaderProps = {
+  left: Block<TUserCardProps> | string;
   right: Block | string;
 };
 

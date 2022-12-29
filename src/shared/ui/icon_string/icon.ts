@@ -2,14 +2,14 @@ import { renderCreator } from "shared/utils/utils";
 
 import source from "./icon.hbs";
 
-type TIconProps = {
+type TIconStringProps = {
   value: string;
   className?: string;
 };
 
-const renderHtml = renderCreator<TIconProps>(source, {
+const renderHtml = renderCreator<TIconStringProps>(source, {
   value: "",
   className: "",
 });
 
-export { renderHtml as renderIcon, TIconProps };
+export { renderHtml as renderIcon };

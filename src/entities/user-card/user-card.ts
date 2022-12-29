@@ -1,11 +1,12 @@
 import { Block } from "shared/core";
+import { TAvatarProps } from "shared/ui";
 
 import source from "./user-card.hbs";
 
 import "./user-card.scss";
 
-type TUserCardProps = {
-  avatar: Block;
+export type TUserCardProps = {
+  avatar: Block<TAvatarProps>;
   name: string;
   message?: string;
   date?: string;

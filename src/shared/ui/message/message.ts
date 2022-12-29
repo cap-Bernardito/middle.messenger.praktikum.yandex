@@ -1,14 +1,29 @@
-import { registerHelper, renderCreator } from "shared/utils/utils";
+import { Block } from "shared/core";
+import { registerHelper } from "shared/utils/utils";
 
 import source from "./message.hbs";
 
 import "./message.scss";
 
-type TMessageProps = {
+export type TMessageProps = {
   type: "in" | "out" | "date";
   text?: string;
   date: string;
 };
+
+export class Message extends Block<TMessageProps> {
+  static cName = "Message";
+
+  constructor({ ...props }: TMessageProps) {
+    super({
+      ...props,
+    });
+  }
+
+  render() {
+    return source;
+  }
+}
 
 registerHelper("isDate", function (value) {
   return value === "date";
@@ -21,11 +36,3 @@ registerHelper("isOut", function (value) {
 registerHelper("isIn", function (value) {
   return value === "in";
 });
-
-const renderHtml = renderCreator<TMessageProps>(source, {
-  type: "out",
-  text: "text",
-  date: "10:10",
-});
-
-export { renderHtml as renderMessage, TMessageProps };

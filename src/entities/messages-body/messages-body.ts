@@ -1,17 +1,26 @@
-import { renderCreator } from "shared/utils/utils";
+import { Block } from "shared/core";
+import { TMessageProps } from "shared/ui";
 
 import source from "./messages-body.hbs";
 
 import "./messages-body.scss";
 
-type TMessagesBodyProps = {
-  messages: string[];
+export type TMessagesBodyProps = {
+  messages: Block<TMessageProps>[];
   placeholder?: string;
 };
 
-const renderHtml = renderCreator<TMessagesBodyProps>(source, {
-  messages: [],
-  placeholder: "Тут пока ничего нет",
-});
+export class MessagesBody extends Block<TMessagesBodyProps> {
+  static cName = "MessagesBody";
 
-export { renderHtml as renderMessagesBody, source as templateMessagesBody, TMessagesBodyProps };
+  constructor({ placeholder = "Тут пока ничего нет", ...props }: TMessagesBodyProps) {
+    super({
+      placeholder,
+      ...props,
+    });
+  }
+
+  render() {
+    return source;
+  }
+}

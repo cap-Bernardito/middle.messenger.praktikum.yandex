@@ -1,9 +1,11 @@
-import { renderLayoutCentered } from "shared/ui/layouts/centered";
-import { renderCreator } from "shared/utils/utils";
+import { Block } from "shared/core";
 
 import source from "./500.hbs";
 
-const pageContent = renderCreator(source)();
-const html = renderLayoutCentered({ body: pageContent });
+export class Page_500 extends Block {
+  static cName = "Page_500";
 
-export { html as page_500 };
+  render() {
+    return source;
+  }
+}

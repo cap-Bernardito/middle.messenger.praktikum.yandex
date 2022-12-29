@@ -1,14 +1,21 @@
-import { renderCreator } from "shared/utils/utils";
+import { Block } from "shared/core";
 
 import source from "./centered.hbs";
 
 import "./centered.scss";
 
-type TCenteredProps = {
-  body: string;
+export type TCenteredProps = {
   className?: "layout-centered_sm" | "layout-centered_md" | "layout-centered_xl";
 };
 
-const renderHtml = renderCreator<TCenteredProps>(source, { body: "", className: "layout-centered_sm" });
+export class LayoutCentered extends Block<TCenteredProps> {
+  static cName = "LayoutCentered";
 
-export { renderHtml as renderLayoutCentered };
+  constructor({ className = "layout-centered_sm" }: TCenteredProps) {
+    super({ className });
+  }
+
+  render() {
+    return source;
+  }
+}

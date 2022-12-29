@@ -1,31 +1,22 @@
-import { renderCreator } from "shared/utils/utils";
+import { Block } from "shared/core";
 
 import source from "./list-v1.hbs";
 
 import "./list-v1.scss";
 
-type TListV1Item = {
-  name: string;
-  value?: string;
-};
-
-type TListV1Props = {
-  items: TListV1Item[];
+export type TListV1Props = {
+  items: Block[];
   className?: string;
 };
 
-const renderHtml = renderCreator<TListV1Props>(source, {
-  items: [
-    {
-      name: "Почта",
-      value: "pochta@yandex.ru",
-    },
-    {
-      name: "Логин",
-      value: "vasya_vasilek",
-    },
-  ],
-  className: "",
-});
+export class ListV1 extends Block<TListV1Props> {
+  static cName = "ListV1";
 
-export { renderHtml as renderListV1, TListV1Props };
+  constructor({ ...props }: TListV1Props) {
+    super(props);
+  }
+
+  render() {
+    return source;
+  }
+}

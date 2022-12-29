@@ -1,9 +1,9 @@
 @use "../../app/styles/variables.scss" as *;
 
 .user-list {
-  max-height: 100vh;
   display: flex;
   flex-direction: column;
+  max-height: 100vh;
   padding: $spacer 0 $spacer $spacer;
 
   &__header {
@@ -20,7 +20,7 @@
   &__link {
     margin-bottom: $spacer * 3;
     padding: $spacer * 2 0;
-    text-align: right;
     color: $secondary;
+    text-align: right;
   }
 }

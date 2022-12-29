@@ -1,14 +1,13 @@
-import { renderCreator } from "shared/utils/utils";
+import { Block } from "shared/core";
 
 import source from "./full-screen.hbs";
 
 import "./full-screen.scss";
 
-type TFullScreenProps = {
-  secondary: string;
-  primary: string;
-};
+export class LayoutFullScreen extends Block {
+  static cName = "LayoutFullScreen";
 
-const renderHtml = renderCreator<TFullScreenProps>(source, { secondary: "secondary", primary: "primary" });
-
-export { renderHtml as renderLayoutFullScreen };
+  render() {
+    return source;
+  }
+}

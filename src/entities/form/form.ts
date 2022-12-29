@@ -1,27 +1,36 @@
-import { renderInput } from "shared/ui/input/input";
-import { _, renderCreator } from "shared/utils/utils";
+import { Block } from "shared/core";
+import { TButtonProps, TInputProps } from "shared/ui";
 
 import source from "./form.hbs";
 
 import "./form.scss";
 
-type TFormProps = {
-  fields: string;
-  button: string;
-  title?: string;
-  meta?: string;
-  className?: string;
-  decorated?: boolean;
-};
+export type TFormProps = TPropsWithEvents<
+  TPropsWithRef<{
+    fields: Block<TInputProps>[];
+    button: Block<TButtonProps>;
+    title?: string;
+    meta?: string;
+    className?: string;
+    decorated?: boolean;
+    onSubmit?: (event: Event) => void;
+  }>
+>;
 
-const renderHtml = renderCreator<TFormProps>(source, {
-  fields: _.range(5)
-    .map(() => renderInput())
-    .join(""),
-  button: "",
-  meta: "",
-  className: "",
-  decorated: true,
-});
+export class Form extends Block<TFormProps> {
+  static cName = "Form";
 
-export { renderHtml as renderForm, source as templateForm, TFormProps };
+  constructor({ decorated = true, onSubmit, ...props }: TFormProps) {
+    super({
+      ...props,
+      decorated,
+      events: {
+        submit: onSubmit,
+      },
+    });
+  }
+
+  render() {
+    return source;
+  }
+}

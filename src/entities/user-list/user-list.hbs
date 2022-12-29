@@ -8,9 +8,11 @@
     </div>
   </header>
 
-  {{#if body}}
+  {{#if users}}
   <div class="user-list__body custom-scroll">
-    {{{body}}}
+    {{#each users}}
+      {{{this}}}
+    {{/each}}
   </div>
   {{/if}}
 </div>

@@ -1,67 +1,120 @@
-import { renderForm } from "entities/form";
-import { renderUserInfo } from "entities/user-info";
+import { Form } from "entities/form";
+import { templateUserInfo, TUserInfoProps } from "entities/user-info";
 
-import { renderAvatar } from "shared/ui/avatar";
-import { renderButton } from "shared/ui/button";
-import { renderInput, TInputProps } from "shared/ui/input";
-import { renderLayoutCentered } from "shared/ui/layouts/centered";
-import { renderCreator } from "shared/utils/utils";
+import { Block } from "shared/core";
+import { Avatar } from "shared/ui/avatar";
+import { Button } from "shared/ui/button";
+import { Input, TInputProps } from "shared/ui/input";
+import { formProcess } from "shared/utils/form-processing";
 
-import source from "./profile.hbs";
+export class ProfileEditInfoPage extends Block<TUserInfoProps> {
+  static cName = "ProfileEditInfoPage";
 
-const inputs: TInputProps[] = [
-  {
-    label: "Почта",
-    value: "pochta@yandex.ru",
-    name: "email",
-    type: "email",
-    classNameInput: "form-control__input_filled",
-  },
-  {
-    label: "Логин",
-    value: "vasya_vasilek",
-    name: "login",
-    classNameInput: "form-control__input_filled",
-  },
-  {
-    label: "Имя",
-    value: "Вася",
-    name: "first_name",
-    classNameInput: "form-control__input_filled",
-  },
-  {
-    label: "Фамилия",
-    value: "Василёк",
-    name: "second_name",
-    classNameInput: "form-control__input_filled",
-  },
-  {
-    label: "Имя в чате",
-    value: "Вася Василёк",
-    name: "display_name",
-    classNameInput: "form-control__input_filled",
-  },
-  {
-    label: "Телефон",
-    value: "+79099673030",
-    name: "phone",
-    type: "tel",
-    classNameInput: "form-control__input_filled",
-  },
-];
+  constructor() {
+    super({
+      avatar: new Avatar(),
+      info: new Form({
+        onSubmit: (event) => {
+          const { isFormValid, formData } = formProcess.form.check(event, Object.values(this.getFormInputs()));
 
-const pageBody = renderUserInfo({
-  title: undefined,
-  controls: undefined,
-  avatar: renderAvatar(),
-  info: renderForm({
-    fields: inputs.map((input) => renderInput(input)).join(""),
-    button: renderButton({ value: "Изменить данные", className: "btn-primary btn-block" }),
-    decorated: false,
-  }),
-});
+          console.log(`Form is${isFormValid ? "" : " not"} valid. FormData: `, formData);
+        },
+        ref: "form",
+        fields: (
+          [
+            {
+              label: "Почта",
+              value: "pochta@yandex.ru",
+              name: "email",
+              type: "email",
+              ref: "emailInput",
+              onInput: (event) => {
+                formProcess.field.check(event, this.getFormInputs().emailInput);
+              },
+              onBlur: (event) => {
+                formProcess.field.check(event, this.getFormInputs().emailInput);
+                formProcess.field.setValue(event, this.getFormInputs().emailInput);
+              },
+            },
+            {
+              label: "Логин",
+              value: "vasya_vasilek",
+              name: "login",
+              ref: "loginInput",
+              onInput: (event) => {
+                formProcess.field.check(event, this.getFormInputs().loginInput);
+              },
+              onBlur: (event) => {
+                formProcess.field.check(event, this.getFormInputs().loginInput);
+                formProcess.field.setValue(event, this.getFormInputs().loginInput);
+              },
+            },
+            {
+              label: "Имя",
+              value: "Вася",
+              name: "first_name",
+              ref: "first_nameInput",
+              onInput: (event) => {
+                formProcess.field.check(event, this.getFormInputs().first_nameInput);
+              },
+              onBlur: (event) => {
+                formProcess.field.check(event, this.getFormInputs().first_nameInput);
+                formProcess.field.setValue(event, this.getFormInputs().first_nameInput);
+              },
+            },
+            {
+              label: "Фамилия",
+              value: "Василёк",
+              name: "second_name",
+              ref: "second_nameInput",
+              onInput: (event) => {
+                formProcess.field.check(event, this.getFormInputs().second_nameInput);
+              },
+              onBlur: (event) => {
+                formProcess.field.check(event, this.getFormInputs().second_nameInput);
+                formProcess.field.setValue(event, this.getFormInputs().second_nameInput);
+              },
+            },
+            {
+              label: "Имя в чате",
+              value: "Вася Василёк",
+              name: "display_name",
+              ref: "display_nameInput",
+              onBlur: (event) => {
+                formProcess.field.setValue(event, this.getFormInputs().display_nameInput);
+              },
+            },
+            {
+              label: "Телефон",
+              value: "+79099673030",
+              name: "phone",
+              type: "tel",
+              ref: "phoneInput",
+              onInput: (event) => {
+                formProcess.field.check(event, this.getFormInputs().phoneInput);
+              },
+              onBlur: (event) => {
+                formProcess.field.check(event, this.getFormInputs().phoneInput);
+                formProcess.field.setValue(event, this.getFormInputs().phoneInput);
+              },
+            },
+          ] as TInputProps[]
+        ).map((inputProps) => new Input(inputProps)),
+        button: new Button({ value: "Изменить данные", className: "btn-primary btn-block" }),
+        decorated: false,
+      }),
+    });
+  }
 
-const pageContent = renderCreator(source, { body: pageBody })();
-const html = renderLayoutCentered({ body: pageContent, className: "layout-centered_md" });
+  getFormInputs = () => {
+    return this.refs.form.refs || {};
+  };
 
-export { html as profileEditInfoPage };
+  render() {
+    return `
+{{#LayoutCentered className="layout-centered_md"}}
+  ${templateUserInfo}
+{{/LayoutCentered}}
+    `;
+  }
+}

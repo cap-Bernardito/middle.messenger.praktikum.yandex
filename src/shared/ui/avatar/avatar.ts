@@ -1,23 +1,30 @@
 import { mdiImageOutline } from "@mdi/js";
-import { renderIcon } from "shared/ui/icon";
-import { registerPartial, renderCreator } from "shared/utils/utils";
+import { Block } from "shared/core";
 
 import source from "./avatar.hbs";
 
 import "./avatar.scss";
 
-registerPartial("icon-image-empty", renderIcon({ value: mdiImageOutline }));
-
-type TAvatar = {
+type TAvatarProps = {
   img?: string;
   title?: string;
   className?: string;
   editable?: boolean;
+  icon?: string;
 };
 
-const renderHtml = renderCreator<TAvatar>(source, {
-  title: "Загрузить аватар",
-  editable: false,
-});
+export class Avatar extends Block<TAvatarProps> {
+  static cName = "Avatar";
 
-export { renderHtml as renderAvatar, TAvatar };
+  constructor({ title = "Загрузить аватар", icon = mdiImageOutline, ...props }: TAvatarProps = {}) {
+    super({
+      ...props,
+      title,
+      icon,
+    });
+  }
+
+  render() {
+    return source;
+  }
+}

@@ -1,8 +1,8 @@
-import { templateUserInfo, TUserInfoProps } from "entities/user-info_block";
+import { templateUserInfo, TUserInfoProps } from "entities/user-info";
 
 import { Block } from "shared/core";
-import { Avatar } from "shared/ui/avatar_block";
-import { ListV1, ListV1Item } from "shared/ui/list-v1_block";
+import { Avatar } from "shared/ui/avatar";
+import { ListV1, ListV1Item } from "shared/ui/list-v1";
 
 export class ProfilePage extends Block<TUserInfoProps> {
   static cName = "ProfilePage";
@@ -10,6 +10,7 @@ export class ProfilePage extends Block<TUserInfoProps> {
   constructor() {
     super({
       avatar: new Avatar(),
+      title: "Вася",
       info: new ListV1({
         items: [
           {

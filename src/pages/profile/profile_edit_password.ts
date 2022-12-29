@@ -1,10 +1,10 @@
-import { Form } from "entities/form_block";
-import { templateUserInfo, TUserInfoProps } from "entities/user-info_block";
+import { Form } from "entities/form";
+import { templateUserInfo, TUserInfoProps } from "entities/user-info";
 
 import { Block } from "shared/core";
-import { Avatar } from "shared/ui/avatar_block";
-import { Button } from "shared/ui/button_block";
-import { Input, TInputProps } from "shared/ui/input_block";
+import { Avatar } from "shared/ui/avatar";
+import { Button } from "shared/ui/button";
+import { Input, TInputProps } from "shared/ui/input";
 import { formProcess } from "shared/utils/form-processing";
 
 export class ProfileEditPasswordPage extends Block<TUserInfoProps> {

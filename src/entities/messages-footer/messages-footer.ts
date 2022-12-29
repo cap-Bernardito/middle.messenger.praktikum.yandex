@@ -1,19 +1,33 @@
-import { renderCreator } from "shared/utils/utils";
+import { Block } from "shared/core";
+import { TButtonProps } from "shared/ui/button";
+import { TTextareaProps } from "shared/ui/textarea";
 
 import source from "./messages-footer.hbs";
 
 import "./messages-footer.scss";
 
-type TMessagesFooterProps = {
-  left: string;
-  middle: string;
-  right: string;
-};
+type TMessagesFooterProps = TPropsWithEvents<
+  TPropsWithRef<{
+    file: string;
+    text: Block<TTextareaProps>;
+    button: Block<TButtonProps>;
+    onSubmit?: (event: Event) => void;
+  }>
+>;
 
-const renderHtml = renderCreator<TMessagesFooterProps>(source, {
-  left: "left",
-  middle: "middle",
-  right: "right",
-});
+export class MessagesFooter extends Block<TMessagesFooterProps> {
+  static cName = "MessagesFooter";
 
-export { renderHtml as renderMessagesFooter, source as templateMessagesFooter, TMessagesFooterProps };
+  constructor({ onSubmit, ...props }: TMessagesFooterProps) {
+    super({
+      ...props,
+      events: {
+        submit: onSubmit,
+      },
+    });
+  }
+
+  render() {
+    return source;
+  }
+}

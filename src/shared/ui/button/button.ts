@@ -1,19 +1,23 @@
-import { renderCreator } from "shared/utils/utils";
+import { Block } from "shared/core";
 
 import source from "./button.hbs";
 
 import "./button.scss";
 
-type TButtonProps = {
+export type TButtonProps = {
   value: string;
   htmlType?: "submit" | "reset" | "button";
   className?: string;
 };
 
-const renderHtml = renderCreator<TButtonProps>(source, {
-  value: "",
-  className: "",
-  htmlType: "submit",
-});
+export class Button extends Block<TButtonProps> {
+  static cName = "Button";
 
-export { renderHtml as renderButton, TButtonProps };
+  constructor({ value = "", className = "", htmlType = "submit" }: TButtonProps) {
+    super({ value, className, htmlType });
+  }
+
+  render() {
+    return source;
+  }
+}

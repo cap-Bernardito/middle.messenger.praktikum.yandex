@@ -1,18 +1,18 @@
-import { templateMessages, TMessagesProps } from "entities/messages_block";
-import { MessagesBody } from "entities/messages-body_block";
-import { MessagesFooter } from "entities/messages-footer_block";
-import { MessagesHeader } from "entities/messages-header_block";
-import { UserCard } from "entities/user-card_block";
-import { templateUserList, TUserListProps } from "entities/user-list_block";
+import { templateMessages, TMessagesProps } from "entities/messages";
+import { MessagesBody } from "entities/messages-body";
+import { MessagesFooter } from "entities/messages-footer";
+import { MessagesHeader } from "entities/messages-header";
+import { UserCard } from "entities/user-card";
+import { templateUserList, TUserListProps } from "entities/user-list";
 
 import { mdiArrowRightCircle, mdiChevronRight, mdiDotsVertical, mdiPaperclip } from "@mdi/js";
 import img from "shared/assets/images/tigger.jpg";
 import { Block } from "shared/core";
 import { Avatar, Button } from "shared/ui";
-import { renderIcon } from "shared/ui/icon";
-import { Message } from "shared/ui/message_block";
-import { Search } from "shared/ui/search_block";
-import { Textarea } from "shared/ui/textarea_block";
+import { renderIcon } from "shared/ui/icon_string";
+import { Message } from "shared/ui/message";
+import { Search } from "shared/ui/search";
+import { Textarea } from "shared/ui/textarea";
 import { formProcess } from "shared/utils/form-processing";
 import { _ } from "shared/utils/utils";
 

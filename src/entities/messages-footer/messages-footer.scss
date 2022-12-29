@@ -32,6 +32,9 @@
     }
 
     &-submit {
+      padding: 0;
+      background: transparent;
+
       svg {
         transform: scale(1.2);
         color: $primary;

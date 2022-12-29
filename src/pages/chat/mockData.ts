@@ -1,4 +1,4 @@
-import { TMessageProps } from "shared/ui/message_block";
+import { TMessageProps } from "shared/ui/message";
 
 export const dateMock = ["Пн", "Вчера", "Сегодня", "10:49", "12:05", "07:59", "03.12.2022"];
 

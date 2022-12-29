@@ -1,5 +1,4 @@
 import { Block, renderDOM } from "shared/core";
-import { renderLayoutCentered } from "shared/ui/layouts/centered";
 
 import {
   ChatPage,
@@ -17,7 +16,7 @@ import "./styles/index.scss";
 
 import "./registerComponents";
 
-const pages: { [K: string]: { title: string; component: string | Block } } = {
+const pages: { [K: string]: { title: string; component: Block } } = {
   "/login": { title: "Авторизация", component: new LoginPage() },
   "/register": { title: "Регистрация", component: new RegisterPage() },
   "/profile": { title: "Профиль", component: new ProfilePage() },
@@ -30,26 +29,24 @@ const pages: { [K: string]: { title: string; component: string | Block } } = {
 };
 
 const currentRoute = location.pathname;
-let html: string | Block = "";
-
-function renderString(str: string) {
-  const root = document.querySelector("#root") as HTMLDivElement;
-
-  root.innerHTML = str;
-}
+let html: Block;
 
 if (!pages[currentRoute]) {
   const indexPage = Object.entries(pages)
     .map(([url, { title }]) => `<li><a href="${url}">${title}</a></li>`)
     .join("");
 
-  html = renderLayoutCentered({ body: `<ul class="list-intro">${indexPage}</ul>` });
+  html = new (class extends Block {
+    render() {
+      return `
+        {{#LayoutCentered}}
+          <ul class="list-intro">${indexPage}</ul>
+        {{/LayoutCentered}}
+      `;
+    }
+  })();
 } else {
   html = pages[currentRoute]["component"];
 }
 
-if (html instanceof Block) {
-  renderDOM(html);
-} else {
-  renderString(html);
-}
+renderDOM(html);

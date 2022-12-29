@@ -1,8 +1,8 @@
-import { Form } from "entities/form_block";
+import { Form } from "entities/form";
 
 import { Block } from "shared/core";
-import { Button } from "shared/ui/button_block";
-import { Input, TInputProps } from "shared/ui/input_block";
+import { Button } from "shared/ui/button";
+import { Input, TInputProps } from "shared/ui/input";
 import { formProcess } from "shared/utils/form-processing";
 
 import source from "./login.hbs";

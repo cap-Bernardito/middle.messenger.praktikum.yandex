@@ -1,6 +1,7 @@
 import { mdiMagnify } from "@mdi/js";
-import { renderIcon } from "shared/ui/icon";
-import { registerPartial, renderCreator } from "shared/utils/utils";
+import { Block } from "shared/core";
+import { renderIcon } from "shared/ui/icon_string";
+import { registerPartial } from "shared/utils/utils";
 
 import source from "./search.hbs";
 
@@ -13,9 +14,16 @@ type TSearchProps = {
 
 registerPartial("icon-search", renderIcon({ value: mdiMagnify }));
 
-const renderHtml = renderCreator<TSearchProps>(source, {
-  value: "",
-  className: "",
-});
+export class Search extends Block<TSearchProps> {
+  static cName = "Search";
 
-export { renderHtml as renderSearch, TSearchProps };
+  constructor({ ...props }: TSearchProps) {
+    super({
+      ...props,
+    });
+  }
+
+  render() {
+    return source;
+  }
+}

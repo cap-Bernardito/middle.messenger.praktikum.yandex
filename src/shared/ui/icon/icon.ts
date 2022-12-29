@@ -1,15 +1,24 @@
-import { renderCreator } from "shared/utils/utils";
+import { Block } from "shared/core";
 
 import source from "./icon.hbs";
+
+// Иконки отсюда - https://materialdesignicons.com/
 
 type TIconProps = {
   value: string;
   className?: string;
 };
 
-const renderHtml = renderCreator<TIconProps>(source, {
-  value: "",
-  className: "",
-});
+export class Icon extends Block<TIconProps> {
+  static cName = "Icon";
 
-export { renderHtml as renderIcon, TIconProps };
+  constructor({ ...props }: TIconProps) {
+    super({
+      ...props,
+    });
+  }
+
+  render() {
+    return source;
+  }
+}

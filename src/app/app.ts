@@ -8,7 +8,7 @@ import {
   Page_500,
   profileEditAvatarPage,
   ProfileEditInfoPage,
-  profileEditPasswordPage,
+  ProfileEditPasswordPage,
   profilePage,
   RegisterPage,
 } from "../pages";
@@ -21,7 +21,7 @@ const pages: { [K: string]: { title: string; component: string | Block } } = {
   "/profile": { title: "Профиль", component: profilePage },
   "/profile_edit_avatar": { title: "Изменить аватар", component: profileEditAvatarPage },
   "/profile_edit_info": { title: "Изменить данные", component: new ProfileEditInfoPage() },
-  "/profile_edit_password": { title: "Изменить пароль", component: profileEditPasswordPage },
+  "/profile_edit_password": { title: "Изменить пароль", component: new ProfileEditPasswordPage() },
   "/chat": { title: "Чат", component: chatPage },
   "/404": { title: "404", component: new Page_404() },
   "/500": { title: "500", component: new Page_500() },

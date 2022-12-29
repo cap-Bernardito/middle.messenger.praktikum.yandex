@@ -5,7 +5,7 @@ import { LoginPage } from "./login/login";
 import { profilePage } from "./profile/profile";
 import { profileEditAvatarPage } from "./profile/profile_edit_avatar";
 import { ProfileEditInfoPage } from "./profile/profile_edit_info";
-import { profileEditPasswordPage } from "./profile/profile_edit_password";
+import { ProfileEditPasswordPage } from "./profile/profile_edit_password";
 import { RegisterPage } from "./register/register";
 
 export {
@@ -15,7 +15,7 @@ export {
   Page_500,
   profileEditAvatarPage,
   ProfileEditInfoPage,
-  profileEditPasswordPage,
+  ProfileEditPasswordPage,
   profilePage,
   RegisterPage,
 };

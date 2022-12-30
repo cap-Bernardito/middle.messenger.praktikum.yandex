@@ -1,23 +1,28 @@
-import { renderCreator } from "shared/utils/utils";
+import { Block } from "shared/core";
 
 import source from "./textarea.hbs";
 
 import "./textarea.scss";
 
-type TTextareaProps = {
+export type TTextareaProps = TPropsWithRef<{
   name: string;
   value?: string;
   placeholder?: string;
   className?: string;
   classNameTextarea?: string;
-};
+  onInput?: (event: Event) => void;
+  onBlur?: (event: Event) => void;
+  onFocus?: (event: Event) => void;
+}>;
 
-const renderHtml = renderCreator<TTextareaProps>(source, {
-  placeholder: "",
-  name: "",
-  value: "",
-  className: "",
-  classNameTextarea: "",
-});
+export class Textarea extends Block<TTextareaProps> {
+  static cName = "Textarea";
 
-export { renderHtml as renderTextarea, TTextareaProps };
+  constructor({ ...props }: TTextareaProps) {
+    super(props);
+  }
+
+  render() {
+    return source;
+  }
+}

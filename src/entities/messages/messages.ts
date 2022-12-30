@@ -1,19 +1,29 @@
-import { renderCreator } from "shared/utils/utils";
+import { TMessagesBodyProps, TMessagesFooterProps, TMessagesHeaderProps } from "entities";
+
+import { Block } from "shared/core";
 
 import source from "./messages.hbs";
 
 import "./messages.scss";
 
-type TMessagesProps = {
-  header: string;
-  body: string;
-  footer: string;
+export type TMessagesProps = {
+  header: Block<TMessagesHeaderProps> | string;
+  body: Block<TMessagesBodyProps> | string;
+  footer: Block<TMessagesFooterProps> | string;
 };
 
-const renderHtml = renderCreator<TMessagesProps>(source, {
-  header: "header",
-  body: "body",
-  footer: "footer",
-});
+export class Messages extends Block<TMessagesProps> {
+  static cName = "Messages";
 
-export { renderHtml as renderMessages, source as templateMessages, TMessagesProps };
+  constructor({ ...props }: TMessagesProps) {
+    super({
+      ...props,
+    });
+  }
+
+  render() {
+    return source;
+  }
+}
+
+export { source as templateMessages };

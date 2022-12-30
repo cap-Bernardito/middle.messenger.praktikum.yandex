@@ -1,19 +1,27 @@
-import { renderCreator } from "shared/utils/utils";
+import { Block } from "shared/core";
+import { TAvatarProps } from "shared/ui";
 
 import source from "./user-info.hbs";
 
-type TUserInfoProps = {
-  avatar?: string;
+export type TUserInfoProps = {
+  avatar?: Block<TAvatarProps>;
   title?: string;
-  info?: string;
-  controls?: string;
+  info?: Block | string;
+  controls?: Block | string;
 };
 
-const renderHtml = renderCreator<TUserInfoProps>(source, {
-  avatar: "avatar",
-  title: "title",
-  info: "list info",
-  controls: "list controls",
-});
+export class UserInfo extends Block<TUserInfoProps> {
+  static cName = "UserInfo";
 
-export { renderHtml as renderUserInfo, source as templateUserInfo, TUserInfoProps };
+  constructor({ ...props }: TUserInfoProps) {
+    super({
+      ...props,
+    });
+  }
+
+  render() {
+    return source;
+  }
+}
+
+export { source as templateUserInfo };

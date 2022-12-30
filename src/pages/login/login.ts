@@ -1,32 +1,66 @@
-import { renderForm } from "entities/form";
+import { Form } from "entities/form";
 
-import { renderButton } from "shared/ui/button";
-import { renderInput, TInputProps } from "shared/ui/input";
-import { renderLayoutCentered } from "shared/ui/layouts/centered";
-import { renderCreator } from "shared/utils/utils";
+import { Block } from "shared/core";
+import { Button } from "shared/ui/button";
+import { Input, TInputProps } from "shared/ui/input";
+import { formProcess } from "shared/utils/form-processing";
 
 import source from "./login.hbs";
 
-const inputs: TInputProps[] = [
-  {
-    label: "Логин",
-    name: "login",
-  },
-  {
-    label: "Пароль",
-    type: "password",
-    name: "password",
-  },
-];
+export class LoginPage extends Block {
+  static cName = "LoginPage";
 
-const formLogin = renderForm({
-  title: "Вход",
-  fields: inputs.map((input) => renderInput(input)).join(""),
-  button: renderButton({ value: "Войти", className: "btn-primary btn-block" }),
-  meta: '<a href="/register" class="text-sm">Зарегистрироваться</a>',
-});
+  constructor() {
+    super({
+      body: new Form({
+        onSubmit: (event) => {
+          const { isFormValid, formData } = formProcess.form.check(event, Object.values(this.getFormInputs()));
 
-const pageContent = renderCreator(source, { body: formLogin })();
-const html = renderLayoutCentered({ body: pageContent });
+          console.log(`Form is${isFormValid ? "" : " not"} valid. FormData: `, formData);
+        },
+        ref: "loginForm",
+        title: "Вход",
+        fields: (
+          [
+            {
+              label: "Логин",
+              name: "login",
+              ref: "loginInput",
+              onInput: (event) => {
+                formProcess.field.check(event, this.getFormInputs().loginInput);
+              },
+              onBlur: (event) => {
+                formProcess.field.check(event, this.getFormInputs().loginInput);
+                formProcess.field.setValue(event, this.getFormInputs().loginInput);
+              },
+            },
+            {
+              label: "Пароль",
+              type: "password",
+              name: "password",
+              ref: "passwordInput",
+              onInput: (event) => {
+                formProcess.field.check(event, this.getFormInputs().passwordInput);
+              },
+              onBlur: (event) => {
+                formProcess.field.check(event, this.getFormInputs().passwordInput);
+                formProcess.field.setValue(event, this.getFormInputs().passwordInput);
+              },
+            },
+          ] as TInputProps[]
+        ).map((inputProps) => new Input(inputProps)),
+        button: new Button({ value: "Войти", className: "btn-primary btn-block" }),
+        meta: '<a href="/register" class="text-sm">Зарегистрироваться</a>',
+        decorated: true,
+      }),
+    });
+  }
 
-export { html as loginPage };
+  getFormInputs = () => {
+    return this.refs.loginForm.refs || {};
+  };
+
+  render() {
+    return source;
+  }
+}

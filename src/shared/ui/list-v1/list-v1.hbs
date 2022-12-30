@@ -1,8 +1,5 @@
 <ul class="list-v1 {{#if className}}{{className}}{{/if}}">
   {{#each items}}
-  <li class="list-v1__item">
-    <span>{{{name}}}</span>
-    {{#if value}} <span>{{value}}</span> {{/if}}
-  </li>
+    {{{this}}}
   {{/each}}
 </ul>

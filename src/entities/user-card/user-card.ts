@@ -1,11 +1,12 @@
-import { renderCreator } from "shared/utils/utils";
+import { Block } from "shared/core";
+import { TAvatarProps } from "shared/ui";
 
 import source from "./user-card.hbs";
 
 import "./user-card.scss";
 
-type TUserCardProps = {
-  avatar: string;
+export type TUserCardProps = {
+  avatar: Block<TAvatarProps>;
   name: string;
   message?: string;
   date?: string;
@@ -13,10 +14,16 @@ type TUserCardProps = {
   className?: string;
 };
 
-const renderHtml = renderCreator<TUserCardProps>(source, {
-  avatar: "avatar",
-  name: "name",
-  message: "message",
-});
+export class UserCard extends Block<TUserCardProps> {
+  static cName = "UserCard";
 
-export { renderHtml as renderUserCard, source as templateUserCard, TUserCardProps };
+  constructor({ ...props }: TUserCardProps) {
+    super({
+      ...props,
+    });
+  }
+
+  render() {
+    return source;
+  }
+}

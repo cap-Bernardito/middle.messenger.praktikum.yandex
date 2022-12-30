@@ -1,17 +1,26 @@
-import { renderCreator } from "shared/utils/utils";
+import { TUserCardProps } from "entities";
+
+import { Block } from "shared/core";
 
 import source from "./messages-header.hbs";
 
 import "./messages-header.scss";
 
-type TMessagesHeaderProps = {
-  left: string;
-  right: string;
+export type TMessagesHeaderProps = {
+  left: Block<TUserCardProps> | string;
+  right: Block | string;
 };
 
-const renderHtml = renderCreator<TMessagesHeaderProps>(source, {
-  left: "left",
-  right: "right",
-});
+export class MessagesHeader extends Block<TMessagesHeaderProps> {
+  static cName = "MessagesHeader";
 
-export { renderHtml as renderMessagesHeader, source as templateMessagesHeader, TMessagesHeaderProps };
+  constructor({ ...props }: TMessagesHeaderProps) {
+    super({
+      ...props,
+    });
+  }
+
+  render() {
+    return source;
+  }
+}

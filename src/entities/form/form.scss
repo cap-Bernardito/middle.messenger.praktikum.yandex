@@ -1,20 +1,22 @@
 @use "../../app/styles/variables.scss" as *;
 
 .form {
-  min-height: 45rem;
   display: flex;
   flex-direction: column;
+
+  min-height: 45rem;
   padding: 4rem 3rem 3rem;
+
   border-radius: $border-radius;
 
   &_decorated {
-    box-shadow: $boxShadow-1;
+    box-shadow: $box-shadow-1;
   }
 
   &__title {
-    text-align: center;
-    font-size: 2rem;
     margin-bottom: $spacer * 10;
+    font-size: 2rem;
+    text-align: center;
   }
 
   &__fields {
@@ -22,8 +24,8 @@
   }
 
   &__button {
-    text-align: center;
     margin-top: $spacer * 10;
+    text-align: center;
   }
 
   &__meta {

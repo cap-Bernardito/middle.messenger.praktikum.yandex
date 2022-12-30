@@ -1,10 +1,10 @@
-import { renderCreator } from "shared/utils/utils";
+import { Block } from "shared/core";
 
 import source from "./input.hbs";
 
 import "./input.scss";
 
-type TInputProps = {
+export type TInputProps = TPropsWithRef<{
   label: string;
   name: string;
   type?: "text" | "number" | "password" | "email" | "tel" | "file";
@@ -12,16 +12,19 @@ type TInputProps = {
   placeholder?: string;
   className?: string;
   classNameInput?: string;
-};
+  onInput?: (event: Event) => void;
+  onBlur?: (event: Event) => void;
+  onFocus?: (event: Event) => void;
+}>;
 
-const renderHtml = renderCreator<TInputProps>(source, {
-  label: "",
-  type: "text",
-  placeholder: "",
-  name: "",
-  value: "",
-  className: "",
-  classNameInput: "",
-});
+export class Input extends Block<TInputProps> {
+  static cName = "Input";
 
-export { renderHtml as renderInput, TInputProps };
+  constructor({ type = "text", ...props }: TInputProps) {
+    super({ type, ...props });
+  }
+
+  render() {
+    return source;
+  }
+}

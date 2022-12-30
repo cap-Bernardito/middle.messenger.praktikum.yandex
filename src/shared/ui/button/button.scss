@@ -1,21 +1,25 @@
 @use "../../../app/styles/variables.scss" as *;
+@use "sass:color";
 
 .btn {
-  box-shadow: none;
+  cursor: pointer;
+
   padding: $spacer * 3 $spacer * 10;
+
   border: none;
   border-radius: $border-radius-sm;
-  cursor: pointer;
   outline: none;
+  box-shadow: none;
+
   transition: 0.25s all;
 
   &-primary {
-    border: 0.1rem solid $primary;
-    background: $primary;
     color: $white;
+    background: $primary;
+    border: 0.1rem solid $primary;
 
     &:hover {
-      background: darken($primary, 10%);
+      background: color.adjust($primary, $lightness: -10%);
     }
   }
 

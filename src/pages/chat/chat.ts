@@ -5,7 +5,7 @@ import { MessagesHeader } from "entities/messages-header";
 import { UserCard } from "entities/user-card";
 import { templateUserList, TUserListProps } from "entities/user-list";
 
-import { mdiArrowRightCircle, mdiChevronRight, mdiDotsVertical, mdiPaperclip } from "@mdi/js";
+import { mdiChevronRight, mdiDotsVertical, mdiPaperclip, mdiSend } from "@mdi/js";
 import img from "shared/assets/images/tigger.jpg";
 import { Block } from "shared/core";
 import { Avatar, Button } from "shared/ui";
@@ -26,15 +26,15 @@ export class ChatPage extends Block {
       ...({
         header_link: `<a href="/profile" class="link-icon">Профиль ${renderIcon({ value: mdiChevronRight })}</a>`,
         header_search: new Search({ value: "" }),
-        users: _.range(14).map(
+        users: _.range(10).map(
           (index) =>
             new UserCard({
               avatar: new Avatar({ className: "avatar_sm", img: index % 3 === 0 ? "" : img }),
-              name: "Алексей",
-              message: "Привет май френдз",
+              name: "Вася Василёк",
+              message: "Привет май френдз. Привет! Смотри, тут всплыл",
               date: dateMock[index] || `${index}.12.2022`,
               counter: index > 0 ? String(index) : undefined,
-              className: index === 3 ? "active" : undefined,
+              className: index === 2 ? "active" : undefined,
             })
         ),
       } as TUserListProps),
@@ -44,6 +44,7 @@ export class ChatPage extends Block {
           left: new UserCard({
             avatar: new Avatar({ className: "avatar_xs", img: img }),
             name: "<span class='text-base'>Алексей</span>",
+            message: "<span class='text-base text-gray-500'>был(а) 33 минуты назад</span>",
             className: "not-interactive",
           }),
           right: `<a href="#" class="link-icon">${renderIcon({ value: mdiDotsVertical })}</a>`,
@@ -64,14 +65,14 @@ export class ChatPage extends Block {
           file: `<a href="#" class="link-icon link-icon-clip">${renderIcon({ value: mdiPaperclip })}</a>`,
           text: new Textarea({
             name: "message",
-            placeholder: "Сообщение",
+            placeholder: "Написать собщение...",
             ref: "messageInput",
             onBlur: (event) => {
               formProcess.field.setValue(event, this.getFormInputs().messageInput);
             },
           }),
           button: new Button({
-            value: `${renderIcon({ value: mdiArrowRightCircle })}`,
+            value: `${renderIcon({ value: mdiSend })}`,
             className: "link-icon link-icon-submit",
           }),
         }),

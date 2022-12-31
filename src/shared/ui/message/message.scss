@@ -4,55 +4,138 @@
 .message {
   $root: &;
 
-  padding: $spacer * 4;
-
-  &_date {
-    align-self: center;
-
-    margin-top: $spacer * 4;
-    margin-bottom: $spacer * 3;
-    padding: $spacer * 2 $spacer * 4;
-
-    color: $secondary;
-    text-align: center;
-
-    background: $gray-100;
-    border-radius: $border-radius;
-  }
-
-  &_in {
-    max-width: 60%;
-    margin-right: auto;
-    background: color.adjust($success, $lightness: 55%);
-    border-radius: 0 $border-radius $border-radius $border-radius;
-
-    #{$root}__date {
-      float: right;
-
-      margin-top: $spacer * 3;
-      margin-left: $spacer * 2;
-
-      font-size: 1rem;
-      color: $secondary;
-      text-align: right;
-    }
-  }
-
-  &_out {
-    max-width: 60%;
+  @include media-bp-down(desktop) {
     margin-left: auto;
-    background: color.adjust($primary, $lightness: 37%);
+    background: $primary;
     border-radius: $border-radius $border-radius 0 $border-radius;
 
     #{$root}__date {
       float: right;
 
-      margin-top: $spacer * 3;
+      margin-top: 0.6rem;
       margin-left: $spacer * 2;
 
-      font-size: 1rem;
-      color: $secondary;
+      font-size: $text-sm;
+      color: $gray-300;
       text-align: right;
+    }
+  }
+
+  position: relative;
+  max-width: 480px;
+  padding: 1rem;
+
+  &::before,
+  &::after {
+    content: '';
+
+    position: absolute;
+    right: 100%;
+    bottom: 0;
+
+    display: block;
+
+    width: 1.8rem;
+    height: 1.8rem;
+  }
+
+  &::before {
+    background: $primary;
+  }
+
+  &::after {
+    background: $body-bg;
+    border-radius: 0 0 1.2rem;
+  }
+
+  &_date-seperator {
+    @include media-bp-down(desktop) {
+      margin-left: auto;
+    }
+
+    align-self: center;
+
+    width: 100%;
+    margin-top: $spacer * 4;
+    margin-right: auto;
+    margin-bottom: $spacer * 3;
+
+    text-align: center;
+
+    background: transparent;
+
+    &::before,
+    &::after {
+      content: none;
+    }
+
+    span {
+      padding: $spacer * 2 $spacer * 3;
+      line-height: 1;
+      background: $gray-700;
+      border-radius: $border-radius-lg;
+    }
+  }
+
+  &_in {
+    margin-right: auto;
+    margin-left: 0;
+    background: $gray-800;
+    border-radius: $border-radius-lg $border-radius-lg $border-radius-lg 0;
+
+    &::before {
+      background: $gray-800;
+    }
+
+    #{$root}__date {
+      position: relative;
+      top: 0.5rem;
+      right: 0.5rem;
+
+      float: right;
+
+      margin-top: 0.6rem;
+      margin-left: $spacer * 2;
+
+      font-size: $text-sm;
+      color: $gray-500;
+      text-align: right;
+    }
+  }
+
+  &_out {
+    @include media-bp-up(desktop) {
+      margin-left: 0;
+      background: $primary;
+      border-radius: $border-radius-lg $border-radius-lg $border-radius-lg 0;
+
+      #{$root}__date {
+        position: relative;
+        top: 0.5rem;
+        right: 0.5rem;
+
+        float: right;
+
+        margin-top: 0.6rem;
+        margin-left: $spacer * 2;
+
+        font-size: $text-sm;
+        color: $gray-300;
+        text-align: right;
+      }
+    }
+
+    @include media-bp-down(desktop) {
+      &::before,
+      &::after {
+        content: '';
+        right: unset;
+        left: 100%;
+      }
+
+      &::after {
+        border-radius: 0 0 0 1.2rem;
+      }
     }
   }
 }

@@ -8,7 +8,6 @@ import source from "./user-list.hbs";
 import "./user-list.scss";
 
 export type TUserListProps = {
-  header_link: string;
   header_search: Block<TSearchProps>;
   users: Block<TUserCardProps>[];
 };

@@ -13,11 +13,10 @@
   &__inner {
     display: flex;
     flex-direction: column;
-    gap: $spacer * 5;
+    gap: $spacer * 2;
     justify-content: flex-end;
 
-    margin-right: $spacer * 4;
-    padding-bottom: $spacer * 4;
+    padding: $spacer * 4;
   }
 
   &__placeholder {

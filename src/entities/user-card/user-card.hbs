@@ -4,21 +4,22 @@
     {{{avatar}}}
   </div>
 
-  <div class="user-card__body card-body">
-    <div class="card-body__title">{{{name}}}</div>
+  <div class="user-card__body">
+    <div class="user-card__entry">
+      <div class="user-card__text user-card__text-title">{{{name}}}</div>
+      <div class="user-card__meta">
+        <div class="user-card__date">{{{date}}}</div>
+      </div>
+    </div>
 
-    {{#if message}}<div class="card-body__message">{{message}}</div>{{/if}}
+    <div class="user-card__entry">
+      <div class="user-card__text user-card__text-message">{{{message}}}</div>
+      <div class="user-card__meta">
+        {{#if counter}}
+        <div class="user-card__counter">{{counter}}</div>
+        {{/if}}
+      </div>
+    </div>
   </div>
-
-  {{#if date}}
-  <div class="user-card__meta card-meta">
-    <div class="card-meta__date">{{date}}</div>
-
-    {{#if counter}}
-    <div class="card-meta__counter">{{counter}}</div>
-    {{/if}}
-  </div>
-  {{/if}}
-
 
 </div>

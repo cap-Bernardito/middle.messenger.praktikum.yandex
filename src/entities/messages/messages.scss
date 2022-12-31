@@ -3,15 +3,21 @@
 .messages {
   $gap: $spacer * 4;
 
+  overflow: hidden;
   display: flex;
   flex-direction: column;
   height: 100%;
-  padding: $gap;
 
   &__header {
     position: relative;
+
     flex: 0 0 auto;
-    padding-bottom: $gap;
+
+    padding: 1rem;
+
+    background: $gray-800;
+    border-bottom: 0.2rem solid $body-bg;
+    border-left: 0.2rem solid $body-bg;
 
     &::before {
       content: "";
@@ -24,15 +30,12 @@
       display: block;
 
       width: 100%;
-
-      border-bottom: 1px solid $gray-300;
     }
   }
 
   &__body {
     position: relative;
     flex: 1 1 100px;
-    padding: $gap 0;
 
     &::before {
       content: "";
@@ -45,13 +48,16 @@
       display: block;
 
       width: 100%;
-
-      border-bottom: 1px solid $gray-300;
     }
   }
 
   &__footer {
     flex: 0 0 auto;
-    padding-top: $gap;
+
+    padding: 1rem;
+
+    background: $gray-800;
+    border-top: 0.2rem solid $body-bg;
+    border-left: 0.2rem solid $body-bg;
   }
 }

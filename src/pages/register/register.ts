@@ -113,7 +113,7 @@ export class RegisterPage extends Block {
           ] as TInputProps[]
         ).map((inputProps) => new Input(inputProps)),
         button: new Button({ value: "Зарегистрироваться", className: "btn-primary btn-block" }),
-        meta: '<a href="/login" class="text-sm">Войти</a>',
+        meta: '<a href="/login">Войти</a>',
         decorated: true,
       }),
     });

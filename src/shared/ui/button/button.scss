@@ -19,7 +19,10 @@
     border: 0.1rem solid $primary;
 
     &:hover {
-      background: color.adjust($primary, $lightness: -10%);
+      $color: color.adjust($primary, $lightness: -10%);
+
+      background: $color;
+      border-color: $color;
     }
   }
 

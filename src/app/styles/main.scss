@@ -177,14 +177,14 @@ a {
   &,
   &:link,
   &:visited {
-    color: $primary;
+    color: $gray-500;
     text-decoration: none;
     transition: color 0.25s;
   }
 
   &:hover,
   &:active {
-    color: $primary;
+    color: $gray-500;
     text-decoration: underline;
   }
 }
@@ -211,6 +211,7 @@ a {
   margin-inline: auto;
   padding-left: 0;
 
+  font-size: $text-lg;
   list-style: none;
 
   li {

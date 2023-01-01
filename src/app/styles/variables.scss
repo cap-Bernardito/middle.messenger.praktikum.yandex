@@ -20,8 +20,8 @@ $black: #000;
 $primary: $blue-200;
 $secondary: $gray-600;
 $success: #0cc;
-$danger: #e52b1a;
-$error: #e52b1a;
+$danger: #db6a60;
+$error: #db6a60;
 $body-color: $white;
 $body-bg: $gray-900;
 
@@ -32,7 +32,7 @@ $spacer: 0.4rem;
 $container-padding: $spacer * 2;
 
 // Box-shadow
-$box-shadow-1: 0 0 0.6rem rgb(0 0 0 / 14%);
+$box-shadow-1: 0 0 0.5rem rgb(147 194 233 / 35%);
 
 // Border-radius
 $border-radius-sm: 0.8rem;

@@ -16,7 +16,6 @@
 
     display: block;
 
-    font-size: $text-sm;
     color: $gray-500;
 
     transition: all 0.3s;
@@ -25,19 +24,26 @@
   &__input {
     width: 100%;
     padding: 0.8rem 0;
+
+    color: $body-color;
+
+    background: transparent;
     border: none;
-    border-bottom: 0.1rem solid $primary;
+    border-bottom: 0.1rem solid $gray-700;
 
     &:not([value=""]),
     &_filled,
     &:focus {
-      border-color: color.adjust($primary, $lightness: -20%);
       outline: none;
 
       & + #{$root}__label {
-        transform: translate(-8%, -180%) scale(0.9);
-        color: $primary;
+        transform: translate(-8%, -150%) scale(0.9);
+        color: $gray-400;
       }
+    }
+
+    &:focus {
+      border-color: $gray-400;
     }
   }
 
@@ -47,13 +53,13 @@
     &_inner {
       position: absolute;
       z-index: 1;
-      top: 2px;
+      top: 0.2rem;
+      right: 0;
       left: 0;
 
-      font-size: 0.7em;
-      color: $danger;
-
-      background: #fff;
+      font-size: $text-sm;
+      color: $error;
+      text-align: center;
     }
 
     &.active {

@@ -26,7 +26,10 @@ declare global {
   export type TKeys<T extends Record<string, unknown>> = keyof T;
   export type TValues<T extends Record<string, unknown>> = T[TKeys<T>];
 
-  export type TEvents = Record<Event["type"], ((event: Event) => void) | undefined>;
+  export type TEvents = Record<
+    Event["type"],
+    (((event: Event) => void) | undefined) | (((event: Event) => void) | undefined)[]
+  >;
   export type TPropsWithEvents<T extends Record<string, unknown>> = T & {
     events?: TEvents;
   };

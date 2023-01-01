@@ -213,32 +213,34 @@ export class Block<P extends Record<string, any> = any> {
     return document.createElement(tagName);
   }
 
-  _removeEvents() {
+  _handleEvents(isRemove = false) {
     const events: TEvents = this.props.events;
 
     if (!events) {
       return;
     }
 
-    Object.entries(events).forEach(([event, listener]) => {
-      if (listener) {
-        this._element.removeEventListener(event, listener);
-      }
-    });
+    for (const [event, listener] of Object.entries(events)) {
+      const listeners = Array.isArray(listener) ? listener : [listener];
+
+      listeners.forEach((listener) => {
+        if (listener) {
+          if (isRemove) {
+            this._element.removeEventListener(event, listener);
+          } else {
+            this._element.addEventListener(event, listener);
+          }
+        }
+      });
+    }
+  }
+
+  _removeEvents() {
+    this._handleEvents(true);
   }
 
   _addEvents() {
-    const events: TEvents = this.props.events;
-
-    if (!events) {
-      return;
-    }
-
-    Object.entries(events).forEach(([event, listener]) => {
-      if (listener) {
-        this._element.addEventListener(event, listener);
-      }
-    });
+    this._handleEvents();
   }
 
   _compile(): HTMLElement {

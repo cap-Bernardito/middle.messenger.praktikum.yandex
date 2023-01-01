@@ -22,27 +22,22 @@ export class TextareaField extends Block<TTextareaFieldProps> {
     super({
       ...props,
       events: {
-        input: onInput,
+        input: [
+          onInput,
+          (event: Event) => {
+            const field = event.target as HTMLTextAreaElement;
+
+            field.setAttribute("rows", "1");
+
+            const fieldHeight = field.scrollHeight;
+            const lineHeight = Number.parseFloat(getComputedStyle(field).lineHeight);
+            const estimatedRows = Math.ceil(fieldHeight / lineHeight - 1);
+
+            field.setAttribute("rows", estimatedRows > 7 ? "7" : String(estimatedRows));
+          },
+        ],
         focus: onFocus,
         blur: onBlur,
-      },
-    });
-
-    this.setProps({
-      ...this.props,
-      events: {
-        ...this.props.events,
-        input: (event) => {
-          const field = event.target as HTMLTextAreaElement;
-
-          field.setAttribute("rows", "1");
-
-          const fieldHeight = field.scrollHeight;
-          const lineHeight = Number.parseFloat(getComputedStyle(field).lineHeight);
-          const estimatedRows = Math.ceil(fieldHeight / lineHeight - 1);
-
-          field.setAttribute("rows", estimatedRows > 7 ? "7" : String(estimatedRows));
-        },
       },
     });
   }

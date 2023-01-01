@@ -1,6 +1,7 @@
 export * from "./avatar";
 export * from "./button";
 export * from "./icon";
+export * from "./icon_string";
 export * from "./input";
 export * from "./layouts/centered/centered";
 export * from "./layouts/full-screen/full-screen";

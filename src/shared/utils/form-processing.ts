@@ -41,11 +41,22 @@ const checks = {
   },
 };
 
-const checksIgnoreFields = ["display_name", "avatar"];
+const checksIgnoreFields = ["display_name", "avatar", "oldPassword"];
 
 const isValidatedField = (fieldName: TKeysCheck | string): fieldName is TKeysCheck => fieldName in checks;
 
-const getInputValue = (event: Event | null, field: Block<TInputProps>) => {
+const isInput = (field: TFormFields): field is Block<TInputProps> =>
+  field.getContent().tagName.toUpperCase() === "INPUT";
+
+const isFileInput = (field: TFormFields): field is Block<TInputProps> => {
+  if (!isInput(field)) {
+    return false;
+  }
+
+  return field.props.type === "file";
+};
+
+const getInputValue = (event: Event | null, field: TFormFields) => {
   const target = (event?.target || field.refs.inputRef.getContent()) as HTMLInputElement | undefined;
   const defaultValue = "";
 
@@ -60,11 +71,11 @@ const getInputValue = (event: Event | null, field: Block<TInputProps>) => {
   return { value: target.value };
 };
 
-const checkField = (event: Event | null, field: Block<TInputProps>) => {
+const checkField = (event: Event | null, field: TFormFields) => {
   const { value, files } = getInputValue(event, field);
   const fieldName = field.props.name;
 
-  if (checksIgnoreFields.includes(field.props.name) || field.props.type === "file") {
+  if (checksIgnoreFields.includes(field.props.name) || isFileInput(field)) {
     return { isValid: true, fieldValue: value, fieldFiles: files, fieldName };
   }
 
@@ -84,7 +95,7 @@ const checkField = (event: Event | null, field: Block<TInputProps>) => {
   return { isValid: !errorMessage, fieldValue: value, fieldName };
 };
 
-const setValue = (event: Event, field: Block<TInputProps>) => {
+const setValue = (event: Event, field: TFormFields) => {
   if (!event.target || !(field instanceof Block)) {
     return;
   }
@@ -124,7 +135,7 @@ const showPasswordsError = (fields: Block[]) => {
   });
 };
 
-const checkForm = (event: Event, fields: Block<TInputProps>[]) => {
+const checkForm = (event: Event, fields: TFormFields[]) => {
   event.preventDefault();
 
   const formData: TFormData = {};

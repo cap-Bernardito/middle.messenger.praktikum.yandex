@@ -1,11 +1,7 @@
-import { Form } from "entities/form";
-import { templateUserInfo, TUserInfoProps } from "entities/user-info";
+import { Form, templateUserInfo, TUserInfoProps } from "entities";
 
 import { Block } from "shared/core";
-import { Avatar } from "shared/ui/avatar";
-import { Button } from "shared/ui/button";
-import { Input, TInputProps } from "shared/ui/input";
-import { formProcess } from "shared/utils/form-processing";
+import { Avatar, Button, Input, TInputProps } from "shared/ui";
 
 export class ProfileEditPasswordPage extends Block<TUserInfoProps> {
   static cName = "ProfileEditPasswordPage";
@@ -15,11 +11,13 @@ export class ProfileEditPasswordPage extends Block<TUserInfoProps> {
       avatar: new Avatar(),
       info: new Form({
         onSubmit: (event) => {
-          const { isFormValid, formData } = formProcess.form.check(event, Object.values(this.getFormInputs()));
+          const { isFormValid, formData } = (this.getForm().form as Form).check(
+            event,
+            Object.values(this.getForm().fields)
+          );
 
           console.log(`Form is${isFormValid ? "" : " not"} valid. FormData: `, formData);
         },
-        ref: "form",
         fields: (
           [
             {
@@ -28,7 +26,7 @@ export class ProfileEditPasswordPage extends Block<TUserInfoProps> {
               type: "password",
               ref: "oldPasswordInput",
               onBlur: (event) => {
-                formProcess.field.setValue(event, this.getFormInputs().oldPasswordInput);
+                (this.getForm().fields.oldPasswordInput as Input).setValue(event);
               },
             },
             {
@@ -37,11 +35,10 @@ export class ProfileEditPasswordPage extends Block<TUserInfoProps> {
               type: "password",
               ref: "newPasswordInput",
               onInput: (event) => {
-                formProcess.field.check(event, this.getFormInputs().newPasswordInput);
+                (this.getForm().fields.newPasswordInput as Input).check(event).setValue(event);
               },
               onBlur: (event) => {
-                formProcess.field.check(event, this.getFormInputs().newPasswordInput);
-                formProcess.field.setValue(event, this.getFormInputs().newPasswordInput);
+                (this.getForm().fields.newPasswordInput as Input).check(event).setValue(event);
               },
             },
             {
@@ -50,11 +47,10 @@ export class ProfileEditPasswordPage extends Block<TUserInfoProps> {
               type: "password",
               ref: "password_confirmInput",
               onInput: (event) => {
-                formProcess.field.check(event, this.getFormInputs().password_confirmInput);
+                (this.getForm().fields.password_confirmInput as Input).check(event).setValue(event);
               },
               onBlur: (event) => {
-                formProcess.field.check(event, this.getFormInputs().password_confirmInput);
-                formProcess.field.setValue(event, this.getFormInputs().password_confirmInput);
+                (this.getForm().fields.password_confirmInput as Input).check(event).setValue(event);
               },
             },
           ] as TInputProps[]
@@ -65,8 +61,13 @@ export class ProfileEditPasswordPage extends Block<TUserInfoProps> {
     });
   }
 
-  getFormInputs = () => {
-    return this.refs.form.refs || {};
+  getForm = () => {
+    const form = this.refs.formRef || {};
+
+    return {
+      form: form,
+      fields: form.refs,
+    };
   };
 
   render() {

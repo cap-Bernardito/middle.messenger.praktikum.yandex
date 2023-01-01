@@ -1,5 +1,6 @@
 import { Block } from "shared/core";
 import { TButtonProps, TTextareaProps } from "shared/ui";
+import { formProcess } from "shared/utils/form-processing";
 
 import source from "./messages-footer.hbs";
 
@@ -24,6 +25,10 @@ export class MessagesFooter extends Block<TMessagesFooterProps> {
         submit: onSubmit,
       },
     });
+  }
+
+  check(event: Event, fields: TFormFields[]) {
+    return formProcess.form.check(event, fields);
   }
 
   render() {

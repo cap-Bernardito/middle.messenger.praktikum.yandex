@@ -1,9 +1,7 @@
 import { Form } from "entities/form";
 
 import { Block } from "shared/core";
-import { Button } from "shared/ui/button";
-import { Input, TInputProps } from "shared/ui/input";
-import { formProcess } from "shared/utils/form-processing";
+import { Button, Input, TInputProps } from "shared/ui";
 
 import source from "./register.hbs";
 
@@ -14,11 +12,13 @@ export class RegisterPage extends Block {
     super({
       body: new Form({
         onSubmit: (event) => {
-          const { isFormValid, formData } = formProcess.form.check(event, Object.values(this.getFormInputs()));
+          const { isFormValid, formData } = (this.getForm().form as Form).check(
+            event,
+            Object.values(this.getForm().fields)
+          );
 
           console.log(`Form is${isFormValid ? "" : " not"} valid. FormData: `, formData);
         },
-        ref: "registerForm",
         title: "Регистрация",
         fields: (
           [
@@ -28,11 +28,10 @@ export class RegisterPage extends Block {
               type: "email",
               ref: "emailInput",
               onInput: (event) => {
-                formProcess.field.check(event, this.getFormInputs().emailInput);
+                (this.getForm().fields.emailInput as Input).check(event).setValue(event);
               },
               onBlur: (event) => {
-                formProcess.field.check(event, this.getFormInputs().emailInput);
-                formProcess.field.setValue(event, this.getFormInputs().emailInput);
+                (this.getForm().fields.emailInput as Input).check(event).setValue(event);
               },
             },
             {
@@ -40,11 +39,10 @@ export class RegisterPage extends Block {
               name: "login",
               ref: "loginInput",
               onInput: (event) => {
-                formProcess.field.check(event, this.getFormInputs().loginInput);
+                (this.getForm().fields.loginInput as Input).check(event).setValue(event);
               },
               onBlur: (event) => {
-                formProcess.field.check(event, this.getFormInputs().loginInput);
-                formProcess.field.setValue(event, this.getFormInputs().loginInput);
+                (this.getForm().fields.loginInput as Input).check(event).setValue(event);
               },
             },
             {
@@ -52,11 +50,10 @@ export class RegisterPage extends Block {
               name: "first_name",
               ref: "first_nameInput",
               onInput: (event) => {
-                formProcess.field.check(event, this.getFormInputs().first_nameInput);
+                (this.getForm().fields.first_nameInput as Input).check(event).setValue(event);
               },
               onBlur: (event) => {
-                formProcess.field.check(event, this.getFormInputs().first_nameInput);
-                formProcess.field.setValue(event, this.getFormInputs().first_nameInput);
+                (this.getForm().fields.first_nameInput as Input).check(event).setValue(event);
               },
             },
             {
@@ -64,11 +61,10 @@ export class RegisterPage extends Block {
               name: "second_name",
               ref: "second_nameInput",
               onInput: (event) => {
-                formProcess.field.check(event, this.getFormInputs().second_nameInput);
+                (this.getForm().fields.second_nameInput as Input).check(event).setValue(event);
               },
               onBlur: (event) => {
-                formProcess.field.check(event, this.getFormInputs().second_nameInput);
-                formProcess.field.setValue(event, this.getFormInputs().second_nameInput);
+                (this.getForm().fields.second_nameInput as Input).check(event).setValue(event);
               },
             },
             {
@@ -77,11 +73,10 @@ export class RegisterPage extends Block {
               type: "tel",
               ref: "phoneInput",
               onInput: (event) => {
-                formProcess.field.check(event, this.getFormInputs().phoneInput);
+                (this.getForm().fields.phoneInput as Input).check(event).setValue(event);
               },
               onBlur: (event) => {
-                formProcess.field.check(event, this.getFormInputs().phoneInput);
-                formProcess.field.setValue(event, this.getFormInputs().phoneInput);
+                (this.getForm().fields.phoneInput as Input).check(event).setValue(event);
               },
             },
             {
@@ -90,11 +85,10 @@ export class RegisterPage extends Block {
               name: "password",
               ref: "passwordInput",
               onInput: (event) => {
-                formProcess.field.check(event, this.getFormInputs().passwordInput);
+                (this.getForm().fields.passwordInput as Input).check(event).setValue(event);
               },
               onBlur: (event) => {
-                formProcess.field.check(event, this.getFormInputs().passwordInput);
-                formProcess.field.setValue(event, this.getFormInputs().passwordInput);
+                (this.getForm().fields.passwordInput as Input).check(event).setValue(event);
               },
             },
             {
@@ -103,11 +97,10 @@ export class RegisterPage extends Block {
               name: "password_confirm",
               ref: "password_confirmInput",
               onInput: (event) => {
-                formProcess.field.check(event, this.getFormInputs().password_confirmInput);
+                (this.getForm().fields.password_confirmInput as Input).check(event).setValue(event);
               },
               onBlur: (event) => {
-                formProcess.field.check(event, this.getFormInputs().password_confirmInput);
-                formProcess.field.setValue(event, this.getFormInputs().password_confirmInput);
+                (this.getForm().fields.password_confirmInput as Input).check(event).setValue(event);
               },
             },
           ] as TInputProps[]
@@ -119,8 +112,13 @@ export class RegisterPage extends Block {
     });
   }
 
-  getFormInputs = () => {
-    return this.refs.registerForm.refs || {};
+  getForm = () => {
+    const form = this.refs.formRef || {};
+
+    return {
+      form: form,
+      fields: form.refs,
+    };
   };
 
   render() {

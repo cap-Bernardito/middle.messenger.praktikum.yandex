@@ -1,11 +1,7 @@
-import { Form } from "entities/form";
-import { templateUserInfo, TUserInfoProps } from "entities/user-info";
+import { Form, templateUserInfo, TUserInfoProps } from "entities";
 
 import { Block } from "shared/core";
-import { Avatar } from "shared/ui/avatar";
-import { Button } from "shared/ui/button";
-import { Input, TInputProps } from "shared/ui/input";
-import { formProcess } from "shared/utils/form-processing";
+import { Avatar, Button, Input, TInputProps } from "shared/ui";
 
 export class ProfileAvatarPage extends Block<TUserInfoProps> {
   static cName = "ProfileAvatarPage";
@@ -16,11 +12,13 @@ export class ProfileAvatarPage extends Block<TUserInfoProps> {
       info: new Form({
         title: "Загрузите файл",
         onSubmit: (event) => {
-          const { isFormValid, formData } = formProcess.form.check(event, Object.values(this.getFormInputs()));
+          const { isFormValid, formData } = (this.getForm().form as Form).check(
+            event,
+            Object.values(this.getForm().fields)
+          );
 
           console.log(`Form is${isFormValid ? "" : " not"} valid. FormData: `, formData);
         },
-        ref: "form",
         fields: (
           [
             {
@@ -30,7 +28,7 @@ export class ProfileAvatarPage extends Block<TUserInfoProps> {
               className: "form-control_file",
               ref: "fileInput",
               onBlur: (event) => {
-                formProcess.field.setValue(event, this.getFormInputs().fileInput);
+                (this.getForm().fields.fileInput as Input).setValue(event);
               },
             },
           ] as TInputProps[]
@@ -41,8 +39,13 @@ export class ProfileAvatarPage extends Block<TUserInfoProps> {
     });
   }
 
-  getFormInputs = () => {
-    return this.refs.form.refs || {};
+  getForm = () => {
+    const form = this.refs.formRef || {};
+
+    return {
+      form: form,
+      fields: form.refs,
+    };
   };
 
   render() {

@@ -1,5 +1,6 @@
 import { Block } from "shared/core";
 import { TButtonProps, TInputProps } from "shared/ui";
+import { formProcess } from "shared/utils/form-processing";
 
 import source from "./form.hbs";
 
@@ -20,14 +21,19 @@ export type TFormProps = TPropsWithEvents<
 export class Form extends Block<TFormProps> {
   static cName = "Form";
 
-  constructor({ decorated = true, onSubmit, ...props }: TFormProps) {
+  constructor({ decorated = true, ref = "formRef", onSubmit, ...props }: TFormProps) {
     super({
       ...props,
       decorated,
+      ref,
       events: {
         submit: onSubmit,
       },
     });
+  }
+
+  check(event: Event, fields: Block<TInputProps>[]) {
+    return formProcess.form.check(event, fields);
   }
 
   render() {

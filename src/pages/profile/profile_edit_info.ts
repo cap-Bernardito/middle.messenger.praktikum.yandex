@@ -1,11 +1,7 @@
-import { Form } from "entities/form";
-import { templateUserInfo, TUserInfoProps } from "entities/user-info";
+import { Form, templateUserInfo, TUserInfoProps } from "entities";
 
 import { Block } from "shared/core";
-import { Avatar } from "shared/ui/avatar";
-import { Button } from "shared/ui/button";
-import { Input, TInputProps } from "shared/ui/input";
-import { formProcess } from "shared/utils/form-processing";
+import { Avatar, Button, Input, TInputProps } from "shared/ui";
 
 export class ProfileEditInfoPage extends Block<TUserInfoProps> {
   static cName = "ProfileEditInfoPage";
@@ -15,11 +11,13 @@ export class ProfileEditInfoPage extends Block<TUserInfoProps> {
       avatar: new Avatar(),
       info: new Form({
         onSubmit: (event) => {
-          const { isFormValid, formData } = formProcess.form.check(event, Object.values(this.getFormInputs()));
+          const { isFormValid, formData } = (this.getForm().form as Form).check(
+            event,
+            Object.values(this.getForm().fields)
+          );
 
           console.log(`Form is${isFormValid ? "" : " not"} valid. FormData: `, formData);
         },
-        ref: "form",
         fields: (
           [
             {
@@ -29,11 +27,10 @@ export class ProfileEditInfoPage extends Block<TUserInfoProps> {
               type: "email",
               ref: "emailInput",
               onInput: (event) => {
-                formProcess.field.check(event, this.getFormInputs().emailInput);
+                (this.getForm().fields.emailInput as Input).check(event).setValue(event);
               },
               onBlur: (event) => {
-                formProcess.field.check(event, this.getFormInputs().emailInput);
-                formProcess.field.setValue(event, this.getFormInputs().emailInput);
+                (this.getForm().fields.emailInput as Input).check(event).setValue(event);
               },
             },
             {
@@ -42,11 +39,10 @@ export class ProfileEditInfoPage extends Block<TUserInfoProps> {
               name: "login",
               ref: "loginInput",
               onInput: (event) => {
-                formProcess.field.check(event, this.getFormInputs().loginInput);
+                (this.getForm().fields.loginInput as Input).check(event).setValue(event);
               },
               onBlur: (event) => {
-                formProcess.field.check(event, this.getFormInputs().loginInput);
-                formProcess.field.setValue(event, this.getFormInputs().loginInput);
+                (this.getForm().fields.loginInput as Input).check(event).setValue(event);
               },
             },
             {
@@ -55,11 +51,10 @@ export class ProfileEditInfoPage extends Block<TUserInfoProps> {
               name: "first_name",
               ref: "first_nameInput",
               onInput: (event) => {
-                formProcess.field.check(event, this.getFormInputs().first_nameInput);
+                (this.getForm().fields.first_nameInput as Input).check(event).setValue(event);
               },
               onBlur: (event) => {
-                formProcess.field.check(event, this.getFormInputs().first_nameInput);
-                formProcess.field.setValue(event, this.getFormInputs().first_nameInput);
+                (this.getForm().fields.first_nameInput as Input).check(event).setValue(event);
               },
             },
             {
@@ -68,11 +63,10 @@ export class ProfileEditInfoPage extends Block<TUserInfoProps> {
               name: "second_name",
               ref: "second_nameInput",
               onInput: (event) => {
-                formProcess.field.check(event, this.getFormInputs().second_nameInput);
+                (this.getForm().fields.second_nameInput as Input).check(event).setValue(event);
               },
               onBlur: (event) => {
-                formProcess.field.check(event, this.getFormInputs().second_nameInput);
-                formProcess.field.setValue(event, this.getFormInputs().second_nameInput);
+                (this.getForm().fields.second_nameInput as Input).check(event).setValue(event);
               },
             },
             {
@@ -80,8 +74,11 @@ export class ProfileEditInfoPage extends Block<TUserInfoProps> {
               value: "Вася Василёк",
               name: "display_name",
               ref: "display_nameInput",
+              onInput: (event) => {
+                (this.getForm().fields.display_nameInput as Input).setValue(event);
+              },
               onBlur: (event) => {
-                formProcess.field.setValue(event, this.getFormInputs().display_nameInput);
+                (this.getForm().fields.display_nameInput as Input).setValue(event);
               },
             },
             {
@@ -91,11 +88,10 @@ export class ProfileEditInfoPage extends Block<TUserInfoProps> {
               type: "tel",
               ref: "phoneInput",
               onInput: (event) => {
-                formProcess.field.check(event, this.getFormInputs().phoneInput);
+                (this.getForm().fields.phoneInput as Input).check(event).setValue(event);
               },
               onBlur: (event) => {
-                formProcess.field.check(event, this.getFormInputs().phoneInput);
-                formProcess.field.setValue(event, this.getFormInputs().phoneInput);
+                (this.getForm().fields.phoneInput as Input).check(event).setValue(event);
               },
             },
           ] as TInputProps[]
@@ -106,8 +102,13 @@ export class ProfileEditInfoPage extends Block<TUserInfoProps> {
     });
   }
 
-  getFormInputs = () => {
-    return this.refs.form.refs || {};
+  getForm = () => {
+    const form = this.refs.formRef || {};
+
+    return {
+      form: form,
+      fields: form.refs,
+    };
   };
 
   render() {

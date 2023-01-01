@@ -1,19 +1,19 @@
-import { templateMessages, TMessagesProps } from "entities/messages";
-import { MessagesBody } from "entities/messages-body";
-import { MessagesFooter } from "entities/messages-footer";
-import { MessagesHeader } from "entities/messages-header";
-import { UserCard } from "entities/user-card";
-import { templateUserList, TUserListProps } from "entities/user-list";
+import {
+  Form,
+  MessagesBody,
+  MessagesFooter,
+  MessagesHeader,
+  templateMessages,
+  templateUserList,
+  TMessagesProps,
+  TUserListProps,
+  UserCard,
+} from "entities";
 
 import { mdiChevronRight, mdiDotsVertical, mdiPaperclip, mdiSend } from "@mdi/js";
 import img from "shared/assets/images/tigger.jpg";
 import { Block } from "shared/core";
-import { Avatar, Button } from "shared/ui";
-import { renderIcon } from "shared/ui/icon_string";
-import { Message } from "shared/ui/message";
-import { Search } from "shared/ui/search";
-import { Textarea } from "shared/ui/textarea";
-import { formProcess } from "shared/utils/form-processing";
+import { Avatar, Button, Message, renderIcon, Search, Textarea } from "shared/ui";
 import { _ } from "shared/utils/utils";
 
 import { dateMock, messagesMock } from "./mockData";
@@ -56,9 +56,12 @@ export class ChatPage extends Block {
             .concat(messagesMock.map((m) => new Message(m))),
         }),
         footer: new MessagesFooter({
-          ref: "form",
+          ref: "formRef",
           onSubmit: (event) => {
-            const { isFormValid, formData } = formProcess.form.check(event, Object.values(this.getFormInputs()));
+            const { isFormValid, formData } = (this.getForm().form as Form).check(
+              event,
+              Object.values(this.getForm().fields)
+            );
 
             console.log(`Form is${isFormValid ? "" : " not"} valid. FormData: `, formData);
           },
@@ -68,7 +71,7 @@ export class ChatPage extends Block {
             placeholder: "Написать собщение...",
             ref: "messageInput",
             onBlur: (event) => {
-              formProcess.field.setValue(event, this.getFormInputs().messageInput);
+              (this.getForm().fields.messageInput as Textarea).check(event).setValue(event);
             },
           }),
           button: new Button({
@@ -80,8 +83,13 @@ export class ChatPage extends Block {
     });
   }
 
-  getFormInputs = () => {
-    return this.refs.form.refs || {};
+  getForm = () => {
+    const form = this.refs.formRef || {};
+
+    return {
+      form: form,
+      fields: form.refs,
+    };
   };
 
   render() {

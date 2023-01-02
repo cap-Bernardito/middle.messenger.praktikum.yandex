@@ -1,7 +1,7 @@
-import { Block } from "shared/core/block";
+import { Input, Textarea } from "shared/ui";
 
 declare global {
-  export type TFormFields = Block<TInputProps> | Block<TTextareaProps>;
+  export type TFormFields = Input | Textarea;
 }
 
 export {};

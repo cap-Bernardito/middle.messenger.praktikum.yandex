@@ -1,12 +1,12 @@
 import { Block } from "shared/core";
-import { TButtonProps } from "shared/ui";
+import { Button } from "shared/ui";
 
 import source from "./chat-toolbar.hbs";
 
 import "./chat-toolbar.scss";
 
 export type TChatToolbar = {
-  controls: Block<TButtonProps>[];
+  controls: Button[];
 };
 
 export class ChatToolbar extends Block<TChatToolbar> {

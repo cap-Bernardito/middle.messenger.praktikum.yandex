@@ -12,10 +12,7 @@ export class LoginPage extends Block {
     super({
       body: new Form({
         onSubmit: (event) => {
-          const { isFormValid, formData } = (this.getForm().form as Form).check(
-            event,
-            Object.values(this.getForm().fields)
-          );
+          const { isFormValid, formData } = this.getForm().form.check(event, Object.values(this.getForm().fields));
 
           console.log(`Form is${isFormValid ? "" : " not"} valid. FormData: `, formData);
         },
@@ -54,14 +51,7 @@ export class LoginPage extends Block {
     });
   }
 
-  getForm = () => {
-    const form = this.refs.formRef || {};
-
-    return {
-      form: form,
-      fields: form.refs,
-    };
-  };
+  getForm = () => Form.getFormParts(this.refs.formRef);
 
   render() {
     return source;

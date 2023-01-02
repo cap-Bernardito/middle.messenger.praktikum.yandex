@@ -11,10 +11,7 @@ export class ProfileEditPasswordPage extends Block<TUserInfoProps> {
       avatar: new Avatar(),
       info: new Form({
         onSubmit: (event) => {
-          const { isFormValid, formData } = (this.getForm().form as Form).check(
-            event,
-            Object.values(this.getForm().fields)
-          );
+          const { isFormValid, formData } = this.getForm().form.check(event, Object.values(this.getForm().fields));
 
           console.log(`Form is${isFormValid ? "" : " not"} valid. FormData: `, formData);
         },
@@ -26,7 +23,7 @@ export class ProfileEditPasswordPage extends Block<TUserInfoProps> {
               type: "password",
               ref: "oldPasswordInput",
               onBlur: (event) => {
-                (this.getForm().fields.oldPasswordInput as Input).setValue(event);
+                this.getForm().fields.oldPasswordInput.setValue(event);
               },
             },
             {
@@ -35,10 +32,10 @@ export class ProfileEditPasswordPage extends Block<TUserInfoProps> {
               type: "password",
               ref: "newPasswordInput",
               onInput: (event) => {
-                (this.getForm().fields.newPasswordInput as Input).check(event).setValue(event);
+                this.getForm().fields.newPasswordInput.check(event).setValue(event);
               },
               onBlur: (event) => {
-                (this.getForm().fields.newPasswordInput as Input).check(event).setValue(event);
+                this.getForm().fields.newPasswordInput.check(event).setValue(event);
               },
             },
             {
@@ -47,10 +44,10 @@ export class ProfileEditPasswordPage extends Block<TUserInfoProps> {
               type: "password",
               ref: "password_confirmInput",
               onInput: (event) => {
-                (this.getForm().fields.password_confirmInput as Input).check(event).setValue(event);
+                this.getForm().fields.password_confirmInput.check(event).setValue(event);
               },
               onBlur: (event) => {
-                (this.getForm().fields.password_confirmInput as Input).check(event).setValue(event);
+                this.getForm().fields.password_confirmInput.check(event).setValue(event);
               },
             },
           ] as TInputProps[]
@@ -61,14 +58,7 @@ export class ProfileEditPasswordPage extends Block<TUserInfoProps> {
     });
   }
 
-  getForm = () => {
-    const form = this.refs.formRef || {};
-
-    return {
-      form: form,
-      fields: form.refs,
-    };
-  };
+  getForm = () => Form.getFormParts(this.refs.formRef);
 
   render() {
     return `

@@ -1,5 +1,5 @@
 import { Block } from "shared/core/block";
-import { TInputProps } from "shared/ui";
+import { Input } from "shared/ui";
 
 type TFormData = Record<string, string | FileList>;
 type TKeysCheck = keyof typeof checks;
@@ -45,10 +45,9 @@ const checksIgnoreFields = ["display_name", "avatar", "oldPassword"];
 
 const isValidatedField = (fieldName: TKeysCheck | string): fieldName is TKeysCheck => fieldName in checks;
 
-const isInput = (field: TFormFields): field is Block<TInputProps> =>
-  field.getContent().tagName.toUpperCase() === "INPUT";
+const isInput = (field: TFormFields): field is Input => field.getContent().tagName.toUpperCase() === "INPUT";
 
-const isFileInput = (field: TFormFields): field is Block<TInputProps> => {
+const isFileInput = (field: TFormFields): field is Input => {
   if (!isInput(field)) {
     return false;
   }
@@ -122,7 +121,7 @@ const checkPasswords = (formData: TFormData) => {
   return firstPassword === password_confirm;
 };
 
-const showPasswordsError = (fields: Block[]) => {
+const showPasswordsError = (fields: TFormFields[]) => {
   const comparedPasswords = ["password", "newpassword", "password_confirm"];
   const passwordFields = fields.filter((field) => {
     const fieldName = field.props.name.toLowerCase();

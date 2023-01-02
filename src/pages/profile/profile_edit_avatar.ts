@@ -12,10 +12,7 @@ export class ProfileAvatarPage extends Block<TUserInfoProps> {
       info: new Form({
         title: "Загрузите файл",
         onSubmit: (event) => {
-          const { isFormValid, formData } = (this.getForm().form as Form).check(
-            event,
-            Object.values(this.getForm().fields)
-          );
+          const { isFormValid, formData } = this.getForm().form.check(event, Object.values(this.getForm().fields));
 
           console.log(`Form is${isFormValid ? "" : " not"} valid. FormData: `, formData);
         },
@@ -28,7 +25,7 @@ export class ProfileAvatarPage extends Block<TUserInfoProps> {
               className: "form-control_file",
               ref: "fileInput",
               onBlur: (event) => {
-                (this.getForm().fields.fileInput as Input).setValue(event);
+                this.getForm().fields.fileInput.setValue(event);
               },
             },
           ] as TInputProps[]
@@ -39,14 +36,7 @@ export class ProfileAvatarPage extends Block<TUserInfoProps> {
     });
   }
 
-  getForm = () => {
-    const form = this.refs.formRef || {};
-
-    return {
-      form: form,
-      fields: form.refs,
-    };
-  };
+  getForm = () => Form.getFormParts(this.refs.formRef);
 
   render() {
     return `

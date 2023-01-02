@@ -1,14 +1,14 @@
 import { Overlay } from "entities/overlay";
 
 import { Block } from "shared/core";
-import { TButtonProps } from "shared/ui";
+import { Button } from "shared/ui";
 
 import source from "./offcanvas.hbs";
 
 import "./offcanvas.scss";
 
 export type TOffcanvasProps = {
-  control: Block<TButtonProps>;
+  control: Button;
   body?: Block | string;
   overlay: Overlay;
   className?: string;

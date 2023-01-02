@@ -1,15 +1,15 @@
-import { TUserCardProps } from "entities";
+import { UserCard } from "entities";
 
 import { Block } from "shared/core";
-import { TSearchProps } from "shared/ui";
+import { Search } from "shared/ui";
 
 import source from "./user-list.hbs";
 
 import "./user-list.scss";
 
 export type TUserListProps = {
-  header_search: Block<TSearchProps>;
-  users: Block<TUserCardProps>[];
+  header_search: Search;
+  users: UserCard[];
 };
 
 export class UserList extends Block<TUserListProps> {

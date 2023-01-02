@@ -1,8 +1,10 @@
 import {
+  ChatToolbar,
   Form,
   MessagesBody,
   MessagesFooter,
   MessagesHeader,
+  Offcanvas,
   templateMessages,
   templateUserList,
   TMessagesProps,
@@ -10,7 +12,7 @@ import {
   UserCard,
 } from "entities";
 
-import { mdiChevronRight, mdiDotsVertical, mdiPaperclip, mdiSend } from "@mdi/js";
+import { mdiChevronRight, mdiDotsVertical, mdiMenu, mdiPaperclip, mdiSend } from "@mdi/js";
 import img from "shared/assets/images/tigger.jpg";
 import { Block } from "shared/core";
 import { Avatar, Button, Message, renderIcon, Search, Textarea } from "shared/ui";
@@ -18,11 +20,25 @@ import { _ } from "shared/utils/utils";
 
 import { dateMock, messagesMock } from "./mockData";
 
+const hamburger = new Button({
+  value: `${renderIcon({ value: mdiMenu })}`,
+  className: "chat-toolbar__button chat-toolbar__button-hamburger",
+});
+
 export class ChatPage extends Block {
   static cName = "ChatPage";
 
   constructor() {
     super({
+      chatToolbar: new ChatToolbar({
+        controls: [hamburger],
+      }),
+
+      offcanvas: new Offcanvas({
+        control: hamburger,
+        body: "body offCanvas",
+      }),
+
       ...({
         header_link: `<a href="/profile" class="link-icon">Профиль ${renderIcon({ value: mdiChevronRight })}</a>`,
         header_search: new Search({ value: "" }),
@@ -95,6 +111,11 @@ export class ChatPage extends Block {
   render() {
     return `
 {{#LayoutFullScreen}}
+  {{{offcanvas}}}
+
+  {{#LayoutFullScreenToolbar}}
+    {{{chatToolbar}}}
+  {{/LayoutFullScreenToolbar}}
 
   {{#LayoutFullScreenAside}}
     ${templateUserList}

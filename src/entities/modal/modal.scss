@@ -1,0 +1,54 @@
+@use "../../app/styles/variables.scss" as *;
+
+.modal {
+  position: absolute;
+  z-index: $z-ofcanvas;
+  top: 5rem;
+  left: 50%;
+  transform: translate(-50%, -1000%);
+
+  overflow: hidden;
+
+  width: 100%;
+  max-width: 390px;
+
+  background: $gray-700;
+  border-radius: $border-radius-sm;
+  box-shadow: 0 0 2.5rem rgb(0 0 0 / 75%);
+
+  transition: transform 0.2s;
+
+  &__header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+
+    margin-bottom: 1rem;
+    padding: 2rem;
+
+    background: $gray-800;
+  }
+
+  &__title {
+    margin: 0;
+    font-size: $h1;
+  }
+
+  &__close {
+    padding: 0;
+    color: $gray-500;
+    background: transparent;
+  }
+
+  &__body {
+    position: relative;
+    z-index: $z-ofcanvas;
+    padding: 2rem;
+    background: $gray-800;
+
+  }
+
+  &.active {
+    transform: translate(-50%, 0);
+  }
+}

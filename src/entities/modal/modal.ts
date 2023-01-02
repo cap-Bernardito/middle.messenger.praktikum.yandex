@@ -1,31 +1,34 @@
 import { Overlay } from "entities/overlay";
 
 import { Block } from "shared/core";
-import { TButtonProps } from "shared/ui";
+import { Button } from "shared/ui";
 
-import source from "./offcanvas.hbs";
+import source from "./modal.hbs";
 
-import "./offcanvas.scss";
+import "./modal.scss";
 
-export type TOffcanvasProps = {
-  control: Block<TButtonProps>;
+export type TModalProps = {
+  control: Button;
+  btnClose: Button;
   body?: Block | string;
   overlay: Overlay;
   className?: string;
+  title: string;
 };
 
-export class Offcanvas extends Block<TOffcanvasProps> {
-  static cName = "Offcanvas";
+export class Modal extends Block<TModalProps> {
+  static cName = "Modal";
 
   private activeClass = "active";
   private isVisible = false;
   private overlay: Overlay;
 
-  constructor({ control, overlay, ...props }: TOffcanvasProps) {
+  constructor({ control, overlay, btnClose, ...props }: TModalProps) {
     super({
       ...props,
       control,
       overlay,
+      btnClose,
     });
 
     this.overlay = overlay;
@@ -37,6 +40,14 @@ export class Offcanvas extends Block<TOffcanvasProps> {
       events: {
         ...control.props.events,
         click: () => this.show(),
+      },
+    });
+
+    btnClose.setProps({
+      ...btnClose.props,
+      events: {
+        ...btnClose.props.events,
+        click: () => this.hide(),
       },
     });
   }

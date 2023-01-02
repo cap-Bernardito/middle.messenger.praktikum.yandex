@@ -1,0 +1,22 @@
+@use "../../app/styles/variables.scss" as *;
+
+.overlay {
+  pointer-events: none;
+
+  position: fixed;
+  z-index: $z-overlay;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+
+  opacity: 0;
+  background: rgba($black, 0.6);
+
+  transition: opacity 0.25s;
+
+  &.active {
+    pointer-events: all;
+    opacity: 1;
+  }
+}

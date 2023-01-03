@@ -8,7 +8,7 @@ import "./user-card.scss";
 export type TUserCardProps = {
   avatar: Avatar;
   name: string;
-  message?: string;
+  message?: Block | string;
   date?: string;
   counter?: string;
   className?: string;

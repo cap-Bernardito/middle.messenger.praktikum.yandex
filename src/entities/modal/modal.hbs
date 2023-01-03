@@ -1,7 +1,21 @@
 <div class="modal {{className}}">
   <header class="modal__header">
-    <h2 class="modal__title">{{{title}}}</h2>
-    {{{btnClose}}}
+    <div class="modal__header-top">
+      <h2 class="modal__title">{{{title}}}</h2>
+      {{{btnClose}}}
+    </div>
+    <div class="modal__header-bottom">{{{header}}}</div>
   </header>
-  <div class="modal__body">{{{body}}}</div>
+
+  {{#if preBody}}
+    <div class="modal__preBody">{{{preBody}}}</div>
+  {{/if}}
+
+  {{#if body}}
+    <div class="modal__body">{{{body}}}</div>
+  {{/if}}
+
+  {{#if postBody}}
+    <div class="modal__postBody">{{{postBody}}}</div>
+  {{/if}}
 </div>

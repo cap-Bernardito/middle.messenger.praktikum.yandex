@@ -111,13 +111,6 @@ export class ChatPage extends Block {
   render() {
     return `
 {{#LayoutFullScreen}}
-  {{{overlay}}}
-  {{{offcanvas}}}
-
-  {{#each modals}}
-    {{{this}}}
-  {{/each}}
-
   {{#LayoutFullScreenToolbar}}
     {{{chatToolbar}}}
   {{/LayoutFullScreenToolbar}}
@@ -130,6 +123,12 @@ export class ChatPage extends Block {
     ${templateMessages}
   {{/LayoutFullScreenMain}}
 
+  {{{overlay}}}
+  {{{offcanvas}}}
+
+  {{#each modals}}
+    {{{this}}}
+  {{/each}}
 {{/LayoutFullScreen}}
     `;
   }

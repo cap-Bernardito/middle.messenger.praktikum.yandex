@@ -21,29 +21,6 @@
     flex: 1 1 auto;
     padding: $padding;
     border-bottom: 1px solid $gray-900;
-
-    .btn {
-      display: flex;
-      gap: 1.2rem;
-      align-items: center;
-      font-size: $text-lg;
-
-      .icon-square {
-        display: block;
-
-        padding: 0.1rem;
-
-        font-size: 0;
-
-        background: coral;
-        border-radius: 0.3rem;
-
-        svg {
-          width: 2rem !important;
-          height: 2rem !important;
-        }
-      }
-    }
   }
 
   &__about {

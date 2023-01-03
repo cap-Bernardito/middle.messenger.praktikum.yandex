@@ -8,6 +8,7 @@ export * from "./layouts/full-screen/full-screen";
 export * from "./layouts/full-screen/full-screen-aside";
 export * from "./layouts/full-screen/full-screen-main";
 export * from "./layouts/full-screen/full-screen-toolbar";
+export * from "./list";
 export * from "./list-v1";
 export * from "./message";
 export * from "./search";

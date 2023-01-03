@@ -10,16 +10,14 @@ import "./modal.scss";
 
 export type TModalProps = {
   control: Button;
+  preBody?: Block | string;
   body?: Block | string;
+  postBody?: Block | string;
+  header?: Block | string;
   overlay: Overlay;
   className?: string;
   title: string;
 };
-
-const btnCloseModal = new Button({
-  value: `${renderIcon({ value: mdiClose })}`,
-  className: "modal__close",
-});
 
 export class Modal extends Block<TModalProps & { btnClose: Button }> {
   static cName = "Modal";
@@ -33,7 +31,10 @@ export class Modal extends Block<TModalProps & { btnClose: Button }> {
       ...props,
       control,
       overlay,
-      btnClose: btnCloseModal,
+      btnClose: new Button({
+        value: `${renderIcon({ value: mdiClose })}`,
+        className: "modal__close",
+      }),
     });
 
     this.overlay = overlay;

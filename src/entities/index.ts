@@ -7,6 +7,7 @@ export * from "./messages-header";
 export * from "./modal";
 export * from "./offcanvas";
 export * from "./overlay";
+export * from "./settings-panel";
 export * from "./user-card";
 export * from "./user-info";
 export * from "./user-list";

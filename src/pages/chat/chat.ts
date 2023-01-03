@@ -1,10 +1,11 @@
+import { offcanvasBody, offcanvasBodyModals } from "widgets/offcanvas-body";
+
 import {
   ChatToolbar,
   Form,
   MessagesBody,
   MessagesFooter,
   MessagesHeader,
-  Modal,
   Offcanvas,
   Overlay,
   templateMessages,
@@ -14,7 +15,7 @@ import {
   UserCard,
 } from "entities";
 
-import { mdiChevronRight, mdiClose, mdiDotsVertical, mdiMenu, mdiPaperclip, mdiSend } from "@mdi/js";
+import { mdiChevronRight, mdiDotsVertical, mdiMenu, mdiPaperclip, mdiSend } from "@mdi/js";
 import img from "shared/assets/images/tigger.jpg";
 import { Block } from "shared/core";
 import { Avatar, Button, Message, renderIcon, Search, Textarea } from "shared/ui";
@@ -27,11 +28,6 @@ const hamburger = new Button({
   className: "chat-toolbar__button chat-toolbar__button-hamburger",
 });
 
-const modal = new Button({
-  value: `Настройки пользователя`,
-  className: "btn-link",
-});
-
 const overlay = new Overlay();
 
 export class ChatPage extends Block {
@@ -42,25 +38,16 @@ export class ChatPage extends Block {
       overlay,
 
       chatToolbar: new ChatToolbar({
-        controls: [hamburger, modal],
+        controls: [hamburger],
       }),
 
       offcanvas: new Offcanvas({
         control: hamburger,
-        body: modal,
+        body: offcanvasBody,
         overlay: overlay,
       }),
 
-      modal: new Modal({
-        control: modal,
-        body: "body modal",
-        overlay: overlay,
-        title: "Настройки",
-        btnClose: new Button({
-          value: `${renderIcon({ value: mdiClose })}`,
-          className: "modal__close",
-        }),
-      }),
+      modals: offcanvasBodyModals,
 
       ...({
         header_link: `<a href="/profile" class="link-icon">Профиль ${renderIcon({ value: mdiChevronRight })}</a>`,
@@ -126,7 +113,10 @@ export class ChatPage extends Block {
 {{#LayoutFullScreen}}
   {{{overlay}}}
   {{{offcanvas}}}
-  {{{modal}}}
+
+  {{#each modals}}
+    {{{this}}}
+  {{/each}}
 
   {{#LayoutFullScreenToolbar}}
     {{{chatToolbar}}}

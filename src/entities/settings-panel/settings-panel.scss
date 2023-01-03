@@ -1,0 +1,54 @@
+@use "../../app/styles/variables.scss" as *;
+
+.settings-panel {
+  $padding: 2rem;
+
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+
+  &__userinfo {
+    flex: 0 1 auto;
+    padding: $padding;
+    border-bottom: 1px solid $gray-900;
+
+    .user-card__text-title {
+      margin-bottom: 0;
+    }
+  }
+
+  &__menu {
+    flex: 1 1 auto;
+    padding: $padding;
+    border-bottom: 1px solid $gray-900;
+
+    .btn {
+      display: flex;
+      gap: 1.2rem;
+      align-items: center;
+      font-size: $text-lg;
+
+      .icon-square {
+        display: block;
+
+        padding: 0.1rem;
+
+        font-size: 0;
+
+        background: coral;
+        border-radius: 0.3rem;
+
+        svg {
+          width: 2rem !important;
+          height: 2rem !important;
+        }
+      }
+    }
+  }
+
+  &__about {
+    flex: 0 0 auto;
+    padding: $padding;
+    color: $gray-500;
+  }
+}

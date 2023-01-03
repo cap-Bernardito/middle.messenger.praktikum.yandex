@@ -15,10 +15,10 @@ export class Block<P extends Record<string, any> = any> {
   public id = nanoid(8);
   public refs: { [key: string]: Block } = {};
   public readonly props: P;
+  public readonly childrenFromProps: { [propName: string]: Block } = {};
 
   protected _element = this._createDocumentElement("div");
   protected _childrenForReplace: { [id: string]: Block } = {};
-  protected _childrenFromProps: { [propName: string]: Block } = {};
 
   eventBus: () => EventBus<EventBusEvents>;
 
@@ -31,7 +31,7 @@ export class Block<P extends Record<string, any> = any> {
 
     this.getStateFromProps(props);
 
-    this._childrenFromProps = children;
+    this.childrenFromProps = children;
     this.refs = refs;
 
     this.props = this._makePropsProxy(props || ({} as P));
@@ -249,7 +249,7 @@ export class Block<P extends Record<string, any> = any> {
 
     const stubs: Record<string, string | string[]> = {};
 
-    for (const [key, value] of Object.entries(this._childrenFromProps)) {
+    for (const [key, value] of Object.entries(this.childrenFromProps)) {
       if (Array.isArray(value)) {
         stubs[key] = [];
 

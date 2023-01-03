@@ -10,6 +10,8 @@ export type TOverlayProps = TPropsWithEvents<{
   className?: string;
 }>;
 
+let instance: Overlay;
+
 export class Overlay extends Block<TOverlayProps> {
   static cName = "Overlay";
   static commands = {
@@ -21,6 +23,10 @@ export class Overlay extends Block<TOverlayProps> {
   private widgets = new Set<TWidgetsWithOverlay>();
 
   constructor({ ...props }: TOverlayProps = {}) {
+    if (instance) {
+      return instance;
+    }
+
     super({
       ...props,
       events: {
@@ -29,6 +35,9 @@ export class Overlay extends Block<TOverlayProps> {
         },
       },
     });
+
+    // eslint-disable-next-line @typescript-eslint/no-this-alias
+    instance = this;
   }
 
   closeWidgets() {

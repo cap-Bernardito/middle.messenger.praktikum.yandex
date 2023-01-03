@@ -1,7 +1,8 @@
 import { Overlay } from "entities/overlay";
 
+import { mdiClose } from "@mdi/js";
 import { Block } from "shared/core";
-import { Button } from "shared/ui";
+import { Button, renderIcon } from "shared/ui";
 
 import source from "./modal.hbs";
 
@@ -9,26 +10,30 @@ import "./modal.scss";
 
 export type TModalProps = {
   control: Button;
-  btnClose: Button;
   body?: Block | string;
   overlay: Overlay;
   className?: string;
   title: string;
 };
 
-export class Modal extends Block<TModalProps> {
+const btnCloseModal = new Button({
+  value: `${renderIcon({ value: mdiClose })}`,
+  className: "modal__close",
+});
+
+export class Modal extends Block<TModalProps & { btnClose: Button }> {
   static cName = "Modal";
 
   private activeClass = "active";
   private isVisible = false;
   private overlay: Overlay;
 
-  constructor({ control, overlay, btnClose, ...props }: TModalProps) {
+  constructor({ control, overlay, ...props }: TModalProps) {
     super({
       ...props,
       control,
       overlay,
-      btnClose,
+      btnClose: btnCloseModal,
     });
 
     this.overlay = overlay;
@@ -42,6 +47,8 @@ export class Modal extends Block<TModalProps> {
         click: () => this.show(),
       },
     });
+
+    const { btnClose } = this.childrenFromProps;
 
     btnClose.setProps({
       ...btnClose.props,

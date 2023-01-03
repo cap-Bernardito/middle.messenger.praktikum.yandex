@@ -30,4 +30,10 @@
     display: block;
     width: 100%;
   }
+
+  &-link {
+    padding: 0;
+    color: $body-color;
+    background: transparent;
+  }
 }

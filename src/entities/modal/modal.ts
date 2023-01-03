@@ -1,6 +1,6 @@
 import { Overlay } from "entities/overlay";
 
-import { mdiClose } from "@mdi/js";
+import { mdiArrowLeft, mdiClose } from "@mdi/js";
 import { Block } from "shared/core";
 import { Button, renderIcon } from "shared/ui";
 
@@ -9,7 +9,8 @@ import source from "./modal.hbs";
 import "./modal.scss";
 
 export type TModalProps = {
-  control: Button;
+  runButton: Button;
+  showBackButton?: boolean;
   preBody?: Block | string;
   body?: Block | string;
   postBody?: Block | string;
@@ -19,21 +20,25 @@ export type TModalProps = {
   title: string;
 };
 
-export class Modal extends Block<TModalProps & { btnClose: Button }> {
+export class Modal extends Block<TModalProps & { btnClose: Button; backButton: Button }> {
   static cName = "Modal";
 
   private activeClass = "active";
   private isVisible = false;
   private overlay: Overlay;
 
-  constructor({ control, overlay, ...props }: TModalProps) {
+  constructor({ runButton, overlay, ...props }: TModalProps) {
     super({
       ...props,
-      control,
+      runButton,
       overlay,
       btnClose: new Button({
         value: `${renderIcon({ value: mdiClose })}`,
         className: "modal__close",
+      }),
+      backButton: new Button({
+        value: `${renderIcon({ value: mdiArrowLeft })}`,
+        className: "modal__back",
       }),
     });
 
@@ -41,21 +46,29 @@ export class Modal extends Block<TModalProps & { btnClose: Button }> {
 
     this.overlay.on(this);
 
-    control.setProps({
-      ...control.props,
+    runButton.setProps({
+      ...runButton.props,
       events: {
-        ...control.props.events,
+        ...runButton.props.events,
         click: () => this.show(),
       },
     });
 
-    const { btnClose } = this.childrenFromProps;
+    const { btnClose, backButton } = this.childrenFromProps;
 
     btnClose.setProps({
       ...btnClose.props,
       events: {
         ...btnClose.props.events,
         click: () => this.hide(),
+      },
+    });
+
+    backButton.setProps({
+      ...backButton.props,
+      events: {
+        ...backButton.props.events,
+        click: () => overlay.showPrevWidget(),
       },
     });
   }

@@ -34,7 +34,8 @@ const changeUserPasswordModalButton = new Button({
 
 export const offcanvasBodyModals = [
   new Modal({
-    control: modalInfo,
+    showBackButton: true,
+    runButton: modalInfo,
     overlay: overlay,
     title: "Настройки",
     header: new UserCard({
@@ -85,19 +86,22 @@ export const offcanvasBodyModals = [
     }),
   }),
   new Modal({
-    control: changeUserAvatarModalButton,
+    showBackButton: true,
+    runButton: changeUserAvatarModalButton,
     body: "Изменить аватар",
     overlay: overlay,
     title: "Изменить аватар",
   }),
   new Modal({
-    control: changeUserInfoModalButton,
+    showBackButton: true,
+    runButton: changeUserInfoModalButton,
     body: "Изменить данные",
     overlay: overlay,
     title: "Изменить данные",
   }),
   new Modal({
-    control: changeUserPasswordModalButton,
+    showBackButton: true,
+    runButton: changeUserPasswordModalButton,
     body: "Изменить пароль",
     overlay: overlay,
     title: "Изменить пароль",

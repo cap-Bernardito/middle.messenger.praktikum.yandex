@@ -1,22 +1,25 @@
 @use "../../app/styles/variables.scss" as *;
 
 .modal {
+  pointer-events: none;
+
   position: absolute;
   z-index: $z-ofcanvas;
   top: 5rem;
   left: 50%;
-  transform: translate(-50%, -1000%);
+  transform: translate(-50%, -5000%);
 
   overflow: hidden;
 
   width: 100%;
   max-width: 390px;
 
+  opacity: 0;
   background: $gray-700;
   border-radius: $border-radius-sm;
   box-shadow: 0 0 1.5rem rgb(0 0 0 / 80%);
 
-  transition: transform 0.2s;
+  transition: opacity 0.2s;
 
   &__header {
     margin-bottom: 1rem;
@@ -39,11 +42,19 @@
     font-size: $h1;
   }
 
-  &__close.btn {
-    margin-left: auto;
+  &__close.btn,
+  &__back.btn {
     padding: 0;
     color: $gray-500;
     background: transparent;
+  }
+
+  &__close.btn {
+    margin-left: auto;
+  }
+
+  &__back.btn {
+    margin-right: 2.5rem;
   }
 
   &__body,
@@ -60,6 +71,8 @@
   }
 
   &.active {
+    pointer-events: auto;
     transform: translate(-50%, 0);
+    opacity: 1;
   }
 }

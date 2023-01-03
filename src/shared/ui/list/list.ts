@@ -17,8 +17,6 @@ export class List extends Block<TListProps> {
       ...props,
       items,
     });
-
-    console.log(this);
   }
 
   render() {

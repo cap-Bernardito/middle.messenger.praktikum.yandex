@@ -21,6 +21,7 @@ export class Overlay extends Block<TOverlayProps> {
 
   private activeClass = "active";
   private widgets = new Set<TWidgetsWithOverlay>();
+  private history: TWidgetsWithOverlay[] = [];
 
   constructor({ ...props }: TOverlayProps = {}) {
     if (instance) {
@@ -40,6 +41,13 @@ export class Overlay extends Block<TOverlayProps> {
     instance = this;
   }
 
+  showPrevWidget() {
+    this.history.pop();
+    const target = this.history.pop();
+
+    target?.show();
+  }
+
   closeWidgets() {
     for (const widget of this.widgets) {
       if (widget.isOn()) {
@@ -56,6 +64,8 @@ export class Overlay extends Block<TOverlayProps> {
         if (widget.isOn()) {
           widget.hide();
         }
+      } else {
+        this.history.push(element);
       }
     }
 
@@ -100,6 +110,7 @@ export class Overlay extends Block<TOverlayProps> {
 
   hide() {
     this.getContent().classList.remove(this.activeClass);
+    this.history = [];
   }
 
   render() {

@@ -16,11 +16,6 @@ declare global {
     export default source;
   }
 
-  export type BlockConstructable<Props = any> = {
-    cName: string;
-    new (props: Props): Block;
-  };
-
   export type TNullable<T> = T | null;
 
   export type TKeys<T extends Record<string, unknown>> = keyof T;

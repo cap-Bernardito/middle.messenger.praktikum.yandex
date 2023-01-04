@@ -15,7 +15,7 @@ export class Block<P extends Record<string, any> = any> {
   } as const;
 
   public id = nanoid(8);
-  public refs: { [key: string]: Block } = {};
+  public refs: TRefs = {};
   public readonly props: P;
   public readonly childrenFromProps: { [propName: string]: Block } = {};
 
@@ -133,6 +133,20 @@ export class Block<P extends Record<string, any> = any> {
 
     return false;
   }
+
+  setPropsWithChildren = (nextProps: P) => {
+    if (!nextProps) {
+      return;
+    }
+
+    const { children, props, refs } = this._getChildren(nextProps);
+
+    Object.assign(this.childrenFromProps, children);
+    Object.assign(this.refs, refs);
+    Object.assign(this.props, props);
+
+    this._render();
+  };
 
   setProps = (nextProps: P) => {
     if (!nextProps) {

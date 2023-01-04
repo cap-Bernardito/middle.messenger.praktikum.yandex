@@ -1,3 +1,6 @@
+// eslint-disable-next-line simple-import-sort/imports
+import "./registerComponents";
+
 import { Block, renderDOM } from "shared/core";
 
 import {
@@ -13,8 +16,6 @@ import {
 } from "../pages";
 
 import "./styles/index.scss";
-
-import "./registerComponents";
 
 const pages: { [K: string]: { title: string; component: Block } } = {
   "/login": { title: "Авторизация", component: new LoginPage() },

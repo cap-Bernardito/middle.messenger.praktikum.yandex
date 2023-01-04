@@ -1,6 +1,8 @@
 import Handlebars from "handlebars";
 import { nanoid } from "nanoid";
 
+import { _ } from "shared/utils/utils";
+
 import { EventBus } from ".";
 
 type EventBusEvents = TValues<typeof Block.EVENTS>;
@@ -268,9 +270,7 @@ export class Block<P extends Record<string, any> = any> {
     }
 
     fragment.innerHTML = template({
-      ...this.state,
-      ...this.props,
-      ...stubs,
+      ..._.merge({ ...this.state }, { ...this.props }, stubs),
       children: this._childrenForReplace,
       refs: this.refs,
     });

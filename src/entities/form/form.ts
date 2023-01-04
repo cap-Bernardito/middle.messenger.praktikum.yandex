@@ -18,6 +18,8 @@ export type TFormProps = TPropsWithEvents<
   }>
 >;
 
+const cache = new WeakMap();
+
 export class Form extends Block<TFormProps> {
   static cName = "Form";
 
@@ -30,6 +32,10 @@ export class Form extends Block<TFormProps> {
   }
 
   static getFormParts = (form: Block | undefined, cb?: typeof Form.isForm) => {
+    if (form && cache.has(form)) {
+      return cache.get(form);
+    }
+
     if (cb) {
       if (!cb(form)) {
         throw new Error(`Component is not a Form`);
@@ -42,10 +48,12 @@ export class Form extends Block<TFormProps> {
 
     const fields = Object.fromEntries(formRefs);
 
-    return {
+    cache.set(form, {
       form: form,
       fields: fields,
-    };
+    });
+
+    return cache.get(form);
   };
 
   constructor({ decorated = true, ref = "formRef", onSubmit, ...props }: TFormProps) {

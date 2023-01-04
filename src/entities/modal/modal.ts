@@ -8,7 +8,7 @@ import source from "./modal.hbs";
 
 import "./modal.scss";
 
-export type TModalProps = {
+export type TModalProps = TPropsWithRef<{
   runButton: Button;
   showBackButton?: boolean;
   preBody?: Block | string;
@@ -18,7 +18,7 @@ export type TModalProps = {
   overlay: Overlay;
   className?: string;
   title: string;
-};
+}>;
 
 export class Modal extends Block<TModalProps & { btnClose: Button; backButton: Button }> {
   static cName = "Modal";

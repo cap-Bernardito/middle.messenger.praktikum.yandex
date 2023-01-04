@@ -54,6 +54,7 @@ $grays: map.merge(
 $gaps: ();
 $gaps: map.merge(
   (
+    "0": 0,
     "1": $spacer,
     "2": $spacer * 2,
     "3": $spacer * 3,
@@ -70,36 +71,62 @@ $gaps: map.merge(
 );
 
 @each $index, $size in $gaps {
+  .m-#{$index} {
+    margin: $size !important;
+  }
+
+  .mx-#{$index} {
+    margin-inline: $size !important;
+  }
+
+  .my-#{$index} {
+    margin-top: $size !important;
+    margin-bottom: $size !important;
+  }
+
   .mb-#{$index} {
-    margin-bottom: $size;
+    margin-bottom: $size !important;
   }
 
   .mt-#{$index} {
-    margin-top: $size;
+    margin-top: $size !important;
   }
 
   .mr-#{$index} {
-    margin-right: $size;
+    margin-right: $size !important;
   }
 
   .ml-#{$index} {
-    margin-left: $size;
+    margin-left: $size !important;
+  }
+
+  .p-#{$index} {
+    padding: $size !important;
+  }
+
+  .px-#{$index} {
+    padding-inline: $size !important;
+  }
+
+  .py-#{$index} {
+    padding-top: $size !important;
+    padding-bottom: $size !important;
   }
 
   .pb-#{$index} {
-    padding-bottom: $size;
+    padding-bottom: $size !important;
   }
 
   .pt-#{$index} {
-    padding-top: $size;
+    padding-top: $size !important;
   }
 
   .pr-#{$index} {
-    padding-right: $size;
+    padding-right: $size !important;
   }
 
   .pl-#{$index} {
-    padding-left: $size;
+    padding-left: $size !important;
   }
 }
 

@@ -1,4 +1,6 @@
-import { Modal, Overlay, SettingsPanel, UserCard } from "entities";
+import { ProfileEditInfoForm } from "widgets/profile_edit_info-form";
+
+import { Form, Modal, Overlay, SettingsPanel, UserCard } from "entities";
 
 import { mdiAccountCircle, mdiCog, mdiFileImageOutline, mdiShieldAccount } from "@mdi/js";
 import img from "shared/assets/images/tigger.jpg";
@@ -32,81 +34,94 @@ const changeUserPasswordModalButton = new Button({
   className: "btn-menu",
 });
 
-export const offcanvasBodyModals = [
-  new Modal({
-    showBackButton: true,
-    runButton: modalInfo,
-    overlay: overlay,
-    title: "Настройки",
-    header: new UserCard({
-      avatar: new Avatar({ className: "avatar_md mr-3", img: img }),
-      name: "<div class='text-lg'>Вася Василёк</div>",
-      message: new List({
-        items: [
-          "<span class='text-sm text-gray-100'>+7 777 777 7777</span>",
-          "<span class='text-sm'>@BuHHeTy</span>",
-        ].map((entry) => new ListItem({ body: entry })),
-        className: "list-modal-header",
+export const offcanvasBodyModals = function (this: { getRefs: () => TRefs }) {
+  return [
+    new Modal({
+      showBackButton: true,
+      runButton: modalInfo,
+      overlay: overlay,
+      title: "Настройки",
+      header: new UserCard({
+        avatar: new Avatar({ className: "avatar_md mr-3", img: img }),
+        name: "<div class='text-lg'>Вася Василёк</div>",
+        message: new List({
+          items: ["<span class='text-sm'>@BuHHeTy</span>"].map((entry) => new ListItem({ body: entry })),
+          className: "list-modal-header",
+        }),
+        className: "not-interactive",
       }),
-      className: "not-interactive",
+      preBody: new ListV1({
+        items: [
+          {
+            name: "Почта",
+            value: "pochta@yandex.ru",
+          },
+          {
+            name: "Логин",
+            value: "vasya_vasilek",
+          },
+          {
+            name: "Имя",
+            value: "Вася",
+          },
+          {
+            name: "Фамилия",
+            value: "Василёк",
+          },
+          {
+            name: "Имя в чате",
+            value: "Вася Василёк",
+          },
+          {
+            name: "Телефон",
+            value: "+7 (909) 967 30 30",
+          },
+        ].map((listItem) => new ListV1Item(listItem)),
+      }),
+      body: new List({
+        items: [changeUserAvatarModalButton, changeUserInfoModalButton, changeUserPasswordModalButton].map(
+          (entry) => new ListItem({ body: entry })
+        ),
+        className: "list-menu",
+      }),
     }),
-    preBody: new ListV1({
-      items: [
-        {
-          name: "Почта",
-          value: "pochta@yandex.ru",
-        },
-        {
-          name: "Логин",
-          value: "vasya_vasilek",
-        },
-        {
-          name: "Имя",
-          value: "Вася",
-        },
-        {
-          name: "Фамилия",
-          value: "Василёк",
-        },
-        {
-          name: "Имя в чате",
-          value: "Вася Василёк",
-        },
-        {
-          name: "Телефон",
-          value: "+7 (909) 967 30 30",
-        },
-      ].map((listItem) => new ListV1Item(listItem)),
+    new Modal({
+      showBackButton: true,
+      runButton: changeUserAvatarModalButton,
+      body: "Изменить аватар",
+      overlay: overlay,
+      title: "Изменить аватар",
     }),
-    body: new List({
-      items: [changeUserAvatarModalButton, changeUserInfoModalButton, changeUserPasswordModalButton].map(
-        (entry) => new ListItem({ body: entry })
-      ),
-      className: "list-menu",
+    new Modal({
+      ref: "changeUserInfoModal",
+      showBackButton: true,
+      runButton: changeUserInfoModalButton,
+      overlay: overlay,
+      title: "Изменить данные",
+      header: new UserCard({
+        avatar: new Avatar({ className: "avatar_md mr-3", img: img }),
+        name: "<div class='text-lg'>Вася Василёк</div>",
+        message: new List({
+          items: ["<span class='text-sm'>@BuHHeTy</span>"].map((entry) => new ListItem({ body: entry })),
+          className: "list-modal-header",
+        }),
+        className: "not-interactive",
+      }),
+      body: ProfileEditInfoForm.call(this, (refs) => Form.getFormParts(refs.changeUserInfoModal.refs.formRef), {
+        className: "px-3 pt-3 pb-0",
+        button: new Button({ value: "Сохранить", className: "btn-form-modal" }),
+        decorated: false,
+      }),
     }),
-  }),
-  new Modal({
-    showBackButton: true,
-    runButton: changeUserAvatarModalButton,
-    body: "Изменить аватар",
-    overlay: overlay,
-    title: "Изменить аватар",
-  }),
-  new Modal({
-    showBackButton: true,
-    runButton: changeUserInfoModalButton,
-    body: "Изменить данные",
-    overlay: overlay,
-    title: "Изменить данные",
-  }),
-  new Modal({
-    showBackButton: true,
-    runButton: changeUserPasswordModalButton,
-    body: "Изменить пароль",
-    overlay: overlay,
-    title: "Изменить пароль",
-  }),
-];
+    new Modal({
+      showBackButton: true,
+      runButton: changeUserPasswordModalButton,
+      body: "Изменить пароль",
+      overlay: overlay,
+      title: "Изменить пароль",
+    }),
+  ];
+};
 
 export const offcanvasBody = new SettingsPanel({
   userInfo: new UserCard({

@@ -3,10 +3,7 @@
 .form {
   display: flex;
   flex-direction: column;
-
-  min-height: 45rem;
   padding: 4rem 3rem 3rem;
-
   border-radius: $border-radius;
 
   &_decorated {
@@ -35,6 +32,8 @@
   }
 
   .form-control {
-    margin-bottom: $spacer * 5;
+    &:not(:last-child) {
+      margin-bottom: $spacer * 5;
+    }
   }
 }

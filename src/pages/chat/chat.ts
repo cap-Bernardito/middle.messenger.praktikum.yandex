@@ -34,7 +34,9 @@ export class ChatPage extends Block {
   static cName = "ChatPage";
 
   constructor() {
-    super({
+    super();
+
+    this.setPropsWithChildren({
       overlay,
 
       chatToolbar: new ChatToolbar({
@@ -47,7 +49,7 @@ export class ChatPage extends Block {
         overlay: overlay,
       }),
 
-      modals: offcanvasBodyModals,
+      modals: offcanvasBodyModals.call(this),
 
       ...({
         header_link: `<a href="/profile" class="link-icon">Профиль ${renderIcon({ value: mdiChevronRight })}</a>`,
@@ -107,6 +109,8 @@ export class ChatPage extends Block {
   }
 
   getForm = () => Form.getFormParts(this.refs.formRef, MessagesFooter.isForm);
+
+  getRefs = () => this.refs;
 
   render() {
     return `

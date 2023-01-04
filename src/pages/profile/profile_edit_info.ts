@@ -4,7 +4,6 @@ import { Form, templateUserInfo, TUserInfoProps } from "entities";
 
 import { Block } from "shared/core";
 import { Avatar, Button } from "shared/ui";
-import { _ } from "shared/utils/utils";
 
 export class ProfileEditInfoPage extends Block<TUserInfoProps> {
   static cName = "ProfileEditInfoPage";

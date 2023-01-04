@@ -5,7 +5,9 @@
       <h2 class="modal__title">{{{title}}}</h2>
       {{{btnClose}}}
     </div>
-    <div class="modal__header-bottom">{{{header}}}</div>
+    {{#if header}}
+      <div class="modal__header-bottom">{{{header}}}</div>
+    {{/if}}
   </header>
 
   {{#if preBody}}

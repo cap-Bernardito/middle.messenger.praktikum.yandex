@@ -1,5 +1,3 @@
-import { Block } from "shared/core/block";
-
 declare global {
   export module "*.hbs" {
     const source: string;

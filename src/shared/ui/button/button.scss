@@ -7,7 +7,7 @@
   padding: $spacer * 3 $spacer * 10;
 
   border: none;
-  border-radius: $border-radius-sm;
+  border-radius: $border-radius-xs;
   outline: none;
   box-shadow: none;
 
@@ -71,6 +71,20 @@
       &-success {
         background: $success;
       }
+    }
+  }
+
+  &-form-modal {
+    padding: 1rem 2rem;
+
+    font-size: $h2;
+    font-weight: 600;
+    color: $blue-100;
+
+    background: transparent;
+
+    &:hover {
+      background: $gray-700;
     }
   }
 }

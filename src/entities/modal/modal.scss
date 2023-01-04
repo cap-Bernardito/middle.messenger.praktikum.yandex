@@ -75,4 +75,10 @@
     transform: translate(-50%, 0);
     opacity: 1;
   }
+
+  .form {
+    &__button {
+      margin-top: 2rem;
+    }
+  }
 }

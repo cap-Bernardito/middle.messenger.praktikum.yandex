@@ -16,9 +16,14 @@
 
     display: block;
 
+    font-weight: 500;
     color: $gray-500;
 
     transition: all 0.3s;
+
+    &:has(~ .form-control__error.active) {
+      color: $danger !important;
+    }
   }
 
   &__input {
@@ -29,7 +34,7 @@
 
     background: transparent;
     border: none;
-    border-bottom: 0.1rem solid $gray-700;
+    border-bottom: 0.1rem solid $gray-600;
 
     &:not([value=""]),
     &_filled,
@@ -38,12 +43,16 @@
 
       & + #{$root}__label {
         transform: translate(-8%, -150%) scale(0.9);
-        color: $gray-400;
+        color: $blue-100;
       }
     }
 
     &:focus {
-      border-color: $gray-400;
+      border-color: $blue-100;
+    }
+
+    &:has(~ .form-control__error.active) {
+      border-color: $danger !important;
     }
   }
 

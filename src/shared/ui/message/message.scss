@@ -27,7 +27,7 @@
 
   &::before,
   &::after {
-    content: '';
+    content: "";
 
     position: absolute;
     right: 100%;
@@ -128,7 +128,7 @@
     @include media-bp-down(desktop) {
       &::before,
       &::after {
-        content: '';
+        content: "";
         right: unset;
         left: 100%;
       }

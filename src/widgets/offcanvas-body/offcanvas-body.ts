@@ -1,3 +1,4 @@
+import { ProfileEditAvatarForm } from "widgets/profile_edit_avatar-form";
 import { ProfileEditInfoForm } from "widgets/profile_edit_info-form";
 import { ProfileEditPasswordForm } from "widgets/profile_edit_password-form";
 
@@ -35,6 +36,17 @@ const changeUserPasswordModalButton = new Button({
   className: "btn-menu",
 });
 
+const getProfileModalHeader = () =>
+  new UserCard({
+    avatar: new Avatar({ className: "avatar_md mr-3", img: img }),
+    name: "<div class='text-lg'>Вася Василёк</div>",
+    message: new List({
+      items: ["<span class='text-sm'>@BuHHeTy</span>"].map((entry) => new ListItem({ body: entry })),
+      className: "list-modal-header",
+    }),
+    className: "not-interactive",
+  });
+
 export const offcanvasBodyModals = function (this: { getRefs: () => TRefs }) {
   return [
     new Modal({
@@ -42,15 +54,7 @@ export const offcanvasBodyModals = function (this: { getRefs: () => TRefs }) {
       runButton: modalInfo,
       overlay: overlay,
       title: "Настройки",
-      header: new UserCard({
-        avatar: new Avatar({ className: "avatar_md mr-3", img: img }),
-        name: "<div class='text-lg'>Вася Василёк</div>",
-        message: new List({
-          items: ["<span class='text-sm'>@BuHHeTy</span>"].map((entry) => new ListItem({ body: entry })),
-          className: "list-modal-header",
-        }),
-        className: "not-interactive",
-      }),
+      header: getProfileModalHeader(),
       preBody: new ListV1({
         items: [
           {
@@ -89,24 +93,22 @@ export const offcanvasBodyModals = function (this: { getRefs: () => TRefs }) {
     new Modal({
       showBackButton: true,
       runButton: changeUserAvatarModalButton,
-      body: "Изменить аватар",
       overlay: overlay,
       title: "Изменить аватар",
+      header: getProfileModalHeader(),
+      ref: "changeUserAvatardModal",
+      body: ProfileEditAvatarForm.call(this, (refs) => Form.getFormParts(refs.changeUserAvatardModal.refs.formRef), {
+        className: "px-3 pt-3 pb-0",
+        button: new Button({ value: "Сохранить", className: "btn-form-modal" }),
+        decorated: false,
+      }),
     }),
     new Modal({
       showBackButton: true,
       runButton: changeUserInfoModalButton,
       overlay: overlay,
       title: "Изменить данные",
-      header: new UserCard({
-        avatar: new Avatar({ className: "avatar_md mr-3", img: img }),
-        name: "<div class='text-lg'>Вася Василёк</div>",
-        message: new List({
-          items: ["<span class='text-sm'>@BuHHeTy</span>"].map((entry) => new ListItem({ body: entry })),
-          className: "list-modal-header",
-        }),
-        className: "not-interactive",
-      }),
+      header: getProfileModalHeader(),
       ref: "changeUserInfoModal",
       body: ProfileEditInfoForm.call(this, (refs) => Form.getFormParts(refs.changeUserInfoModal.refs.formRef), {
         className: "px-3 pt-3 pb-0",
@@ -119,15 +121,7 @@ export const offcanvasBodyModals = function (this: { getRefs: () => TRefs }) {
       runButton: changeUserPasswordModalButton,
       overlay: overlay,
       title: "Изменить пароль",
-      header: new UserCard({
-        avatar: new Avatar({ className: "avatar_md mr-3", img: img }),
-        name: "<div class='text-lg'>Вася Василёк</div>",
-        message: new List({
-          items: ["<span class='text-sm'>@BuHHeTy</span>"].map((entry) => new ListItem({ body: entry })),
-          className: "list-modal-header",
-        }),
-        className: "not-interactive",
-      }),
+      header: getProfileModalHeader(),
       ref: "changeUserPasswordModal",
       body: ProfileEditPasswordForm.call(this, (refs) => Form.getFormParts(refs.changeUserPasswordModal.refs.formRef), {
         className: "px-3 pt-3 pb-0",

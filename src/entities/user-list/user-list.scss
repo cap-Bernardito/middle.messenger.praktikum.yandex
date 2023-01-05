@@ -4,23 +4,15 @@
   display: flex;
   flex-direction: column;
   max-height: 100vh;
-  padding: $spacer 0 $spacer $spacer;
+  padding-bottom: 2rem;
 
   &__header {
-    padding-bottom: $spacer * 5;
+    margin-bottom: $spacer;
+    padding: 1rem;
   }
 
   &__body {
     overflow-x: hidden;
     overflow-y: auto;
-  }
-}
-
-.list-header {
-  &__link {
-    margin-bottom: $spacer * 3;
-    padding: $spacer * 2 0;
-    color: $secondary;
-    text-align: right;
   }
 }

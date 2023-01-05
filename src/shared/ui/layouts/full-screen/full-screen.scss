@@ -3,30 +3,25 @@
 .layout-full-screen {
   $root: &;
 
+  position: relative;
   display: flex;
   min-height: 100vh;
 
+  &__toolbar {
+    position: relative;
+    flex: 0 0 7.2rem;
+    max-width: 7.2rem;
+  }
+
   &__secondary {
     position: relative;
-    flex: 0 0 31rem;
-    margin-right: 0.6rem;
-    background: $gray-100;
-
-    &::before {
-      content: "";
-
-      position: absolute;
-      top: 0;
-      right: -0.5rem;
-
-      height: 100%;
-
-      border-right: 0.3rem solid $gray-200;
-    }
+    flex: 0 1 31rem;
+    max-width: 31rem;
+    background: $gray-800;
   }
 
   &__primary {
-    flex: 1 1 1rem;
+    flex: 1 1 31rem;
     min-height: 100%;
   }
 }

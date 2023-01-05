@@ -1,0 +1,92 @@
+@use "../../app/styles/variables.scss" as *;
+
+.modal {
+  pointer-events: none;
+
+  position: absolute;
+  z-index: $z-ofcanvas;
+  top: 5rem;
+  left: 50%;
+  transform: translate(-50%, -5000%);
+
+  overflow: hidden;
+
+  width: 100%;
+  max-width: 390px;
+  margin-right: $spacer * 2;
+  margin-left: $spacer * 2;
+
+  opacity: 0;
+  background: $gray-700;
+  border-radius: $border-radius-sm;
+  box-shadow: 0 0 1.5rem rgb(0 0 0 / 80%);
+
+  transition: opacity 0.2s;
+
+  &__main {
+    overflow-x: hidden;
+    overflow-y: auto;
+    max-height: calc(100vh - 5rem - 20rem);
+  }
+
+  &__header {
+    margin-bottom: 1rem;
+    padding: 2rem;
+    background: $gray-800;
+
+    &-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+    }
+
+    &-bottom {
+      margin-top: $spacer * 5;
+    }
+  }
+
+  &__title {
+    margin: 0;
+    font-size: $h1;
+  }
+
+  &__close.btn,
+  &__back.btn {
+    padding: 0;
+    color: $gray-500;
+    background: transparent;
+  }
+
+  &__close.btn {
+    margin-left: auto;
+  }
+
+  &__back.btn {
+    margin-right: 2.5rem;
+  }
+
+  &__body,
+  &__preBody,
+  &__postBody {
+    position: relative;
+    padding: 2rem;
+    background: $gray-800;
+  }
+
+  &__preBody + &__body,
+  &__body + &__postBody {
+    margin-top: 1rem;
+  }
+
+  &.active {
+    pointer-events: auto;
+    transform: translate(-50%, 0);
+    opacity: 1;
+  }
+
+  .form {
+    &__button {
+      margin-top: 2rem;
+    }
+  }
+}

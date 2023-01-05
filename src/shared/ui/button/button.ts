@@ -4,11 +4,11 @@ import source from "./button.hbs";
 
 import "./button.scss";
 
-export type TButtonProps = {
+export type TButtonProps = TPropsWithEvents<{
   value: string;
   htmlType?: "submit" | "reset" | "button";
   className?: string;
-};
+}>;
 
 export class Button extends Block<TButtonProps> {
   static cName = "Button";

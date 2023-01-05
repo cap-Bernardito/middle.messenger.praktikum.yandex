@@ -8,11 +8,11 @@
   &__item {
     display: flex;
     justify-content: space-between;
-    margin-bottom: $spacer * 2;
-    padding-bottom: $spacer * 2;
 
     &:not(:last-child) {
-      border-bottom: 1px solid $gray-300;
+      margin-bottom: $spacer * 2;
+      padding-bottom: $spacer * 2;
+      border-bottom: 1px solid $gray-700;
     }
 
     span {

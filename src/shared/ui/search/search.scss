@@ -2,29 +2,21 @@
 
 .search {
   position: relative;
-  margin: 0 $spacer * 1.5;
 
   &__input {
     width: 100%;
-    padding: $spacer * 3 $spacer * 2 $spacer * 3 $spacer * 8;
+    padding: $spacer * 2 $spacer * 4;
 
-    background: $gray-300;
+    color: #fff;
+
+    background: $gray-700;
+    border: none;
     border-color: transparent;
-    border-radius: $border-radius-sm;
+    border-radius: 0.2rem;
 
     &:focus {
       border-color: $primary !important;
       outline: none;
     }
-  }
-
-  &__icon {
-    position: absolute;
-    top: 50%;
-    left: 4px;
-    transform: translateY(-50%);
-
-    line-height: 1;
-    color: $gray-500;
   }
 }

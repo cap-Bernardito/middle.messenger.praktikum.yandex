@@ -1,0 +1,25 @@
+@use "../../../app/styles/variables.scss" as *;
+
+.list {
+  $root: &;
+
+  margin: 0;
+  padding: 0;
+  list-style: none;
+
+  &-modal-header {
+    #{$root}__item {
+      &:not(:last-child) {
+        margin-bottom: 0.3rem;
+      }
+    }
+  }
+
+  &-menu {
+    #{$root}__item {
+      &:not(:last-child) {
+        margin-bottom: 1.4em;
+      }
+    }
+  }
+}

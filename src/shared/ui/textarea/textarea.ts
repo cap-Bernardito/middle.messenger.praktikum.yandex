@@ -1,4 +1,5 @@
 import { Block } from "shared/core";
+import { formProcess } from "shared/utils/form-processing";
 
 import source from "./textarea.hbs";
 
@@ -20,6 +21,18 @@ export class Textarea extends Block<TTextareaProps> {
 
   constructor({ ...props }: TTextareaProps) {
     super(props);
+  }
+
+  check(event: Event) {
+    formProcess.field.check(event, this);
+
+    return this;
+  }
+
+  setValue(event: Event) {
+    formProcess.field.setValue(event, this);
+
+    return this;
   }
 
   render() {

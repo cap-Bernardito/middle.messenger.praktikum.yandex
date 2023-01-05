@@ -1,5 +1,8 @@
+import { Form } from "entities";
+
 import { Block } from "shared/core";
-import { TButtonProps, TTextareaProps } from "shared/ui";
+import { Button, Textarea } from "shared/ui";
+import { formProcess } from "shared/utils/form-processing";
 
 import source from "./messages-footer.hbs";
 
@@ -8,14 +11,18 @@ import "./messages-footer.scss";
 export type TMessagesFooterProps = TPropsWithEvents<
   TPropsWithRef<{
     file: string;
-    text: Block<TTextareaProps>;
-    button: Block<TButtonProps>;
+    text: Textarea;
+    button: Button;
     onSubmit?: (event: Event) => void;
   }>
 >;
 
 export class MessagesFooter extends Block<TMessagesFooterProps> {
   static cName = "MessagesFooter";
+
+  static isForm(block: Block | undefined): block is Form {
+    return block instanceof MessagesFooter;
+  }
 
   constructor({ onSubmit, ...props }: TMessagesFooterProps) {
     super({
@@ -24,6 +31,10 @@ export class MessagesFooter extends Block<TMessagesFooterProps> {
         submit: onSubmit,
       },
     });
+  }
+
+  check(event: Event, fields: TFormFields[]) {
+    return formProcess.form.check(event, fields);
   }
 
   render() {

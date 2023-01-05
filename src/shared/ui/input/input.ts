@@ -1,4 +1,5 @@
 import { Block } from "shared/core";
+import { formProcess } from "shared/utils/form-processing";
 
 import source from "./input.hbs";
 
@@ -22,6 +23,18 @@ export class Input extends Block<TInputProps> {
 
   constructor({ type = "text", ...props }: TInputProps) {
     super({ type, ...props });
+  }
+
+  check(event: Event) {
+    formProcess.field.check(event, this);
+
+    return this;
+  }
+
+  setValue(event: Event) {
+    formProcess.field.setValue(event, this);
+
+    return this;
   }
 
   render() {

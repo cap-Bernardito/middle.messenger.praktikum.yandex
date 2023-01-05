@@ -1,5 +1,3 @@
-import { Block } from "shared/core/block";
-
 declare global {
   export module "*.hbs" {
     const source: string;
@@ -16,17 +14,15 @@ declare global {
     export default source;
   }
 
-  export type BlockConstructable<Props = any> = {
-    cName: string;
-    new (props: Props): Block;
-  };
-
   export type TNullable<T> = T | null;
 
   export type TKeys<T extends Record<string, unknown>> = keyof T;
   export type TValues<T extends Record<string, unknown>> = T[TKeys<T>];
 
-  export type TEvents = Record<Event["type"], ((event: Event) => void) | undefined>;
+  export type TEvents = Record<
+    Event["type"],
+    (((event: Event) => void) | undefined) | (((event: Event) => void) | undefined)[]
+  >;
   export type TPropsWithEvents<T extends Record<string, unknown>> = T & {
     events?: TEvents;
   };

@@ -1,49 +1,26 @@
-import { Form } from "entities/form";
-import { templateUserInfo, TUserInfoProps } from "entities/user-info";
+import { ProfileEditAvatarForm } from "widgets/profile_edit_avatar-form";
+
+import { Form, templateUserInfo, TUserInfoProps } from "entities";
 
 import { Block } from "shared/core";
-import { Avatar } from "shared/ui/avatar";
-import { Button } from "shared/ui/button";
-import { Input, TInputProps } from "shared/ui/input";
-import { formProcess } from "shared/utils/form-processing";
+import { Avatar, Button } from "shared/ui";
 
 export class ProfileAvatarPage extends Block<TUserInfoProps> {
   static cName = "ProfileAvatarPage";
 
   constructor() {
-    super({
-      avatar: new Avatar(),
-      info: new Form({
-        title: "Загрузите файл",
-        onSubmit: (event) => {
-          const { isFormValid, formData } = formProcess.form.check(event, Object.values(this.getFormInputs()));
+    super();
 
-          console.log(`Form is${isFormValid ? "" : " not"} valid. FormData: `, formData);
-        },
-        ref: "form",
-        fields: (
-          [
-            {
-              label: "Выбрать файл на компьютере",
-              name: "avatar",
-              type: "file",
-              className: "form-control_file",
-              ref: "fileInput",
-              onBlur: (event) => {
-                formProcess.field.setValue(event, this.getFormInputs().fileInput);
-              },
-            },
-          ] as TInputProps[]
-        ).map((inputProps) => new Input(inputProps)),
-        button: new Button({ value: "Поменять", className: "btn-primary btn-block" }),
+    this.setPropsWithChildren({
+      avatar: new Avatar(),
+      info: ProfileEditAvatarForm.call(this, (refs) => Form.getFormParts(refs.formRef), {
+        button: new Button({ value: "Изменить пароль", title: "Изменить пароль", className: "btn-primary btn-block" }),
         decorated: false,
       }),
     });
   }
 
-  getFormInputs = () => {
-    return this.refs.form.refs || {};
-  };
+  getRefs = () => this.refs;
 
   render() {
     return `

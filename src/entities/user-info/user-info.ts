@@ -1,10 +1,10 @@
 import { Block } from "shared/core";
-import { TAvatarProps } from "shared/ui";
+import { Avatar } from "shared/ui";
 
 import source from "./user-info.hbs";
 
 export type TUserInfoProps = {
-  avatar?: Block<TAvatarProps>;
+  avatar?: Avatar;
   title?: string;
   info?: Block | string;
   controls?: Block | string;

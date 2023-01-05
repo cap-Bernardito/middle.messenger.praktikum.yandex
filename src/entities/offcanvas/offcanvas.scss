@@ -1,0 +1,27 @@
+@use "../../app/styles/variables.scss" as *;
+
+.offcanvas {
+  position: absolute;
+  z-index: $z-ofcanvas;
+  top: 0;
+  right: 100%;
+  bottom: 0;
+
+  width: 280px;
+
+  transition: transform 0.2s;
+
+  &__body {
+    position: relative;
+    z-index: $z-ofcanvas;
+
+    height: 100%;
+
+    background: $gray-800;
+    box-shadow: 0 0 2.5rem rgb(0 0 0 / 75%);
+  }
+
+  &.active {
+    transform: translateX(100%);
+  }
+}

@@ -1,7 +1,7 @@
-<div class="message {{#if (isDate type) }}message_date{{/if}}{{#if (isOut type) }}message_out{{/if}}{{#if (isIn type) }}message_in{{/if}}
+<div class="message {{#if (isDate type) }}message_date-seperator{{/if}}{{#if (isOut type) }}message_out{{/if}}{{#if (isIn type) }}message_in{{/if}}
 ">
   {{#if (isDate type) }}
-    {{date}}
+    <span>{{date}}</span>
   {{else}}
     {{text}}
     <div class="message__date">

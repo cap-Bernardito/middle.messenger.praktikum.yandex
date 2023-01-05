@@ -1,9 +1,10 @@
 <input
   class="form-control__input {{classNameInput}}"
   type="{{type}}"
-  placeholder="{{placeholder}}"
   name="{{name}}"
+  id="{{id}}"
   value="{{value}}"
+  {{#if placeholder}} placeholder="{{placeholder}}" {{/if}}
   {{#if required}} required {{/if}}
   {{#if disabled}} disabled {{/if}}
 >

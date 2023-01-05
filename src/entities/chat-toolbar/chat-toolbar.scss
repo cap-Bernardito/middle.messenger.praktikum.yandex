@@ -1,0 +1,15 @@
+@use "../../app/styles/variables.scss" as *;
+
+.chat-toolbar {
+  display: flex;
+  flex-direction: column;
+
+  &__button {
+    color: $gray-500;
+    background: transparent;
+
+    &-hamburger.btn {
+      padding: 1.2rem 0;
+    }
+  }
+}

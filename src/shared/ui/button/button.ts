@@ -4,17 +4,18 @@ import source from "./button.hbs";
 
 import "./button.scss";
 
-export type TButtonProps = {
+export type TButtonProps = TPropsWithEvents<{
   value: string;
+  title: string;
   htmlType?: "submit" | "reset" | "button";
   className?: string;
-};
+}>;
 
 export class Button extends Block<TButtonProps> {
   static cName = "Button";
 
-  constructor({ value = "", className = "", htmlType = "submit" }: TButtonProps) {
-    super({ value, className, htmlType });
+  constructor({ htmlType = "submit", ...props }: TButtonProps) {
+    super({ ...props, htmlType });
   }
 
   render() {

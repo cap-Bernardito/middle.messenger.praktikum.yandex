@@ -13,11 +13,12 @@
   &__inner {
     display: flex;
     flex-direction: column;
-    gap: $spacer * 5;
     justify-content: flex-end;
+    padding: $spacer * 4;
 
-    margin-right: $spacer * 4;
-    padding-bottom: $spacer * 4;
+    > div:not(:last-child) {
+      margin-bottom: $spacer * 2;
+    }
   }
 
   &__placeholder {

@@ -1,9 +1,7 @@
-import { Form } from "entities/form";
+import { Form } from "entities";
 
 import { Block } from "shared/core";
-import { Button } from "shared/ui/button";
-import { Input, TInputProps } from "shared/ui/input";
-import { formProcess } from "shared/utils/form-processing";
+import { Button, Input, TInputProps } from "shared/ui";
 
 import source from "./login.hbs";
 
@@ -14,51 +12,48 @@ export class LoginPage extends Block {
     super({
       body: new Form({
         onSubmit: (event) => {
-          const { isFormValid, formData } = formProcess.form.check(event, Object.values(this.getFormInputs()));
+          const { isFormValid, formData } = this.getForm().form.check(event, Object.values(this.getForm().fields));
 
           console.log(`Form is${isFormValid ? "" : " not"} valid. FormData: `, formData);
         },
-        ref: "loginForm",
         title: "Вход",
         fields: (
           [
             {
               label: "Логин",
               name: "login",
+              required: true,
               ref: "loginInput",
               onInput: (event) => {
-                formProcess.field.check(event, this.getFormInputs().loginInput);
+                (this.getForm().fields.loginInput as Input).check(event).setValue(event);
               },
               onBlur: (event) => {
-                formProcess.field.check(event, this.getFormInputs().loginInput);
-                formProcess.field.setValue(event, this.getFormInputs().loginInput);
+                (this.getForm().fields.loginInput as Input).check(event).setValue(event);
               },
             },
             {
               label: "Пароль",
               type: "password",
               name: "password",
+              required: true,
               ref: "passwordInput",
               onInput: (event) => {
-                formProcess.field.check(event, this.getFormInputs().passwordInput);
+                (this.getForm().fields.passwordInput as Input).check(event).setValue(event);
               },
               onBlur: (event) => {
-                formProcess.field.check(event, this.getFormInputs().passwordInput);
-                formProcess.field.setValue(event, this.getFormInputs().passwordInput);
+                (this.getForm().fields.passwordInput as Input).check(event).setValue(event);
               },
             },
           ] as TInputProps[]
         ).map((inputProps) => new Input(inputProps)),
-        button: new Button({ value: "Войти", className: "btn-primary btn-block" }),
-        meta: '<a href="/register" class="text-sm">Зарегистрироваться</a>',
+        button: new Button({ value: "Войти", title: "Войти", className: "btn-primary btn-block" }),
+        meta: '<a href="/register">Зарегистрироваться</a>',
         decorated: true,
       }),
     });
   }
 
-  getFormInputs = () => {
-    return this.refs.loginForm.refs || {};
-  };
+  getForm = () => Form.getFormParts(this.refs.formRef);
 
   render() {
     return source;

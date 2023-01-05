@@ -6,11 +6,13 @@ type TInputFieldProps = TPropsWithEvents<{
   onInput?: (event: Event) => void;
   onFocus?: (event: Event) => void;
   onBlur?: (event: Event) => void;
-  name: string;
+  id: string;
   type?: "text" | "number" | "password" | "email" | "tel" | "file";
   value?: string;
   placeholder?: string;
   classNameInput?: string;
+  required?: boolean;
+  disabled?: boolean;
 }>;
 
 export class InputField extends Block<TInputFieldProps> {

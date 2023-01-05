@@ -1,9 +1,7 @@
 import { Form } from "entities/form";
 
 import { Block } from "shared/core";
-import { Button } from "shared/ui/button";
-import { Input, TInputProps } from "shared/ui/input";
-import { formProcess } from "shared/utils/form-processing";
+import { Button, Input, TInputProps } from "shared/ui";
 
 import source from "./register.hbs";
 
@@ -14,11 +12,10 @@ export class RegisterPage extends Block {
     super({
       body: new Form({
         onSubmit: (event) => {
-          const { isFormValid, formData } = formProcess.form.check(event, Object.values(this.getFormInputs()));
+          const { isFormValid, formData } = this.getForm().form.check(event, Object.values(this.getForm().fields));
 
           console.log(`Form is${isFormValid ? "" : " not"} valid. FormData: `, formData);
         },
-        ref: "registerForm",
         title: "Регистрация",
         fields: (
           [
@@ -26,102 +23,104 @@ export class RegisterPage extends Block {
               label: "Почта",
               name: "email",
               type: "email",
+              required: true,
               ref: "emailInput",
               onInput: (event) => {
-                formProcess.field.check(event, this.getFormInputs().emailInput);
+                this.getForm().fields.emailInput.check(event).setValue(event);
               },
               onBlur: (event) => {
-                formProcess.field.check(event, this.getFormInputs().emailInput);
-                formProcess.field.setValue(event, this.getFormInputs().emailInput);
+                this.getForm().fields.emailInput.check(event).setValue(event);
               },
             },
             {
               label: "Логин",
               name: "login",
+              required: true,
               ref: "loginInput",
               onInput: (event) => {
-                formProcess.field.check(event, this.getFormInputs().loginInput);
+                this.getForm().fields.loginInput.check(event).setValue(event);
               },
               onBlur: (event) => {
-                formProcess.field.check(event, this.getFormInputs().loginInput);
-                formProcess.field.setValue(event, this.getFormInputs().loginInput);
+                this.getForm().fields.loginInput.check(event).setValue(event);
               },
             },
             {
               label: "Имя",
               name: "first_name",
+              required: true,
               ref: "first_nameInput",
               onInput: (event) => {
-                formProcess.field.check(event, this.getFormInputs().first_nameInput);
+                this.getForm().fields.first_nameInput.check(event).setValue(event);
               },
               onBlur: (event) => {
-                formProcess.field.check(event, this.getFormInputs().first_nameInput);
-                formProcess.field.setValue(event, this.getFormInputs().first_nameInput);
+                this.getForm().fields.first_nameInput.check(event).setValue(event);
               },
             },
             {
               label: "Фамилия",
               name: "second_name",
+              required: true,
               ref: "second_nameInput",
               onInput: (event) => {
-                formProcess.field.check(event, this.getFormInputs().second_nameInput);
+                this.getForm().fields.second_nameInput.check(event).setValue(event);
               },
               onBlur: (event) => {
-                formProcess.field.check(event, this.getFormInputs().second_nameInput);
-                formProcess.field.setValue(event, this.getFormInputs().second_nameInput);
+                this.getForm().fields.second_nameInput.check(event).setValue(event);
               },
             },
             {
               label: "Телефон",
               name: "phone",
               type: "tel",
+              required: true,
               ref: "phoneInput",
               onInput: (event) => {
-                formProcess.field.check(event, this.getFormInputs().phoneInput);
+                this.getForm().fields.phoneInput.check(event).setValue(event);
               },
               onBlur: (event) => {
-                formProcess.field.check(event, this.getFormInputs().phoneInput);
-                formProcess.field.setValue(event, this.getFormInputs().phoneInput);
+                this.getForm().fields.phoneInput.check(event).setValue(event);
               },
             },
             {
               label: "Пароль",
               type: "password",
               name: "password",
+              required: true,
               ref: "passwordInput",
               onInput: (event) => {
-                formProcess.field.check(event, this.getFormInputs().passwordInput);
+                this.getForm().fields.passwordInput.check(event).setValue(event);
               },
               onBlur: (event) => {
-                formProcess.field.check(event, this.getFormInputs().passwordInput);
-                formProcess.field.setValue(event, this.getFormInputs().passwordInput);
+                this.getForm().fields.passwordInput.check(event).setValue(event);
               },
             },
             {
               label: "Пароль (ещё раз)",
               type: "password",
               name: "password_confirm",
+              required: true,
               ref: "password_confirmInput",
               onInput: (event) => {
-                formProcess.field.check(event, this.getFormInputs().password_confirmInput);
+                this.getForm().fields.password_confirmInput.check(event).setValue(event);
               },
               onBlur: (event) => {
-                formProcess.field.check(event, this.getFormInputs().password_confirmInput);
-                formProcess.field.setValue(event, this.getFormInputs().password_confirmInput);
+                this.getForm().fields.password_confirmInput.check(event).setValue(event);
               },
             },
           ] as TInputProps[]
         ).map((inputProps) => new Input(inputProps)),
-        button: new Button({ value: "Зарегистрироваться", className: "btn-primary btn-block" }),
-        meta: '<a href="/login" class="text-sm">Войти</a>',
+        button: new Button({
+          value: "Зарегистрироваться",
+          title: "Зарегистрироваться",
+          className: "btn-primary btn-block",
+        }),
+        meta: '<a href="/login">Войти</a>',
         decorated: true,
       }),
     });
   }
 
-  getFormInputs = () => {
-    return this.refs.registerForm.refs || {};
-  };
+  getForm = () => Form.getFormParts(this.refs.formRef);
 
   render() {
     return source;

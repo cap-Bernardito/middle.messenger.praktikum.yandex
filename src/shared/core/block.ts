@@ -1,6 +1,8 @@
 import Handlebars from "handlebars";
 import { nanoid } from "nanoid";
 
+import { _ } from "shared/utils/utils";
+
 import { EventBus } from ".";
 
 type EventBusEvents = TValues<typeof Block.EVENTS>;
@@ -13,12 +15,12 @@ export class Block<P extends Record<string, any> = any> {
   } as const;
 
   public id = nanoid(8);
-  public refs: { [key: string]: Block } = {};
+  public refs: TRefs = {};
   public readonly props: P;
+  public readonly childrenFromProps: { [propName: string]: Block } = {};
 
   protected _element = this._createDocumentElement("div");
   protected _childrenForReplace: { [id: string]: Block } = {};
-  protected _childrenFromProps: { [propName: string]: Block } = {};
 
   eventBus: () => EventBus<EventBusEvents>;
 
@@ -31,7 +33,7 @@ export class Block<P extends Record<string, any> = any> {
 
     this.getStateFromProps(props);
 
-    this._childrenFromProps = children;
+    this.childrenFromProps = children;
     this.refs = refs;
 
     this.props = this._makePropsProxy(props || ({} as P));
@@ -115,8 +117,36 @@ export class Block<P extends Record<string, any> = any> {
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   componentDidUpdate(oldProps: P, newProps: P) {
-    return true;
+    const oldPr = Object.entries(oldProps);
+    const newPr = Object.entries(newProps);
+
+    if (oldPr.length !== newPr.length) {
+      return true;
+    }
+
+    // TODO: улучшить проверку в глубину
+    for (const [key, value] of oldPr) {
+      if (newProps[key] !== value) {
+        return true;
+      }
+    }
+
+    return false;
   }
+
+  setPropsWithChildren = (nextProps: P) => {
+    if (!nextProps) {
+      return;
+    }
+
+    const { children, props, refs } = this._getChildren(nextProps);
+
+    Object.assign(this.childrenFromProps, children);
+    Object.assign(this.refs, refs);
+    Object.assign(this.props, props);
+
+    this._render();
+  };
 
   setProps = (nextProps: P) => {
     if (!nextProps) {
@@ -199,32 +229,34 @@ export class Block<P extends Record<string, any> = any> {
     return document.createElement(tagName);
   }
 
-  _removeEvents() {
+  _handleEvents(isRemove = false) {
     const events: TEvents = this.props.events;
 
     if (!events) {
       return;
     }
 
-    Object.entries(events).forEach(([event, listener]) => {
-      if (listener) {
-        this._element.removeEventListener(event, listener);
-      }
-    });
+    for (const [event, listener] of Object.entries(events)) {
+      const listeners = Array.isArray(listener) ? listener : [listener];
+
+      listeners.forEach((listener) => {
+        if (listener) {
+          if (isRemove) {
+            this._element.removeEventListener(event, listener);
+          } else {
+            this._element.addEventListener(event, listener);
+          }
+        }
+      });
+    }
+  }
+
+  _removeEvents() {
+    this._handleEvents(true);
   }
 
   _addEvents() {
-    const events: TEvents = this.props.events;
-
-    if (!events) {
-      return;
-    }
-
-    Object.entries(events).forEach(([event, listener]) => {
-      if (listener) {
-        this._element.addEventListener(event, listener);
-      }
-    });
+    this._handleEvents();
   }
 
   _compile(): HTMLElement {
@@ -233,7 +265,7 @@ export class Block<P extends Record<string, any> = any> {
 
     const stubs: Record<string, string | string[]> = {};
 
-    for (const [key, value] of Object.entries(this._childrenFromProps)) {
+    for (const [key, value] of Object.entries(this.childrenFromProps)) {
       if (Array.isArray(value)) {
         stubs[key] = [];
 
@@ -252,9 +284,7 @@ export class Block<P extends Record<string, any> = any> {
     }
 
     fragment.innerHTML = template({
-      ...this.state,
-      ...this.props,
-      ...stubs,
+      ..._.merge({ ...this.state }, { ...this.props }, stubs),
       children: this._childrenForReplace,
       refs: this.refs,
     });

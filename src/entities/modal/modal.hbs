@@ -1,0 +1,26 @@
+<div class="modal {{className}}">
+  <header class="modal__header">
+    <div class="modal__header-top">
+      {{#if showBackButton}}{{{backButton}}}{{/if}}
+      <h2 class="modal__title">{{{title}}}</h2>
+      {{{btnClose}}}
+    </div>
+    {{#if header}}
+      <div class="modal__header-bottom">{{{header}}}</div>
+    {{/if}}
+  </header>
+
+  <div class="modal__main custom-scroll">
+    {{#if preBody}}
+      <div class="modal__preBody">{{{preBody}}}</div>
+    {{/if}}
+
+    {{#if body}}
+      <div class="modal__body">{{{body}}}</div>
+    {{/if}}
+
+    {{#if postBody}}
+      <div class="modal__postBody">{{{postBody}}}</div>
+    {{/if}}
+  </div>
+</div>

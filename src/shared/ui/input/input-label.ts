@@ -4,7 +4,7 @@ import source from "./input-label.hbs";
 
 export type TInputLabelProps = {
   label: string;
-  name: string;
+  for: string;
 };
 
 export class InputLabel extends Block<TInputLabelProps> {

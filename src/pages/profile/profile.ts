@@ -1,8 +1,7 @@
-import { templateUserInfo, TUserInfoProps } from "entities/user-info";
+import { templateUserInfo, TUserInfoProps } from "entities";
 
 import { Block } from "shared/core";
-import { Avatar } from "shared/ui/avatar";
-import { ListV1, ListV1Item } from "shared/ui/list-v1";
+import { Avatar, ListV1, ListV1Item } from "shared/ui";
 
 export class ProfilePage extends Block<TUserInfoProps> {
   static cName = "ProfilePage";

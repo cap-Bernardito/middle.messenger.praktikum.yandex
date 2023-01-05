@@ -1,42 +1,26 @@
+import { ProfileEditAvatarForm } from "widgets/profile_edit_avatar-form";
+
 import { Form, templateUserInfo, TUserInfoProps } from "entities";
 
 import { Block } from "shared/core";
-import { Avatar, Button, Input, TInputProps } from "shared/ui";
+import { Avatar, Button } from "shared/ui";
 
 export class ProfileAvatarPage extends Block<TUserInfoProps> {
   static cName = "ProfileAvatarPage";
 
   constructor() {
-    super({
-      avatar: new Avatar(),
-      info: new Form({
-        title: "Загрузите файл",
-        onSubmit: (event) => {
-          const { isFormValid, formData } = this.getForm().form.check(event, Object.values(this.getForm().fields));
+    super();
 
-          console.log(`Form is${isFormValid ? "" : " not"} valid. FormData: `, formData);
-        },
-        fields: (
-          [
-            {
-              label: "Выбрать файл на компьютере",
-              name: "avatar",
-              type: "file",
-              className: "form-control_file",
-              ref: "fileInput",
-              onBlur: (event) => {
-                this.getForm().fields.fileInput.setValue(event);
-              },
-            },
-          ] as TInputProps[]
-        ).map((inputProps) => new Input(inputProps)),
-        button: new Button({ value: "Поменять", className: "btn-primary btn-block" }),
+    this.setPropsWithChildren({
+      avatar: new Avatar(),
+      info: ProfileEditAvatarForm.call(this, (refs) => Form.getFormParts(refs.formRef), {
+        button: new Button({ value: "Изменить пароль", className: "btn-primary btn-block" }),
         decorated: false,
       }),
     });
   }
 
-  getForm = () => Form.getFormParts(this.refs.formRef);
+  getRefs = () => this.refs;
 
   render() {
     return `

@@ -1,4 +1,5 @@
 import { ProfileEditInfoForm } from "widgets/profile_edit_info-form";
+import { ProfileEditPasswordForm } from "widgets/profile_edit_password-form";
 
 import { Form, Modal, Overlay, SettingsPanel, UserCard } from "entities";
 
@@ -93,7 +94,6 @@ export const offcanvasBodyModals = function (this: { getRefs: () => TRefs }) {
       title: "Изменить аватар",
     }),
     new Modal({
-      ref: "changeUserInfoModal",
       showBackButton: true,
       runButton: changeUserInfoModalButton,
       overlay: overlay,
@@ -107,6 +107,7 @@ export const offcanvasBodyModals = function (this: { getRefs: () => TRefs }) {
         }),
         className: "not-interactive",
       }),
+      ref: "changeUserInfoModal",
       body: ProfileEditInfoForm.call(this, (refs) => Form.getFormParts(refs.changeUserInfoModal.refs.formRef), {
         className: "px-3 pt-3 pb-0",
         button: new Button({ value: "Сохранить", className: "btn-form-modal" }),
@@ -116,9 +117,23 @@ export const offcanvasBodyModals = function (this: { getRefs: () => TRefs }) {
     new Modal({
       showBackButton: true,
       runButton: changeUserPasswordModalButton,
-      body: "Изменить пароль",
       overlay: overlay,
       title: "Изменить пароль",
+      header: new UserCard({
+        avatar: new Avatar({ className: "avatar_md mr-3", img: img }),
+        name: "<div class='text-lg'>Вася Василёк</div>",
+        message: new List({
+          items: ["<span class='text-sm'>@BuHHeTy</span>"].map((entry) => new ListItem({ body: entry })),
+          className: "list-modal-header",
+        }),
+        className: "not-interactive",
+      }),
+      ref: "changeUserPasswordModal",
+      body: ProfileEditPasswordForm.call(this, (refs) => Form.getFormParts(refs.changeUserPasswordModal.refs.formRef), {
+        className: "px-3 pt-3 pb-0",
+        button: new Button({ value: "Сохранить", className: "btn-form-modal" }),
+        decorated: false,
+      }),
     }),
   ];
 };

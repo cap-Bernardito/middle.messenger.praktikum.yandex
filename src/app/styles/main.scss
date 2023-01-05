@@ -76,7 +76,8 @@ $gaps: map.merge(
   }
 
   .mx-#{$index} {
-    margin-inline: $size !important;
+    margin-right: $size !important;
+    margin-left: $size !important;
   }
 
   .my-#{$index} {
@@ -105,7 +106,8 @@ $gaps: map.merge(
   }
 
   .px-#{$index} {
-    padding-inline: $size !important;
+    padding-right: $size !important;
+    padding-left: $size !important;
   }
 
   .py-#{$index} {
@@ -132,7 +134,8 @@ $gaps: map.merge(
 
 // Layout
 .container {
-  margin-inline: auto;
+  margin-right: auto;
+  margin-left: auto;
 }
 
 body,
@@ -234,8 +237,9 @@ a {
 .list-intro {
   display: table;
 
+  margin-right: auto;
   margin-bottom: 0;
-  margin-inline: auto;
+  margin-left: auto;
   padding-left: 0;
 
   font-size: $text-lg;

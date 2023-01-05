@@ -2,7 +2,6 @@
 
 .messages-footer {
   display: flex;
-  gap: $spacer * 2;
   align-items: end;
   justify-content: space-between;
 
@@ -12,6 +11,8 @@
 
   &__middle {
     flex: 1 1 100px;
+    margin-right: $spacer * 2;
+    margin-left: $spacer * 2;
   }
 
   &__right {

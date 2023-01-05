@@ -10,15 +10,17 @@
     {{/if}}
   </header>
 
-  {{#if preBody}}
-    <div class="modal__preBody">{{{preBody}}}</div>
-  {{/if}}
+  <div class="modal__main">
+    {{#if preBody}}
+      <div class="modal__preBody">{{{preBody}}}</div>
+    {{/if}}
 
-  {{#if body}}
-    <div class="modal__body">{{{body}}}</div>
-  {{/if}}
+    {{#if body}}
+      <div class="modal__body">{{{body}}}</div>
+    {{/if}}
 
-  {{#if postBody}}
-    <div class="modal__postBody">{{{postBody}}}</div>
-  {{/if}}
+    {{#if postBody}}
+      <div class="modal__postBody">{{{postBody}}}</div>
+    {{/if}}
+  </div>
 </div>

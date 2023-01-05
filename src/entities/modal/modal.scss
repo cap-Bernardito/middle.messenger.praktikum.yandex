@@ -13,6 +13,8 @@
 
   width: 100%;
   max-width: 390px;
+  margin-right: $spacer * 2;
+  margin-left: $spacer * 2;
 
   opacity: 0;
   background: $gray-700;
@@ -20,6 +22,12 @@
   box-shadow: 0 0 1.5rem rgb(0 0 0 / 80%);
 
   transition: opacity 0.2s;
+
+  &__main {
+    overflow-x: hidden;
+    overflow-y: auto;
+    max-height: calc(100vh - 5rem - 20rem);
+  }
 
   &__header {
     margin-bottom: 1rem;

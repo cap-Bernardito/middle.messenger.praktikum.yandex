@@ -4,11 +4,8 @@
   $root: &;
 
   display: flex;
-  gap: $spacer * 2;
   align-items: center;
-
   max-width: 100%;
-
   color: $gray-500;
 
   &:not(.not-interactive) {
@@ -38,6 +35,7 @@
 
   &__avatar {
     flex: 0 1 4.7rem;
+    margin-right: $spacer * 2;
   }
 
   &__body {

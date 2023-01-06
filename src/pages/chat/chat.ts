@@ -26,6 +26,7 @@ import { dateMock, messagesMock } from "./mockData";
 const hamburger = new Button({
   value: `${renderIcon({ value: mdiMenu })}`,
   className: "chat-toolbar__button chat-toolbar__button-hamburger",
+  title: "Открыть панель настроек",
 });
 
 const overlay = new Overlay();
@@ -75,7 +76,7 @@ export class ChatPage extends Block {
             message: "<span class='text-base text-gray-500'>был(а) 33 минуты назад</span>",
             className: "not-interactive",
           }),
-          right: `<a href="#" class="link-icon">${renderIcon({ value: mdiDotsVertical })}</a>`,
+          right: `<a href="#" title="Открыть меню" class="link-icon">${renderIcon({ value: mdiDotsVertical })}</a>`,
         }),
         body: new MessagesBody({
           messages: messagesMock
@@ -90,7 +91,9 @@ export class ChatPage extends Block {
 
             console.log(`Form is${isFormValid ? "" : " not"} valid. FormData: `, formData);
           },
-          file: `<a href="#" class="link-icon link-icon-clip">${renderIcon({ value: mdiPaperclip })}</a>`,
+          file: `<a href="#" title="Приложить файл" class="link-icon link-icon-clip">${renderIcon({
+            value: mdiPaperclip,
+          })}</a>`,
           text: new Textarea({
             name: "message",
             placeholder: "Написать собщение...",
@@ -102,6 +105,7 @@ export class ChatPage extends Block {
           button: new Button({
             value: `${renderIcon({ value: mdiSend })}`,
             className: "link-icon link-icon-submit",
+            title: "Отправить",
           }),
         }),
       } as TMessagesProps),

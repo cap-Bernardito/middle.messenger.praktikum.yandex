@@ -23,9 +23,11 @@ export function ProfileEditAvatarForm(
       [
         {
           label: "Выбрать файл на компьютере",
+          placeholder: "Выбрать файл на компьютере",
           name: "avatar",
           type: "file",
           className: "form-control_file",
+          required: true,
           ref: "fileInput",
           onBlur: (event) => {
             getForm(this.getRefs()).fields.fileInput.setValue(event);

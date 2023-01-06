@@ -22,6 +22,7 @@ export class LoginPage extends Block {
             {
               label: "Логин",
               name: "login",
+              required: true,
               ref: "loginInput",
               onInput: (event) => {
                 (this.getForm().fields.loginInput as Input).check(event).setValue(event);
@@ -34,6 +35,7 @@ export class LoginPage extends Block {
               label: "Пароль",
               type: "password",
               name: "password",
+              required: true,
               ref: "passwordInput",
               onInput: (event) => {
                 (this.getForm().fields.passwordInput as Input).check(event).setValue(event);
@@ -44,7 +46,7 @@ export class LoginPage extends Block {
             },
           ] as TInputProps[]
         ).map((inputProps) => new Input(inputProps)),
-        button: new Button({ value: "Войти", className: "btn-primary btn-block" }),
+        button: new Button({ value: "Войти", title: "Войти", className: "btn-primary btn-block" }),
         meta: '<a href="/register">Зарегистрироваться</a>',
         decorated: true,
       }),

@@ -23,6 +23,7 @@ export class RegisterPage extends Block {
               label: "Почта",
               name: "email",
               type: "email",
+              required: true,
               ref: "emailInput",
               onInput: (event) => {
                 this.getForm().fields.emailInput.check(event).setValue(event);
@@ -34,6 +35,7 @@ export class RegisterPage extends Block {
             {
               label: "Логин",
               name: "login",
+              required: true,
               ref: "loginInput",
               onInput: (event) => {
                 this.getForm().fields.loginInput.check(event).setValue(event);
@@ -45,6 +47,7 @@ export class RegisterPage extends Block {
             {
               label: "Имя",
               name: "first_name",
+              required: true,
               ref: "first_nameInput",
               onInput: (event) => {
                 this.getForm().fields.first_nameInput.check(event).setValue(event);
@@ -56,6 +59,7 @@ export class RegisterPage extends Block {
             {
               label: "Фамилия",
               name: "second_name",
+              required: true,
               ref: "second_nameInput",
               onInput: (event) => {
                 this.getForm().fields.second_nameInput.check(event).setValue(event);
@@ -68,6 +72,7 @@ export class RegisterPage extends Block {
               label: "Телефон",
               name: "phone",
               type: "tel",
+              required: true,
               ref: "phoneInput",
               onInput: (event) => {
                 this.getForm().fields.phoneInput.check(event).setValue(event);
@@ -80,6 +85,7 @@ export class RegisterPage extends Block {
               label: "Пароль",
               type: "password",
               name: "password",
+              required: true,
               ref: "passwordInput",
               onInput: (event) => {
                 this.getForm().fields.passwordInput.check(event).setValue(event);
@@ -92,6 +98,7 @@ export class RegisterPage extends Block {
               label: "Пароль (ещё раз)",
               type: "password",
               name: "password_confirm",
+              required: true,
               ref: "password_confirmInput",
               onInput: (event) => {
                 this.getForm().fields.password_confirmInput.check(event).setValue(event);
@@ -102,7 +109,11 @@ export class RegisterPage extends Block {
             },
           ] as TInputProps[]
         ).map((inputProps) => new Input(inputProps)),
-        button: new Button({ value: "Зарегистрироваться", className: "btn-primary btn-block" }),
+        button: new Button({
+          value: "Зарегистрироваться",
+          title: "Зарегистрироваться",
+          className: "btn-primary btn-block",
+        }),
         meta: '<a href="/login">Войти</a>',
         decorated: true,
       }),

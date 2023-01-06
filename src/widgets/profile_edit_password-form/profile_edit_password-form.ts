@@ -25,6 +25,7 @@ export function ProfileEditPasswordForm(
           label: "Старый пароль",
           name: "oldPassword",
           type: "password",
+          required: true,
           ref: "oldPasswordInput",
           onBlur: (event) => {
             getForm(this.getRefs()).fields.oldPasswordInput.setValue(event);
@@ -34,6 +35,7 @@ export function ProfileEditPasswordForm(
           label: "Новый пароль",
           name: "newPassword",
           type: "password",
+          required: true,
           ref: "newPasswordInput",
           onInput: (event) => {
             getForm(this.getRefs()).fields.newPasswordInput.check(event).setValue(event);
@@ -46,6 +48,7 @@ export function ProfileEditPasswordForm(
           label: "Повторите новый пароль",
           name: "password_confirm",
           type: "password",
+          required: true,
           ref: "password_confirmInput",
           onInput: (event) => {
             getForm(this.getRefs()).fields.password_confirmInput.check(event).setValue(event);

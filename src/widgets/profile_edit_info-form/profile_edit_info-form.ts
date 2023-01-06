@@ -26,6 +26,7 @@ export function ProfileEditInfoForm(
           value: "pochta@yandex.ru",
           name: "email",
           type: "email",
+          required: true,
           ref: "emailInput",
           onInput: (event) => {
             getForm(this.getRefs()).fields.emailInput.check(event).setValue(event);
@@ -38,6 +39,7 @@ export function ProfileEditInfoForm(
           label: "Логин",
           value: "vasya_vasilek",
           name: "login",
+          required: true,
           ref: "loginInput",
           onInput: (event) => {
             getForm(this.getRefs()).fields.loginInput.check(event).setValue(event);
@@ -50,6 +52,7 @@ export function ProfileEditInfoForm(
           label: "Имя",
           value: "Вася",
           name: "first_name",
+          required: true,
           ref: "first_nameInput",
           onInput: (event) => {
             getForm(this.getRefs()).fields.first_nameInput.check(event).setValue(event);
@@ -62,6 +65,7 @@ export function ProfileEditInfoForm(
           label: "Фамилия",
           value: "Василёк",
           name: "second_name",
+          required: true,
           ref: "second_nameInput",
           onInput: (event) => {
             getForm(this.getRefs()).fields.second_nameInput.check(event).setValue(event);
@@ -74,6 +78,7 @@ export function ProfileEditInfoForm(
           label: "Имя в чате",
           value: "Вася Василёк",
           name: "display_name",
+          required: true,
           ref: "display_nameInput",
           onInput: (event) => {
             getForm(this.getRefs()).fields.display_nameInput.setValue(event);
@@ -87,6 +92,7 @@ export function ProfileEditInfoForm(
           value: "+79099673030",
           name: "phone",
           type: "tel",
+          required: true,
           ref: "phoneInput",
           onInput: (event) => {
             getForm(this.getRefs()).fields.phoneInput.check(event).setValue(event);

@@ -12,6 +12,7 @@ const overlay = new Overlay();
 
 const modalInfo = new Button({
   value: `<span class="icon-square icon-square-coral">${renderIcon({ value: mdiCog })}</span> Настройки`,
+  title: "Настройки",
   className: "btn-menu",
 });
 
@@ -19,6 +20,7 @@ const changeUserAvatarModalButton = new Button({
   value: `<span class="icon-square icon-square-warning">${renderIcon({
     value: mdiFileImageOutline,
   })}</span> Изменить аватар`,
+  title: "Изменить аватар",
   className: "btn-menu",
 });
 
@@ -26,6 +28,7 @@ const changeUserInfoModalButton = new Button({
   value: `<span class="icon-square icon-square-coral">${renderIcon({
     value: mdiAccountCircle,
   })}</span> Изменить данные`,
+  title: "Изменить данные",
   className: "btn-menu",
 });
 
@@ -33,6 +36,7 @@ const changeUserPasswordModalButton = new Button({
   value: `<span class="icon-square icon-square-success">${renderIcon({
     value: mdiShieldAccount,
   })}</span> Изменить пароль`,
+  title: "Изменить пароль",
   className: "btn-menu",
 });
 
@@ -99,7 +103,7 @@ export const offcanvasBodyModals = function (this: { getRefs: () => TRefs }) {
       ref: "changeUserAvatardModal",
       body: ProfileEditAvatarForm.call(this, (refs) => Form.getFormParts(refs.changeUserAvatardModal.refs.formRef), {
         className: "px-3 pt-3 pb-0",
-        button: new Button({ value: "Сохранить", className: "btn-form-modal" }),
+        button: new Button({ value: "Сохранить", title: "Сохранить", className: "btn-form-modal" }),
         decorated: false,
       }),
     }),
@@ -112,7 +116,7 @@ export const offcanvasBodyModals = function (this: { getRefs: () => TRefs }) {
       ref: "changeUserInfoModal",
       body: ProfileEditInfoForm.call(this, (refs) => Form.getFormParts(refs.changeUserInfoModal.refs.formRef), {
         className: "px-3 pt-3 pb-0",
-        button: new Button({ value: "Сохранить", className: "btn-form-modal" }),
+        button: new Button({ value: "Сохранить", title: "Сохранить", className: "btn-form-modal" }),
         decorated: false,
       }),
     }),
@@ -125,7 +129,7 @@ export const offcanvasBodyModals = function (this: { getRefs: () => TRefs }) {
       ref: "changeUserPasswordModal",
       body: ProfileEditPasswordForm.call(this, (refs) => Form.getFormParts(refs.changeUserPasswordModal.refs.formRef), {
         className: "px-3 pt-3 pb-0",
-        button: new Button({ value: "Сохранить", className: "btn-form-modal" }),
+        button: new Button({ value: "Сохранить", title: "Сохранить", className: "btn-form-modal" }),
         decorated: false,
       }),
     }),

@@ -35,10 +35,12 @@ export class Modal extends Block<TModalProps & { btnClose: Button; backButton: B
       btnClose: new Button({
         value: `${renderIcon({ value: mdiClose })}`,
         className: "modal__close",
+        title: "Закрыть",
       }),
       backButton: new Button({
         value: `${renderIcon({ value: mdiArrowLeft })}`,
         className: "modal__back",
+        title: "Назад",
       }),
     });
 

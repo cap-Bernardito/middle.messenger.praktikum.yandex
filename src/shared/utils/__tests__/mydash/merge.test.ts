@@ -15,10 +15,20 @@ describe("Should merge", () => {
   testCases.forEach((testCase) => {
     const [testName, testFixtures, expected] = testCase;
 
+    // @ts-ignore
     const result = _.merge(...testFixtures);
 
     it(testName, () => {
       expect(result).toEqual(expected);
     });
+  });
+
+  it(`dist object should mutate`, () => {
+    const dist = { a: 1 };
+
+    const result = _.merge(dist, { a: 2 }, { a: 3 });
+
+    expect(result).toEqual({ a: 3 });
+    expect(dist === result).toEqual(true);
   });
 });

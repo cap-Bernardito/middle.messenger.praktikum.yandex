@@ -1,8 +1,8 @@
-type Indexed<T = unknown> = {
+export type Indexed<T = unknown> = {
   [key in string]?: T;
 };
 
-const isObject = (value: unknown): value is Indexed => toString.call(value) === "[object Object]";
+export const isObject = (value: unknown): value is Indexed => toString.call(value) === "[object Object]";
 
 export function merge(dst: Indexed, ...args: Indexed[]) {
   let src: Indexed;

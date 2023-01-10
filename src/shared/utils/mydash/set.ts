@@ -1,11 +1,13 @@
-import { Indexed, isObject, merge } from "./";
+import { isPlainObject } from "../utils";
 
-export function set(target: Indexed | unknown, path: string, value: unknown): Indexed | unknown {
+import { merge } from "./";
+
+export function set(target: PlainObject | unknown, path: string, value: unknown): PlainObject | unknown {
   if (typeof path !== "string") {
     throw new Error("path must be string");
   }
 
-  if (!isObject(target)) {
+  if (!isPlainObject(target)) {
     return target;
   }
 

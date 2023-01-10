@@ -1,11 +1,7 @@
-export type Indexed<T = unknown> = {
-  [key in string]?: T;
-};
+import { isPlainObject } from "../utils";
 
-export const isObject = (value: unknown): value is Indexed => toString.call(value) === "[object Object]";
-
-export function merge(dst: Indexed, ...args: Indexed[]) {
-  let src: Indexed;
+export function merge(dst: PlainObject, ...args: PlainObject[]) {
+  let src: PlainObject;
   let p: string;
 
   while (args.length > 0) {
@@ -16,7 +12,7 @@ export function merge(dst: Indexed, ...args: Indexed[]) {
         const srcValue = src[p];
         const distValue = dst[p];
 
-        if (isObject(srcValue) && (isObject(distValue) || typeof distValue === "undefined")) {
+        if (isPlainObject(srcValue) && (isPlainObject(distValue) || typeof distValue === "undefined")) {
           dst[p] = merge(distValue || {}, srcValue);
         } else if (Array.isArray(srcValue) && (Array.isArray(distValue) || typeof distValue === "undefined")) {
           dst[p] = [...(distValue || []), ...srcValue];

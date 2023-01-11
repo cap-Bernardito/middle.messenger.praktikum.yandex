@@ -1,3 +1,5 @@
+import { isArrayOrObject, isPlainObject } from "./utils";
+
 const enum METHODS {
   GET = "GET",
   POST = "POST",
@@ -85,8 +87,24 @@ export class HTTPTransport {
   };
 }
 
-function queryStringify(data: Record<string, string>) {
-  const queryParams = Object.entries(data).map((key, value) => `${key}=${value}`);
+const getPairs = (objLike: PlainArrayOrObject, path = ""): string[] => {
+  return Object.entries(objLike).map(([key, value]) => {
+    const deepPath = path ? `${path}[${key}]` : key;
 
-  return queryParams ? `?${queryParams.join("&")}` : "";
+    if (isArrayOrObject(value)) {
+      return getPairs(value, deepPath).join("&");
+    }
+
+    return `${deepPath}=${encodeURIComponent(String(value))}`;
+  });
+};
+
+export function queryStringify(data: PlainObject): string | never {
+  if (!isPlainObject(data)) {
+    throw new Error("Input must be an object");
+  }
+
+  const pairs = getPairs(data);
+
+  return pairs.length ? `?${pairs.join("&")}` : "";
 }

@@ -1,7 +1,7 @@
 import { _ } from "../../utils";
 
 describe("Should work with range", () => {
-  const testCases: any[] = [
+  const testCases: [number[], number, number?, number?][] = [
     [[0, 1, 2, 3], 4],
     [[0, -1, -2, -3], -4],
     [[1, 2, 3, 4], 1, 5],
@@ -23,7 +23,7 @@ describe("Should work with range", () => {
 });
 
 describe("Should work with rangeRight", () => {
-  const testCases: any[] = [
+  const testCases: [number[], number, number?, number?][] = [
     [[3, 2, 1, 0], 4],
     [[-3, -2, -1, 0], -4],
     [[4, 3, 2, 1], 1, 5],
@@ -35,9 +35,9 @@ describe("Should work with rangeRight", () => {
 
   testCases.forEach((testCase) => {
     const [expected, ...args] = testCase;
+    const [start, end, step] = args;
 
-    // @ts-ignore
-    const result = _.rangeRight(...args);
+    const result = _.rangeRight(start, end, step);
 
     it(`rangeRight(${args.join(", ")}) should return [${expected.join(", ")}]`, () => {
       expect(result).toEqual(expected);

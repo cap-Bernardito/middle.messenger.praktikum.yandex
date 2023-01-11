@@ -1,6 +1,6 @@
 import { _ } from "../../utils";
 
-const testCases: any[] = [
+const testCases: [string, string, string?][] = [
   ["abc", "  abc  "],
   ["abc", "  abc  ", " "],
   ["abc", "-_-abc-_-", "_-"],
@@ -13,9 +13,9 @@ const testCases: any[] = [
 describe("Should work trim", () => {
   testCases.forEach((testCase) => {
     const [expected, ...args] = testCase;
+    const [string, chars] = args;
 
-    // @ts-ignore
-    const result = _.trim(...args);
+    const result = _.trim(string, chars);
 
     it(`trim('${args.join("', ' ")}') should return "${expected}"`, () => {
       expect(result).toEqual(expected);

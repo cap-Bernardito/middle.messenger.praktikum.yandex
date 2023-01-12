@@ -115,23 +115,12 @@ export class Block<P extends Record<string, any> = any> {
     this._render();
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   componentDidUpdate(oldProps: P, newProps: P) {
-    const oldPr = Object.entries(oldProps);
-    const newPr = Object.entries(newProps);
-
-    if (oldPr.length !== newPr.length) {
-      return true;
+    if (_.isEqual(oldProps, newProps)) {
+      return false;
     }
 
-    // TODO: улучшить проверку в глубину
-    for (const [key, value] of oldPr) {
-      if (newProps[key] !== value) {
-        return true;
-      }
-    }
-
-    return false;
+    return true;
   }
 
   setPropsWithChildren = (nextProps: P) => {

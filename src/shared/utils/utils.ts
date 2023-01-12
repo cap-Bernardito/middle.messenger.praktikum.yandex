@@ -42,5 +42,5 @@ export const isArrayOrObject = (value: unknown): value is PlainArrayOrObject => 
 };
 
 export const getObjectKeys = <T extends object>(obj: T) => Object.keys(obj) as Array<keyof T>;
-export const getObjectValues = <T extends object>(obj: T) => Object.keys(obj) as Array<T[keyof T]>;
+export const getObjectValues = <T extends object>(obj: T) => Object.values(obj) as Array<T[keyof T]>;
 export const getObjectEntries = <T extends object>(obj: T): Entries<T> => Object.entries(obj) as any;

@@ -3,7 +3,7 @@ import { getObjectKeys, isArrayOrObject } from "../utils";
 export const isEqual = (a: PlainArrayOrObject, b: PlainArrayOrObject): boolean => {
   const aProps = getObjectKeys(a);
   const aLength = aProps.length;
-  const bProps = Object.keys(b) as (keyof typeof a)[];
+  const bProps = getObjectKeys(b);
   const bLength = bProps.length;
 
   if (aLength != bLength) {

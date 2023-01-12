@@ -1,3 +1,4 @@
+export * from "./cloneDeep";
 export * from "./first";
 export * from "./identity";
 export * from "./isEqual";

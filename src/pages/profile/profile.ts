@@ -1,6 +1,6 @@
 import { templateUserInfo, TUserInfoProps } from "entities";
 
-import { Block } from "shared/core";
+import { Block, Link } from "shared/core";
 import { Avatar, ListV1, ListV1Item } from "shared/ui";
 
 export class ProfilePage extends Block<TUserInfoProps> {
@@ -41,10 +41,13 @@ export class ProfilePage extends Block<TUserInfoProps> {
       controls: new ListV1({
         items: [
           {
-            name: '<a href="/profile_edit_info">Изменить данные</a>',
+            name: new Link({ to: "/profile_edit_info", value: "Изменить данные", title: "Изменить данные" }),
           },
           {
-            name: '<a href="/profile_edit_password">Изменить пароль</a>',
+            name: new Link({ to: "/profile_edit_password", value: "Изменить пароль", title: "Изменить пароль" }),
+          },
+          {
+            name: new Link({ to: "/profile_edit_avatar", value: "Изменить аватар", title: "Изменить аватар" }),
           },
           {
             name: '<a href="#" class="text-danger">Выйти</a>',

@@ -7,6 +7,14 @@ declare global {
   };
 
   export type TRefs = { [key: string]: Block };
+
+  export type TRouteObject = {
+    path: string;
+    element: BlockConstructable;
+    title?: string;
+    shouldAuthorized?: boolean;
+    routeShouldMount?: (route: Route) => boolean;
+  };
 }
 
 export {};

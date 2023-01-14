@@ -11,7 +11,7 @@ export type TFormProps = TPropsWithEvents<
     fields: Input[];
     button: Button;
     title?: string;
-    meta?: string;
+    meta?: Block | string;
     className?: string;
     decorated?: boolean;
     onSubmit?: (event: Event) => void;

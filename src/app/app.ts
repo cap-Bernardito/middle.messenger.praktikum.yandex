@@ -1,7 +1,7 @@
 // eslint-disable-next-line simple-import-sort/imports
 import "./registerComponents";
 
-import { Block, renderDOM } from "shared/core";
+import { Route, router } from "shared/core";
 
 import {
   ChatPage,
@@ -17,37 +17,92 @@ import {
 
 import "./styles/index.scss";
 
-const pages: { [K: string]: { title: string; component: Block } } = {
-  "/login": { title: "Авторизация", component: new LoginPage() },
-  "/register": { title: "Регистрация", component: new RegisterPage() },
-  "/profile": { title: "Профиль", component: new ProfilePage() },
-  "/profile_edit_avatar": { title: "Изменить аватар", component: new ProfileAvatarPage() },
-  "/profile_edit_info": { title: "Изменить данные", component: new ProfileEditInfoPage() },
-  "/profile_edit_password": { title: "Изменить пароль", component: new ProfileEditPasswordPage() },
-  "/chat": { title: "Чат", component: new ChatPage() },
-  "/404": { title: "404", component: new Page_404() },
-  "/500": { title: "500", component: new Page_500() },
+// TODO: Заменить на store
+const state = {
+  user: true,
 };
 
-const currentRoute = location.pathname;
-let html: Block;
+const routes: TRouteObject[] = [
+  {
+    path: "/",
+    element: ChatPage,
+    shouldAuthorized: false,
+    routeShouldMount: () => {
+      if (state.user) {
+        router.go("/chat");
+      } else {
+        router.go("/login");
+      }
 
-if (!pages[currentRoute]) {
-  const indexPage = Object.entries(pages)
-    .map(([url, { title }]) => `<li><a href="${url}">${title}</a></li>`)
-    .join("");
+      return false;
+    },
+  },
+  {
+    path: "/chat",
+    title: "Чат",
+    element: ChatPage,
+    shouldAuthorized: true,
+  },
+  {
+    path: "/login",
+    title: "Авторизация",
+    element: LoginPage,
+    shouldAuthorized: false,
+  },
+  {
+    path: "/register",
+    title: "Регистрация",
+    element: RegisterPage,
+    shouldAuthorized: false,
+  },
+  {
+    path: "/profile",
+    title: "Профиль",
+    element: ProfilePage,
+    shouldAuthorized: true,
+  },
+  {
+    path: "/profile_edit_avatar",
+    title: "Изменить аватар",
+    element: ProfileAvatarPage,
+    shouldAuthorized: true,
+  },
+  {
+    path: "/profile_edit_info",
+    title: "Изменить данные",
+    element: ProfileEditInfoPage,
+    shouldAuthorized: true,
+  },
+  {
+    path: "/profile_edit_password",
+    title: "Изменить пароль",
+    element: ProfileEditPasswordPage,
+    shouldAuthorized: true,
+  },
+  {
+    path: "/500",
+    title: "500",
+    element: Page_500,
+    shouldAuthorized: true,
+  },
+  {
+    path: "*",
+    title: "404",
+    element: Page_404,
+    shouldAuthorized: false,
+  },
+];
 
-  html = new (class extends Block {
-    render() {
-      return `
-        {{#LayoutCentered}}
-          <ul class="list-intro">${indexPage}</ul>
-        {{/LayoutCentered}}
-      `;
+routes.forEach((routeProps) => {
+  router.use(routeProps, (route: Route) => {
+    if (!route.isPrivate() || Boolean(state.user)) {
+      return true;
     }
-  })();
-} else {
-  html = pages[currentRoute]["component"];
-}
 
-renderDOM(html);
+    router.go("/login");
+
+    return false;
+  });
+});
+
+router.start();

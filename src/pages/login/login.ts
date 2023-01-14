@@ -1,6 +1,6 @@
 import { Form } from "entities";
 
-import { Block } from "shared/core";
+import { Block, Link } from "shared/core";
 import { Button, Input, TInputProps } from "shared/ui";
 
 import source from "./login.hbs";
@@ -47,7 +47,7 @@ export class LoginPage extends Block {
           ] as TInputProps[]
         ).map((inputProps) => new Input(inputProps)),
         button: new Button({ value: "Войти", title: "Войти", className: "btn-primary btn-block" }),
-        meta: '<a href="/register">Зарегистрироваться</a>',
+        meta: new Link({ to: "/register", value: "Зарегистрироваться", title: "Зарегистрироваться" }),
         decorated: true,
       }),
     });

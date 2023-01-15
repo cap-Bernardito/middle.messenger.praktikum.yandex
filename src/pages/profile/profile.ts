@@ -2,6 +2,7 @@ import { templateUserInfo, TUserInfoProps } from "entities";
 
 import { Block, Link } from "shared/core";
 import { Avatar, ListV1, ListV1Item } from "shared/ui";
+import { ROUTES } from "shared/utils/constants";
 
 export class ProfilePage extends Block<TUserInfoProps> {
   static cName = "ProfilePage";
@@ -41,13 +42,13 @@ export class ProfilePage extends Block<TUserInfoProps> {
       controls: new ListV1({
         items: [
           {
-            name: new Link({ to: "/profile_edit_info", value: "Изменить данные", title: "Изменить данные" }),
+            name: new Link({ to: ROUTES.profileEditInfo.path, value: "Изменить данные", title: "Изменить данные" }),
           },
           {
-            name: new Link({ to: "/profile_edit_password", value: "Изменить пароль", title: "Изменить пароль" }),
+            name: new Link({ to: ROUTES.profileEditPassword.path, value: "Изменить пароль", title: "Изменить пароль" }),
           },
           {
-            name: new Link({ to: "/profile_edit_avatar", value: "Изменить аватар", title: "Изменить аватар" }),
+            name: new Link({ to: ROUTES.profileEditAvatar.path, value: "Изменить аватар", title: "Изменить аватар" }),
           },
           {
             name: '<a href="#" class="text-danger">Выйти</a>',

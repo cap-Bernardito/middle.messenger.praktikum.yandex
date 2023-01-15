@@ -2,8 +2,7 @@ import { Form } from "entities";
 
 import { Block, Link } from "shared/core";
 import { Button, Input, TInputProps } from "shared/ui";
-
-import source from "./login.hbs";
+import { ROUTES } from "shared/utils/constants";
 
 export class LoginPage extends Block {
   static cName = "LoginPage";
@@ -47,7 +46,7 @@ export class LoginPage extends Block {
           ] as TInputProps[]
         ).map((inputProps) => new Input(inputProps)),
         button: new Button({ value: "Войти", title: "Войти", className: "btn-primary btn-block" }),
-        meta: new Link({ to: "/register", value: "Зарегистрироваться", title: "Зарегистрироваться" }),
+        meta: new Link({ to: ROUTES.register.path, value: "Зарегистрироваться", title: "Зарегистрироваться" }),
         decorated: true,
       }),
     });
@@ -56,6 +55,10 @@ export class LoginPage extends Block {
   getForm = () => Form.getFormParts(this.refs.formRef);
 
   render() {
-    return source;
+    return `
+  {{#LayoutCentered}}
+    {{{body}}}
+  {{/LayoutCentered}}
+    `;
   }
 }

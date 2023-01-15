@@ -2,8 +2,7 @@ import { Form } from "entities/form";
 
 import { Block, Link } from "shared/core";
 import { Button, Input, TInputProps } from "shared/ui";
-
-import source from "./register.hbs";
+import { ROUTES } from "shared/utils/constants";
 
 export class RegisterPage extends Block {
   static cName = "RegisterPage";
@@ -114,7 +113,7 @@ export class RegisterPage extends Block {
           title: "Зарегистрироваться",
           className: "btn-primary btn-block",
         }),
-        meta: new Link({ to: "/login", value: "Войти", title: "Войти" }),
+        meta: new Link({ to: ROUTES.login.path, value: "Войти", title: "Войти" }),
         decorated: true,
       }),
     });
@@ -123,6 +122,10 @@ export class RegisterPage extends Block {
   getForm = () => Form.getFormParts(this.refs.formRef);
 
   render() {
-    return source;
+    return `
+  {{#LayoutCentered}}
+    {{{body}}}
+  {{/LayoutCentered}}
+    `;
   }
 }

@@ -2,6 +2,7 @@
 import "./registerComponents";
 
 import { Route, router } from "shared/core";
+import { ROUTES } from "shared/utils/constants";
 
 import {
   ChatPage,
@@ -24,78 +25,78 @@ const state = {
 
 const routes: TRouteObject[] = [
   {
-    path: "/chat/:id",
-    title: "Чат",
-    element: ChatPage,
-    shouldAuthorized: true,
-  },
-  {
-    path: "/chat",
-    title: "Мессенджер",
-    element: ChatPage,
-    shouldAuthorized: true,
-  },
-  {
-    path: "/login",
-    title: "Авторизация",
-    element: LoginPage,
-    shouldAuthorized: false,
-  },
-  {
-    path: "/register",
-    title: "Регистрация",
-    element: RegisterPage,
-    shouldAuthorized: false,
-  },
-  {
-    path: "/profile",
-    title: "Профиль",
-    element: ProfilePage,
-    shouldAuthorized: true,
-  },
-  {
-    path: "/profile_edit_avatar",
-    title: "Изменить аватар",
-    element: ProfileAvatarPage,
-    shouldAuthorized: true,
-  },
-  {
-    path: "/profile_edit_info",
-    title: "Изменить данные",
-    element: ProfileEditInfoPage,
-    shouldAuthorized: true,
-  },
-  {
-    path: "/profile_edit_password",
-    title: "Изменить пароль",
-    element: ProfileEditPasswordPage,
-    shouldAuthorized: true,
-  },
-  {
-    path: "/500",
-    title: "500",
-    element: Page_500,
-    shouldAuthorized: true,
-  },
-  {
-    path: "*",
-    title: "404",
-    element: Page_404,
-    shouldAuthorized: false,
-  },
-  {
-    path: "/",
-    element: ChatPage,
+    path: ROUTES.home.path,
+    title: ROUTES.home.title,
     shouldAuthorized: false,
     routeShouldMount: () => {
       if (state.user) {
-        router.go("/chat");
+        router.go(ROUTES.messenger.path);
       } else {
-        router.go("/login");
+        router.go(ROUTES.login.path);
       }
 
       return false;
     },
+  },
+  {
+    path: ROUTES.login.path,
+    title: ROUTES.login.title,
+    element: LoginPage,
+    shouldAuthorized: false,
+  },
+  {
+    path: ROUTES.register.path,
+    title: ROUTES.register.title,
+    element: RegisterPage,
+    shouldAuthorized: false,
+  },
+  {
+    path: ROUTES.page_500.path,
+    title: ROUTES.page_500.title,
+    element: Page_500,
+    shouldAuthorized: false,
+  },
+  {
+    path: ROUTES.page_404.path,
+    title: ROUTES.page_404.title,
+    element: Page_404,
+    shouldAuthorized: false,
+  },
+  {
+    path: ROUTES.profile.path,
+    title: ROUTES.profile.title,
+    element: ProfilePage,
+    shouldAuthorized: true,
+  },
+  {
+    path: ROUTES.profileEditAvatar.path,
+    title: ROUTES.profileEditAvatar.title,
+    element: ProfileAvatarPage,
+    shouldAuthorized: true,
+  },
+  {
+    path: ROUTES.profileEditInfo.path,
+    title: ROUTES.profileEditInfo.title,
+    element: ProfileEditInfoPage,
+    shouldAuthorized: true,
+  },
+  {
+    path: ROUTES.profileEditPassword.path,
+    title: ROUTES.profileEditPassword.title,
+    element: ProfileEditPasswordPage,
+    shouldAuthorized: true,
+  },
+  {
+    path: ROUTES.chat.path,
+    title: ROUTES.chat.title,
+    element: ChatPage,
+    shouldAuthorized: true,
+  },
+  {
+    path: ROUTES.messenger.path,
+    title: ROUTES.messenger.title,
+    element: ChatPage,
+    shouldAuthorized: true,
   },
 ];
 
@@ -105,7 +106,7 @@ routes.forEach((routeProps) => {
       return true;
     }
 
-    router.go("/login");
+    router.go(ROUTES.login.path);
 
     return false;
   });

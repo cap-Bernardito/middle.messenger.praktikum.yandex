@@ -24,7 +24,7 @@ class Router {
     this._onRoute(window.location.pathname);
   }
 
-  private _onRoute(pathname: string) {
+  private _onRoute(pathname: string): boolean {
     const route = this.getRoute(pathname) || this.getRoute("*");
 
     if (!route) {
@@ -32,7 +32,7 @@ class Router {
     }
 
     if (!route.routeShouldMount(route)) {
-      return;
+      return false;
     }
 
     if (this._currentRoute) {
@@ -42,6 +42,8 @@ class Router {
     this._currentRoute = route;
 
     route.render();
+
+    return true;
   }
 
   use(routeProps: TRouteObject, routeShouldMount: (route: Route) => boolean) {
@@ -51,9 +53,9 @@ class Router {
   }
 
   go(pathname: string) {
-    this._history.pushState({}, "", pathname);
-
-    this._onRoute(pathname);
+    if (this._onRoute(pathname)) {
+      this._history.pushState({}, "", pathname);
+    }
   }
 
   back() {
@@ -69,9 +71,9 @@ class Router {
   }
 
   getParams() {
-    const route = this._routes.find((route) => route.match(window.location.pathname));
+    const route = this.getRoute(window.location.pathname);
 
-    return route?.getParams();
+    return route ? route.getParams() : {};
   }
 }
 

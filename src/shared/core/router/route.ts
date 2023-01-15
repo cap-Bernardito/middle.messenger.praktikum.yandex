@@ -69,12 +69,12 @@ export class Route {
   }
 
   render() {
-    if (!this._screen) {
+    if (!this._screen && this._screenConstructor) {
       this._screen = new this._screenConstructor({});
+
+      renderDOM(this._screen);
+
+      document.title = `App / ${this._title}`;
     }
-
-    renderDOM(this._screen);
-
-    document.title = `App / ${this._title}`;
   }
 }

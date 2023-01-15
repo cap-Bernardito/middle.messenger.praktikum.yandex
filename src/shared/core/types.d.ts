@@ -10,7 +10,7 @@ declare global {
 
   export type TRouteObject = {
     path: string;
-    element: BlockConstructable;
+    element?: BlockConstructable;
     title?: string;
     shouldAuthorized?: boolean;
     routeShouldMount?: (route: Route) => boolean;

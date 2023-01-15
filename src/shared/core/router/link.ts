@@ -1,4 +1,4 @@
-import { Block, router } from "shared/core";
+import { Block, registerComponent, router } from "shared/core";
 
 export type TLinkProps = TPropsWithEvents<{
   value: string;
@@ -34,3 +34,5 @@ export class Link extends Block<TLinkProps> {
     `;
   }
 }
+
+registerComponent(Link);

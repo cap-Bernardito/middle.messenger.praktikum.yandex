@@ -67,6 +67,12 @@ class Router {
   getRoute(pathname: string) {
     return this._routes.find((route) => route.match(pathname));
   }
+
+  getParams() {
+    const route = this._routes.find((route) => route.match(window.location.pathname));
+
+    return route?.getParams();
+  }
 }
 
 export const router = new Router();

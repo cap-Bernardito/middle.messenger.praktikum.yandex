@@ -24,22 +24,14 @@ const state = {
 
 const routes: TRouteObject[] = [
   {
-    path: "/",
+    path: "/chat/:id",
+    title: "Чат",
     element: ChatPage,
-    shouldAuthorized: false,
-    routeShouldMount: () => {
-      if (state.user) {
-        router.go("/chat");
-      } else {
-        router.go("/login");
-      }
-
-      return false;
-    },
+    shouldAuthorized: true,
   },
   {
     path: "/chat",
-    title: "Чат",
+    title: "Мессенджер",
     element: ChatPage,
     shouldAuthorized: true,
   },
@@ -90,6 +82,20 @@ const routes: TRouteObject[] = [
     title: "404",
     element: Page_404,
     shouldAuthorized: false,
+  },
+  {
+    path: "/",
+    element: ChatPage,
+    shouldAuthorized: false,
+    routeShouldMount: () => {
+      if (state.user) {
+        router.go("/chat");
+      } else {
+        router.go("/login");
+      }
+
+      return false;
+    },
   },
 ];
 

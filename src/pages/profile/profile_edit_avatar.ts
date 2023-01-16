@@ -11,7 +11,7 @@ export class ProfileAvatarPage extends Block<TUserInfoProps> {
   constructor() {
     super();
 
-    this.setPropsWithChildren({
+    this.setProps({
       avatar: new Avatar(),
       info: ProfileEditAvatarForm.call(this, (refs) => Form.getFormParts(refs.formRef), {
         button: new Button({ value: "Изменить аватар", title: "Изменить аватар", className: "btn-primary btn-block" }),

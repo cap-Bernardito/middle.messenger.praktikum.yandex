@@ -37,7 +37,7 @@ export class ChatPage extends Block {
   constructor() {
     super();
 
-    this.setPropsWithChildren({
+    this.setProps({
       overlay,
 
       chatToolbar: new ChatToolbar({

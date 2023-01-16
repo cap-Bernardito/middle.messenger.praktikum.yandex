@@ -33,11 +33,11 @@ export class Block<P extends Record<string, any> = any> {
 
     this.getStateFromProps(props);
 
-    this.childrenFromProps = children;
     this.refs = refs;
 
     this.props = this._makePropsProxy(props || ({} as P));
     this.state = this._makePropsProxy(this.state);
+    this.childrenFromProps = this._makePropsProxy(children);
 
     this.eventBus = () => eventBus;
 
@@ -123,26 +123,12 @@ export class Block<P extends Record<string, any> = any> {
     return true;
   }
 
-  setPropsWithChildren = (nextProps: P) => {
-    if (!nextProps) {
-      return;
-    }
-
+  setProps = (nextProps: P) => {
     const { children, props, refs } = this._getChildren(nextProps);
 
-    Object.assign(this.childrenFromProps, children);
-    Object.assign(this.refs, refs);
-    Object.assign(this.props, props);
-
-    this._render();
-  };
-
-  setProps = (nextProps: P) => {
-    if (!nextProps) {
-      return;
-    }
-
-    Object.assign(this.props, nextProps);
+    _.merge(this.childrenFromProps, children);
+    _.merge(this.refs, refs);
+    _.merge(this.props, props);
   };
 
   setState = (nextState: any) => {
@@ -150,7 +136,7 @@ export class Block<P extends Record<string, any> = any> {
       return;
     }
 
-    Object.assign(this.state, nextState);
+    _.merge(this.state, nextState);
   };
 
   get element() {
@@ -199,8 +185,11 @@ export class Block<P extends Record<string, any> = any> {
           throw new Error("Нет прав");
         }
 
-        // TODO: улучшить клонирование
-        const oldProps = { ...target };
+        const oldProps = _.cloneDeep(target, (item) => {
+          if (item instanceof Block) {
+            return item;
+          }
+        });
 
         Reflect.set(target, prop, value);
 

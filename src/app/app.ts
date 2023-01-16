@@ -46,9 +46,11 @@ const routes: TRouteObject[] = [
     routeShouldMount: () => {
       if (state.user) {
         router.go(ROUTES.messenger.path);
+
+        return false;
       }
 
-      return false;
+      return true;
     },
   },
   {
@@ -59,9 +61,11 @@ const routes: TRouteObject[] = [
     routeShouldMount: () => {
       if (state.user) {
         router.go(ROUTES.messenger.path);
+
+        return false;
       }
 
-      return false;
+      return true;
     },
   },
   {

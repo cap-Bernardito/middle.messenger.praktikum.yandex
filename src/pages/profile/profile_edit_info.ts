@@ -11,7 +11,7 @@ export class ProfileEditInfoPage extends Block<TUserInfoProps> {
   constructor() {
     super();
 
-    this.setPropsWithChildren({
+    this.setProps({
       avatar: new Avatar(),
       info: ProfileEditInfoForm.call(this, (refs) => Form.getFormParts(refs.formRef), {
         button: new Button({ value: "Изменить данные", title: "Изменить данные", className: "btn-primary btn-block" }),

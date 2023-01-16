@@ -48,4 +48,12 @@ describe("Should work cloneDeep", () => {
     expect(result === expected).toEqual(false);
     expect(result.key === expected.key).toEqual(false);
   });
+
+  it(`should work "transform" function`, () => {
+    const [input, expected] = [{ key: "value" }, { key: "value", newKey: "new value" }];
+
+    const result = _.cloneDeep(input, (item) => ({ ...item, newKey: "new value" })) as typeof expected;
+
+    expect(result === expected).toEqual(false);
+  });
 });

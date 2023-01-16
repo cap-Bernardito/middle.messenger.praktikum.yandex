@@ -43,12 +43,26 @@ const routes: TRouteObject[] = [
     title: ROUTES.login.title,
     element: LoginPage,
     shouldAuthorized: false,
+    routeShouldMount: () => {
+      if (state.user) {
+        router.go(ROUTES.messenger.path);
+      }
+
+      return false;
+    },
   },
   {
     path: ROUTES.register.path,
     title: ROUTES.register.title,
     element: RegisterPage,
     shouldAuthorized: false,
+    routeShouldMount: () => {
+      if (state.user) {
+        router.go(ROUTES.messenger.path);
+      }
+
+      return false;
+    },
   },
   {
     path: ROUTES.page_500.path,

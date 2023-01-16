@@ -10,7 +10,7 @@ export class InputError extends Block<TInputErrorProps> {
   static cName = "InputError";
 
   constructor({ ...props }: TInputErrorProps) {
-    super({ ...props });
+    super({ text: "", ...props });
   }
 
   render() {

@@ -1,6 +1,10 @@
 import { getObjectKeys, isArrayOrObject } from "../utils";
 
-export const isEqual = (a: PlainArrayOrObject, b: PlainArrayOrObject): boolean => {
+export const isEqual = (a: PlainArrayOrObject | undefined, b: PlainArrayOrObject | undefined): boolean => {
+  if (typeof a === "undefined" || typeof b === "undefined") {
+    return a === b;
+  }
+
   const aProps = getObjectKeys(a);
   const aLength = aProps.length;
   const bProps = getObjectKeys(b);

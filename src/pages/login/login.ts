@@ -1,3 +1,7 @@
+import { authServices } from "processes/auth";
+
+import { store } from "app/store";
+
 import { Form } from "entities";
 
 import { Block, Link } from "shared/core";
@@ -13,7 +17,9 @@ export class LoginPage extends Block {
         onSubmit: (event) => {
           const { isFormValid, formData } = this.getForm().form.check(event, Object.values(this.getForm().fields));
 
-          console.log(`Form is${isFormValid ? "" : " not"} valid. FormData: `, formData);
+          if (isFormValid) {
+            store.dispatch(authServices.login, formData);
+          }
         },
         title: "Вход",
         fields: (

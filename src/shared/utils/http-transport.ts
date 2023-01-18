@@ -17,15 +17,15 @@ type TOptions = {
   withCredentials?: boolean;
 };
 
-type TResponse<T> = {
+export type TResponse<T> = {
   readonly status: number;
   readonly statusText: string;
   readonly responseType: XMLHttpRequestResponseType;
   readonly response: T;
 };
 
-type TOptionsGet = Omit<TOptions, "method" | "body">;
-type TOptionsNotGet = Omit<TOptions, "method" | "data">;
+export type TOptionsGet = Omit<TOptions, "method" | "body">;
+export type TOptionsNotGet = Omit<TOptions, "method">;
 type TRequest = <T>(url: string, options: TOptions) => Promise<TResponse<T>>;
 type TMethod<O> = <T>(url: string, options?: O) => Promise<TResponse<T>>;
 
@@ -78,7 +78,9 @@ export class HTTPTransport {
       xhr.onerror = reject;
       xhr.ontimeout = reject;
 
-      if (isGet || !body) {
+      if (!isGet && data) {
+        xhr.send(JSON.stringify(data));
+      } else if (isGet || !body) {
         xhr.send();
       } else {
         xhr.send(body);

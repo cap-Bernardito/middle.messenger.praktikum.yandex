@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Messenger pet-project",
   "scripts": {
-    "clear": "del-cli dist/**/* .parcel-cache",
+    "clear": "del-cli dist/**/* .parcel-cache \"node_modules/.cache/parcel-cache\"",
     "watch": "npm run clear && parcel src/index.html -p 3000 --no-cache --cache-dir \"node_modules/.cache/parcel-cache\"",
     "build": "npm run clear && parcel build src/index.html --no-cache --cache-dir \"node_modules/.cache/parcel-cache\"",
     "start": "npm run clear && npm run build && node ./server.js",
@@ -17,7 +17,7 @@
   },
   "alias": {
     "app": "./src/app",
-    "proccess": "./src/proccess",
+    "processes": "./src/processes",
     "pages": "./src/pages",
     "widgets": "./src/widgets",
     "features": "./src/features",

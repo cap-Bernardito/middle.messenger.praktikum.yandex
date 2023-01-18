@@ -2,7 +2,7 @@ import { isPlainObject } from "../utils";
 
 import { merge } from "./";
 
-export function set(target: PlainObject | unknown, path: string, value: unknown): PlainObject | unknown {
+export function set<T>(target: PlainObject, path: string, value: unknown): PlainObject<T> {
   if (typeof path !== "string") {
     throw new Error("path must be string");
   }
@@ -21,5 +21,5 @@ export function set(target: PlainObject | unknown, path: string, value: unknown)
     return { [key]: acc };
   }, {});
 
-  return merge(target, result);
+  return merge(target, result) as PlainObject<T>;
 }

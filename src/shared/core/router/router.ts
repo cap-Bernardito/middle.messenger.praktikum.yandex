@@ -58,6 +58,10 @@ class Router {
     }
   }
 
+  restart() {
+    this.go(window.location.pathname);
+  }
+
   back() {
     this._history.back();
   }

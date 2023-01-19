@@ -1,10 +1,14 @@
+import { authModel, authServices } from "processes/auth";
+
+import { store } from "app/store";
+
 import { Form } from "entities/form";
 
 import { Block, Link } from "shared/core";
 import { Button, Input, TInputProps } from "shared/ui";
 import { ROUTES } from "shared/utils/constants";
 
-export class RegisterPage extends Block {
+class RegisterPage extends Block {
   static cName = "RegisterPage";
 
   constructor() {
@@ -13,7 +17,9 @@ export class RegisterPage extends Block {
         onSubmit: (event) => {
           const { isFormValid, formData } = this.getForm().form.check(event, Object.values(this.getForm().fields));
 
-          console.log(`Form is${isFormValid ? "" : " not"} valid. FormData: `, formData);
+          if (isFormValid) {
+            store.dispatch(authServices.register, formData);
+          }
         },
         title: "Регистрация",
         fields: (
@@ -119,6 +125,14 @@ export class RegisterPage extends Block {
     });
   }
 
+  componentDidUpdate(oldProps: any, newProps: any): boolean {
+    if (oldProps.authError !== newProps.authError) {
+      this.getForm().form.setProps({ formError: newProps.authError });
+    }
+
+    return true;
+  }
+
   getForm = () => Form.getFormParts(this.refs.formRef);
 
   render() {
@@ -129,3 +143,7 @@ export class RegisterPage extends Block {
     `;
   }
 }
+
+const RegisterPageWithStore = authModel.withAuth(RegisterPage);
+
+export { RegisterPageWithStore as RegisterPage };

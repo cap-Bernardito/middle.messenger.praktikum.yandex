@@ -1,15 +1,20 @@
 import { authAPI, authModel, authTypes } from "processes/auth";
 
-import { transformUser, UserDTO } from "shared/api";
+import { transformUser } from "shared/api";
+import { UserDTO } from "shared/api/types";
 import { router } from "shared/core";
 import { apiHasError } from "shared/utils";
 
 import { logout } from "./logout";
 
-export const login = async (dispatch: Dispatch<AppState>, state: AppState, action: authTypes.LoginRequestData) => {
+export const register = async (
+  dispatch: Dispatch<AppState>,
+  state: AppState,
+  action: authTypes.RegisterRequestData
+) => {
   dispatch(authModel.setUser({ loading: true }));
 
-  const response = await authAPI.login(action);
+  const response = await authAPI.register(action);
 
   if (apiHasError(response)) {
     dispatch(authModel.setUser({ user: null, loading: false, error: response.reason }));

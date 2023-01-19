@@ -1,16 +1,12 @@
+import { authTypes } from "processes/auth";
+
 import { APIError, UserDTO } from "shared/api/types";
 import { request } from "shared/core/apiRequest";
 
-type LoginRequestData = {
-  login: string;
-  password: string;
-};
-
-// eslint-disable-next-line @typescript-eslint/ban-types
-type LoginResponseData = {} | APIError;
-
 export const authAPI = {
-  login: (data: LoginRequestData) => request.post<LoginResponseData>("auth/signin", { data }),
+  login: (data: authTypes.LoginRequestData) => request.post<authTypes.ResponseData>("auth/signin", { data }),
+
+  register: (data: authTypes.RegisterRequestData) => request.post<authTypes.ResponseData>("auth/signup", { data }),
 
   me: () => request.get<UserDTO | APIError>("auth/user"),
 

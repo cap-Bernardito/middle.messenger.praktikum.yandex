@@ -1,9 +1,11 @@
-import { authModel } from "processes/auth";
+import { authModel, authServices } from "processes/auth";
+
+import { store } from "app/store";
 
 import { templateUserInfo, TUserInfoProps } from "entities";
 
 import { Block, Link } from "shared/core";
-import { Avatar, ListV1, ListV1Item } from "shared/ui";
+import { Avatar, Button, ListV1, ListV1Item } from "shared/ui";
 import { ROUTES } from "shared/utils/constants";
 
 export class ProfilePage extends Block<TUserInfoProps> {
@@ -59,7 +61,15 @@ export class ProfilePage extends Block<TUserInfoProps> {
             name: new Link({ to: ROUTES.profileEditAvatar.path, value: "Изменить аватар", title: "Изменить аватар" }),
           },
           {
-            name: '<a href="#" class="text-danger">Выйти</a>',
+            name: new Button({
+              value: "Выйти",
+              title: "Выйти",
+              className: "text-danger btn-link",
+              htmlType: "button",
+              onClick: () => {
+                store.dispatch(authServices.logout);
+              },
+            }),
           },
         ].map((listItem) => new ListV1Item(listItem)),
       }),

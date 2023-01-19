@@ -1,4 +1,6 @@
-import { authModel } from "processes/auth";
+import { authModel, authServices } from "processes/auth";
+
+import { store } from "app/store";
 
 import { ProfileEditAvatarForm } from "widgets/profile_edit_avatar-form";
 import { ProfileEditInfoForm } from "widgets/profile_edit_info-form";
@@ -6,7 +8,7 @@ import { ProfileEditPasswordForm } from "widgets/profile_edit_password-form";
 
 import { Form, Modal, Overlay, SettingsPanel, UserCard } from "entities";
 
-import { mdiAccountCircle, mdiCog, mdiFileImageOutline, mdiShieldAccount } from "@mdi/js";
+import { mdiAccountCircle, mdiCog, mdiExitToApp, mdiFileImageOutline, mdiShieldAccount } from "@mdi/js";
 import img from "shared/assets/images/tigger.jpg";
 import { Avatar, Button, List, ListItem, ListV1, ListV1Item, renderIcon } from "shared/ui";
 
@@ -104,7 +106,7 @@ export const offcanvasBodyModals = function (this: { getRefs: () => TRefs }) {
     );
   }
 
-  result.concat(
+  result.push(
     new Modal({
       showBackButton: true,
       runButton: changeUserAvatarModalButton,
@@ -149,12 +151,23 @@ export const offcanvasBodyModals = function (this: { getRefs: () => TRefs }) {
   return result;
 };
 
+const logout = new Button({
+  value: `<span class="icon-square icon-square-fiolet">${renderIcon({ value: mdiExitToApp })}</span> Выйти`,
+  title: "Выйти",
+  className: "btn-menu mt-auto",
+  htmlType: "button",
+  onClick: () => {
+    overlay.closeWidgets();
+    store.dispatch(authServices.logout);
+  },
+});
+
 export const offcanvasBody = new SettingsPanel({
   userInfo: new UserCard({
     avatar: new Avatar({ className: "avatar_xs", img: img }),
     name: "<span class='text-lg'>Вася Василёк</span>",
     className: "not-interactive",
   }),
-  menu: [modalInfo],
+  menu: [modalInfo, logout],
   about: "Учебное приложение для обмена сообщениями",
 });

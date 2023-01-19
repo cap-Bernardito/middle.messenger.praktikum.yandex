@@ -9,13 +9,20 @@ export type TButtonProps = TPropsWithEvents<{
   title: string;
   htmlType?: "submit" | "reset" | "button";
   className?: string;
+  onClick?: (event: Event) => void;
 }>;
 
 export class Button extends Block<TButtonProps> {
   static cName = "Button";
 
-  constructor({ htmlType = "submit", ...props }: TButtonProps) {
-    super({ ...props, htmlType });
+  constructor({ htmlType = "submit", onClick, ...props }: TButtonProps) {
+    super({
+      ...props,
+      htmlType,
+      events: {
+        click: onClick,
+      },
+    });
   }
 
   render() {

@@ -1,3 +1,5 @@
+import { authModel } from "processes/auth";
+
 import { templateUserInfo, TUserInfoProps } from "entities";
 
 import { Block, Link } from "shared/core";
@@ -8,6 +10,12 @@ export class ProfilePage extends Block<TUserInfoProps> {
   static cName = "ProfilePage";
 
   constructor() {
+    const { user } = authModel.selectUser();
+
+    if (!user) {
+      return;
+    }
+
     super({
       avatar: new Avatar(),
       title: "Вася",
@@ -15,27 +23,27 @@ export class ProfilePage extends Block<TUserInfoProps> {
         items: [
           {
             name: "Почта",
-            value: "pochta@yandex.ru",
+            value: user.email,
           },
           {
             name: "Логин",
-            value: "vasya_vasilek",
+            value: user.login,
           },
           {
             name: "Имя",
-            value: "Вася",
+            value: user.firstName,
           },
           {
             name: "Фамилия",
-            value: "Василёк",
+            value: user.secondName,
           },
           {
             name: "Имя в чате",
-            value: "Вася Василёк",
+            value: user.displayName,
           },
           {
             name: "Телефон",
-            value: "+7 (909) 967 30 30",
+            value: user.phone,
           },
         ].map((listItem) => new ListV1Item(listItem)),
       }),

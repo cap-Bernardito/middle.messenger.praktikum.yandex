@@ -1,3 +1,5 @@
+import { authModel } from "processes/auth";
+
 import { ProfileEditAvatarForm } from "widgets/profile_edit_avatar-form";
 import { ProfileEditInfoForm } from "widgets/profile_edit_info-form";
 import { ProfileEditPasswordForm } from "widgets/profile_edit_password-form";
@@ -52,48 +54,57 @@ const getProfileModalHeader = () =>
   });
 
 export const offcanvasBodyModals = function (this: { getRefs: () => TRefs }) {
-  return [
-    new Modal({
-      showBackButton: true,
-      runButton: modalInfo,
-      overlay: overlay,
-      title: "Настройки",
-      header: getProfileModalHeader(),
-      preBody: new ListV1({
-        items: [
-          {
-            name: "Почта",
-            value: "pochta@yandex.ru",
-          },
-          {
-            name: "Логин",
-            value: "vasya_vasilek",
-          },
-          {
-            name: "Имя",
-            value: "Вася",
-          },
-          {
-            name: "Фамилия",
-            value: "Василёк",
-          },
-          {
-            name: "Имя в чате",
-            value: "Вася Василёк",
-          },
-          {
-            name: "Телефон",
-            value: "+7 (909) 967 30 30",
-          },
-        ].map((listItem) => new ListV1Item(listItem)),
-      }),
-      body: new List({
-        items: [changeUserAvatarModalButton, changeUserInfoModalButton, changeUserPasswordModalButton].map(
-          (entry) => new ListItem({ body: entry })
-        ),
-        className: "list-menu",
-      }),
-    }),
+  const result = [];
+
+  const { user } = authModel.selectUser();
+
+  if (user) {
+    result.push(
+      new Modal({
+        showBackButton: true,
+        runButton: modalInfo,
+        overlay: overlay,
+        title: "Настройки",
+        header: getProfileModalHeader(),
+        preBody: new ListV1({
+          items: [
+            {
+              name: "Почта",
+              value: user.email,
+            },
+            {
+              name: "Логин",
+              value: user.login,
+            },
+            {
+              name: "Имя",
+              value: user.firstName,
+            },
+            {
+              name: "Фамилия",
+              value: user.secondName,
+            },
+            {
+              name: "Имя в чате",
+              value: user.displayName,
+            },
+            {
+              name: "Телефон",
+              value: user.phone,
+            },
+          ].map((listItem) => new ListV1Item(listItem)),
+        }),
+        body: new List({
+          items: [changeUserAvatarModalButton, changeUserInfoModalButton, changeUserPasswordModalButton].map(
+            (entry) => new ListItem({ body: entry })
+          ),
+          className: "list-menu",
+        }),
+      })
+    );
+  }
+
+  result.concat(
     new Modal({
       showBackButton: true,
       runButton: changeUserAvatarModalButton,
@@ -132,8 +143,10 @@ export const offcanvasBodyModals = function (this: { getRefs: () => TRefs }) {
         button: new Button({ value: "Сохранить", title: "Сохранить", className: "btn-form-modal" }),
         decorated: false,
       }),
-    }),
-  ];
+    })
+  );
+
+  return result;
 };
 
 export const offcanvasBody = new SettingsPanel({

@@ -11,6 +11,10 @@
     {{/each}}
   </div>
 
+  {{#if formError}}
+    {{{Error value=formError ref="formErrorRef"}}}
+  {{/if}}
+
   <div class="form__button">
     {{{button}}}
   </div>

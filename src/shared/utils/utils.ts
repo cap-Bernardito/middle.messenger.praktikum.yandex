@@ -4,8 +4,6 @@ type Entries<T> = {
   [K in keyof T]: [K, T[K]];
 }[keyof T][];
 
-export * as _ from "./mydash/index";
-
 export const compileHbs: TRender = (source, context, options) => {
   const template = Handlebars.compile(source, options);
 

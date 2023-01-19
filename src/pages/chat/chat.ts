@@ -19,7 +19,7 @@ import { mdiChevronRight, mdiDotsVertical, mdiMenu, mdiPaperclip, mdiSend } from
 import img from "shared/assets/images/tigger.jpg";
 import { Block } from "shared/core";
 import { Avatar, Button, Message, renderIcon, Search, Textarea } from "shared/ui";
-import { _ } from "shared/utils/utils";
+import { _ } from "shared/utils";
 
 import { dateMock, messagesMock } from "./mockData";
 

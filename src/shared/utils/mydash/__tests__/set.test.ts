@@ -1,4 +1,4 @@
-import { _ } from "../../utils";
+import { _ } from "../..";
 
 describe("Should work set", () => {
   it(`return target if target is not object`, () => {

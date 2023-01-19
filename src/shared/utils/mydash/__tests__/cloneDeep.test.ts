@@ -1,5 +1,5 @@
+import { _ } from "../..";
 import { printObject } from "../../test-utils";
-import { _ } from "../../utils";
 
 const testCases: [object, object][] = [
   [{ key: null }, { key: null }],

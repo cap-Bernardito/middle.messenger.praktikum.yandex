@@ -1,5 +1,5 @@
+import { _ } from "../..";
 import { printObject } from "../../test-utils";
-import { _ } from "../../utils";
 
 describe("Should work with isEqual", () => {
   const testCases: [boolean, PlainObject, PlainObject][] = [
@@ -11,6 +11,7 @@ describe("Should work with isEqual", () => {
     [true, { foo: [1, 2] }, { foo: { 0: 1, 1: 2 } }],
     [true, { foo: NaN }, { foo: NaN }],
     [true, { foo: () => true }, { foo: () => true }],
+    [false, { error: null }, { error: "error" }],
     [false, { a: 1 }, { a: 2 }],
     [false, { a: [1, 2] }, { a: [1, 2, 3] }],
   ];

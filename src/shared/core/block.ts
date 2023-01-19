@@ -1,7 +1,7 @@
 import Handlebars from "handlebars";
 import { nanoid } from "nanoid";
 
-import { _ } from "shared/utils/utils";
+import { _ } from "shared/utils";
 
 import { EventBus } from ".";
 
@@ -115,15 +115,17 @@ export class Block<P extends Record<string, any> = any> {
     this._render();
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   componentDidUpdate(oldProps: P, newProps: P) {
-    if (_.isEqual(oldProps, newProps)) {
-      return false;
-    }
+    // TODO: разобраться с этим
+    // if (_.isEqual(oldProps, newProps)) {
+    //   return false;
+    // }
 
     return true;
   }
 
-  setProps = (nextProps: P) => {
+  setProps = (nextProps: Partial<P>) => {
     const { children, props, refs } = this._getChildren(nextProps);
 
     _.merge(this.childrenFromProps, children);

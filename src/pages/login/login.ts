@@ -1,4 +1,4 @@
-import { authServices } from "processes/auth";
+import { authModel, authServices } from "processes/auth";
 
 import { store } from "app/store";
 
@@ -8,11 +8,18 @@ import { Block, Link } from "shared/core";
 import { Button, Input, TInputProps } from "shared/ui";
 import { ROUTES } from "shared/utils/constants";
 
-export class LoginPage extends Block {
+type LoginPageProps = {
+  body: Block | string;
+};
+
+class LoginPage extends Block {
   static cName = "LoginPage";
 
-  constructor() {
-    super({
+  constructor(props: LoginPageProps) {
+    super(props);
+
+    this.setProps({
+      ...props,
       body: new Form({
         onSubmit: (event) => {
           const { isFormValid, formData } = this.getForm().form.check(event, Object.values(this.getForm().fields));
@@ -58,6 +65,14 @@ export class LoginPage extends Block {
     });
   }
 
+  componentDidUpdate(oldProps: any, newProps: any): boolean {
+    if (oldProps.authError !== newProps.authError) {
+      this.getForm().form.setProps({ formError: newProps.authError });
+    }
+
+    return true;
+  }
+
   getForm = () => Form.getFormParts(this.refs.formRef);
 
   render() {
@@ -68,3 +83,7 @@ export class LoginPage extends Block {
     `;
   }
 }
+
+const LoginPageWithStore = authModel.withAuth(LoginPage);
+
+export { LoginPageWithStore as LoginPage };

@@ -1,4 +1,4 @@
-import { _ } from "../../utils";
+import { _ } from "../..";
 
 const testCases: [string, PlainObject[], Record<string, any>][] = [
   ["as Object.assign", [{ a: 1 }, { a: 2 }, { a: 3 }], { a: 3 }],

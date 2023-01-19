@@ -1,3 +1,5 @@
+import { _ } from "shared/utils";
+
 import { EventBus } from "./event-bus";
 
 export class Store<State extends Record<string, any>> extends EventBus {
@@ -15,9 +17,10 @@ export class Store<State extends Record<string, any>> extends EventBus {
   }
 
   public set(nextState: Partial<State>) {
-    const prevState = { ...this.state };
+    const prevState = _.cloneDeep(this.state);
 
-    this.state = { ...this.state, ...nextState };
+    // @ts-ignore
+    this.state = { ..._.merge(this.state, nextState) };
 
     this.emit("changed", prevState, nextState);
   }
@@ -26,7 +29,7 @@ export class Store<State extends Record<string, any>> extends EventBus {
     if (typeof nextStateOrAction === "function") {
       nextStateOrAction(this.dispatch.bind(this), this.state, payload);
     } else {
-      this.set({ ...this.state, ...nextStateOrAction });
+      this.set(nextStateOrAction);
     }
   }
 }

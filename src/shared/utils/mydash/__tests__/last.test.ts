@@ -1,4 +1,4 @@
-import { _ } from "../../utils";
+import { _ } from "../..";
 
 const testCases: any[] = [
   ["first element", [10, 13, 5], 5],

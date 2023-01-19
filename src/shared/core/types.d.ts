@@ -1,6 +1,8 @@
 import { Block } from "shared/core/block";
 
 declare global {
+  export type TStateProps = Record<string, any>;
+
   export type BlockConstructable<Props = any> = {
     cName: string;
     new (props: Props): Block;

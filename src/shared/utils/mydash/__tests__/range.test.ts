@@ -1,4 +1,4 @@
-import { _ } from "../../utils";
+import { _ } from "../..";
 
 describe("Should work with range", () => {
   const testCases: [number[], number, number?, number?][] = [

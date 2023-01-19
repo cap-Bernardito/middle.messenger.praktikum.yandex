@@ -16,5 +16,3 @@ store.on("changed", (prevState, nextState) => {
 });
 
 export const useSelector = <T>(selectorFn: (store: AppState) => T) => selectorFn(store.getState());
-
-export const atata = () => true;

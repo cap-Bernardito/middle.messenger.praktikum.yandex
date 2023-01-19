@@ -1,0 +1,8 @@
+@use "../../../app/styles/variables.scss" as *;
+
+.error {
+  margin-top: 2rem;
+  margin-bottom: -2rem;
+  color: $error;
+  text-align: center;
+}

@@ -1,4 +1,4 @@
-import { _ } from "../../utils";
+import { _ } from "../..";
 
 const testCases: [string, string, string?][] = [
   ["abc", "  abc  "],

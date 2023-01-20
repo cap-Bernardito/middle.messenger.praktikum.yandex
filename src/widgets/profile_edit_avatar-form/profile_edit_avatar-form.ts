@@ -1,4 +1,6 @@
-import { Form, TFormProps } from "entities/form";
+import { FormWithAuth } from "widgets/form-with-auth";
+
+import { TFormProps } from "entities/form";
 
 import { Input, TInputProps } from "shared/ui";
 
@@ -9,7 +11,7 @@ export function ProfileEditAvatarForm(
   getForm: (refs: TRefs) => TFormPartials,
   props: Omit<TFormProps, "fields">
 ) {
-  return new Form({
+  return new FormWithAuth({
     onSubmit: (event) => {
       const { isFormValid, formData } = getForm(this.getRefs()).form.check(
         event,
@@ -35,5 +37,5 @@ export function ProfileEditAvatarForm(
         },
       ] as TInputProps[]
     ).map((inputProps) => new Input(inputProps)),
-  });
+  } as TFormProps);
 }

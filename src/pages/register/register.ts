@@ -2,7 +2,9 @@ import { authModel, authServices } from "processes/auth";
 
 import { store } from "app/store";
 
-import { Form } from "entities/form";
+import { FormWithAuth } from "widgets/form-with-auth";
+
+import { Form, TFormProps } from "entities/form";
 
 import { Block, Link } from "shared/core";
 import { Button, Input, TInputProps } from "shared/ui";
@@ -13,7 +15,7 @@ class RegisterPage extends Block {
 
   constructor() {
     super({
-      body: new Form({
+      body: new FormWithAuth({
         onSubmit: (event) => {
           const { isFormValid, formData } = this.getForm().form.check(event, Object.values(this.getForm().fields));
 
@@ -121,20 +123,8 @@ class RegisterPage extends Block {
         }),
         meta: new Link({ to: ROUTES.login.path, value: "Войти", title: "Войти" }),
         decorated: true,
-      }),
+      } as TFormProps),
     });
-  }
-
-  componentDidUpdate(oldProps: any, newProps: any): boolean {
-    if (oldProps.authError !== newProps.authError) {
-      this.getForm().form.setProps({ formError: newProps.authError });
-    }
-
-    if (oldProps.authLoading !== newProps.authLoading) {
-      this.getForm().form.setProps({ loading: newProps.authLoading });
-    }
-
-    return true;
   }
 
   getForm = () => Form.getFormParts(this.refs.formRef);

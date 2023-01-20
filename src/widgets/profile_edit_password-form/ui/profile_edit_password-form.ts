@@ -1,4 +1,9 @@
-import { Form, TFormProps } from "entities/form";
+import { store } from "app/store";
+
+import { FormWithAuth } from "widgets/form-with-auth";
+import { profileEditPassword } from "widgets/profile_edit_password-form";
+
+import { TFormProps } from "entities/form";
 
 import { Input, TInputProps } from "shared/ui";
 
@@ -9,14 +14,18 @@ export function ProfileEditPasswordForm(
   getForm: (refs: TRefs) => TFormPartials,
   props: Omit<TFormProps, "fields">
 ) {
-  return new Form({
+  return new FormWithAuth({
     onSubmit: (event) => {
       const { isFormValid, formData } = getForm(this.getRefs()).form.check(
         event,
         Object.values(getForm(this.getRefs()).fields)
       );
 
-      console.log(`Form is${isFormValid ? "" : " not"} valid. FormData: `, formData);
+      if (isFormValid) {
+        delete formData.password_confirm;
+
+        store.dispatch(profileEditPassword, formData);
+      }
     },
     ...props,
     fields: (
@@ -59,5 +68,5 @@ export function ProfileEditPasswordForm(
         },
       ] as TInputProps[]
     ).map((inputProps) => new Input(inputProps)),
-  });
+  } as TFormProps);
 }

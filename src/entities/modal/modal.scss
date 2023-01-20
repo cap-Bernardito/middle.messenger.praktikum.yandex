@@ -43,6 +43,10 @@
     &-bottom {
       margin-top: $spacer * 5;
     }
+
+    .user-card__text-title {
+      max-width: 100%;
+    }
   }
 
   &__title {

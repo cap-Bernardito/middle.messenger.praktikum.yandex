@@ -45,14 +45,14 @@ const changeUserPasswordModalButton = new Button({
   className: "btn-menu",
 });
 
+const UserCardWithAuth = authModel.withAuth(UserCard);
+const ListV1ItemWithAuth = authModel.withAuth(ListV1Item);
+
 const getProfileModalHeader = (user: User) =>
-  new UserCard({
+  new UserCardWithAuth({
     avatar: new MyAvatar({ className: "avatar_md mr-3" }),
-    name: `<div class='text-lg'>${user.fullName}</div>`,
-    message: new List({
-      items: [`<span class='text-sm'>@${user.displayName}</span>`].map((entry) => new ListItem({ body: entry })),
-      className: "list-modal-header",
-    }),
+    name: () => `<div class='text-lg'>${user.fullName}</div>`,
+    message: () => `<ul class="list list-modal-header"><li class="list__item ">@${user.displayName}</li></ul>`,
     className: "not-interactive",
   });
 
@@ -74,29 +74,29 @@ export const offcanvasBodyModals = function (this: { getRefs: () => TRefs }) {
         items: [
           {
             name: "Почта",
-            value: user.email,
+            value: () => user.email,
           },
           {
             name: "Логин",
-            value: user.login,
+            value: () => user.login,
           },
           {
             name: "Имя",
-            value: user.firstName,
+            value: () => user.firstName,
           },
           {
             name: "Фамилия",
-            value: user.secondName,
+            value: () => user.secondName,
           },
           {
             name: "Имя в чате",
-            value: user.displayName,
+            value: () => user.displayName,
           },
           {
             name: "Телефон",
-            value: user.phone,
+            value: () => user.phone,
           },
-        ].map((listItem) => new ListV1Item(listItem)),
+        ].map((listItem) => new ListV1ItemWithAuth(listItem)),
       }),
       body: new List({
         items: [changeUserAvatarModalButton, changeUserInfoModalButton, changeUserPasswordModalButton].map(
@@ -160,9 +160,9 @@ const logout = new Button({
 
 export const offcanvasBody = (user: User) =>
   new SettingsPanel({
-    userInfo: new UserCard({
+    userInfo: new UserCardWithAuth({
       avatar: new MyAvatar({ className: "avatar_xs" }),
-      name: `<span class='text-lg'>${user.fullName}</span>`,
+      name: () => `<span class='text-lg'>${user.fullName}</span>`,
       className: "not-interactive",
     }),
     menu: [modalInfo, logout],

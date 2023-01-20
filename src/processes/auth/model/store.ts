@@ -7,6 +7,7 @@ export type User = {
   avatar: string;
   phone: string;
   email: string;
+  fullName: string;
 };
 
 export type TUserState = {

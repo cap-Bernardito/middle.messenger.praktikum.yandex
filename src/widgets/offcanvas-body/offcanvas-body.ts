@@ -2,6 +2,7 @@ import { authModel, authServices } from "processes/auth";
 
 import { store } from "app/store";
 
+import { MyAvatar } from "widgets/my-avatar";
 import { ProfileEditAvatarForm } from "widgets/profile_edit_avatar-form";
 import { ProfileEditInfoForm } from "widgets/profile_edit_info-form";
 import { ProfileEditPasswordForm } from "widgets/profile_edit_password-form";
@@ -9,8 +10,7 @@ import { ProfileEditPasswordForm } from "widgets/profile_edit_password-form";
 import { Form, Modal, Overlay, SettingsPanel, UserCard } from "entities";
 
 import { mdiAccountCircle, mdiCog, mdiExitToApp, mdiFileImageOutline, mdiShieldAccount } from "@mdi/js";
-import img from "shared/assets/images/tigger.jpg";
-import { Avatar, Button, List, ListItem, ListV1, ListV1Item, renderIcon } from "shared/ui";
+import { Button, List, ListItem, ListV1, ListV1Item, renderIcon } from "shared/ui";
 
 const overlay = new Overlay();
 
@@ -46,7 +46,7 @@ const changeUserPasswordModalButton = new Button({
 
 const getProfileModalHeader = () =>
   new UserCard({
-    avatar: new Avatar({ className: "avatar_md mr-3", img: img }),
+    avatar: new MyAvatar({ className: "avatar_md mr-3" }),
     name: "<div class='text-lg'>Вася Василёк</div>",
     message: new List({
       items: ["<span class='text-sm'>@BuHHeTy</span>"].map((entry) => new ListItem({ body: entry })),
@@ -164,7 +164,7 @@ const logout = new Button({
 
 export const offcanvasBody = new SettingsPanel({
   userInfo: new UserCard({
-    avatar: new Avatar({ className: "avatar_xs", img: img }),
+    avatar: new MyAvatar({ className: "avatar_xs" }),
     name: "<span class='text-lg'>Вася Василёк</span>",
     className: "not-interactive",
   }),

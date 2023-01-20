@@ -1,9 +1,10 @@
+import { MyAvatar } from "widgets/my-avatar";
 import { ProfileEditInfoForm } from "widgets/profile_edit_info-form";
 
 import { Form, templateUserInfo, TUserInfoProps } from "entities";
 
 import { Block } from "shared/core";
-import { Avatar, Button } from "shared/ui";
+import { Button } from "shared/ui";
 
 export class ProfileEditInfoPage extends Block<TUserInfoProps> {
   static cName = "ProfileEditInfoPage";
@@ -12,7 +13,7 @@ export class ProfileEditInfoPage extends Block<TUserInfoProps> {
     super();
 
     this.setProps({
-      avatar: new Avatar(),
+      avatar: new MyAvatar({}),
       info: ProfileEditInfoForm.call(this, (refs) => Form.getFormParts(refs.formRef), {
         button: new Button({ value: "Изменить данные", title: "Изменить данные", className: "btn-primary btn-block" }),
         decorated: false,

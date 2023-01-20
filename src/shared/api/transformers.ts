@@ -12,5 +12,6 @@ export const transformUser = (data: UserDTO): authModel.User => {
     avatar: data.avatar,
     phone: data.phone,
     email: data.email,
+    fullName: `${data.first_name} ${data.second_name}`,
   };
 };

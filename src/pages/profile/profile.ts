@@ -2,10 +2,12 @@ import { authModel, authServices } from "processes/auth";
 
 import { store } from "app/store";
 
+import { MyAvatar } from "widgets/my-avatar";
+
 import { templateUserInfo, TUserInfoProps } from "entities";
 
 import { Block, Link } from "shared/core";
-import { Avatar, Button, ListV1, ListV1Item } from "shared/ui";
+import { Button, ListV1, ListV1Item } from "shared/ui";
 import { ROUTES } from "shared/utils/constants";
 
 export class ProfilePage extends Block<TUserInfoProps> {
@@ -19,8 +21,8 @@ export class ProfilePage extends Block<TUserInfoProps> {
     }
 
     super({
-      avatar: new Avatar(),
-      title: "Вася",
+      avatar: new MyAvatar({}),
+      title: user.fullName,
       info: new ListV1({
         items: [
           {

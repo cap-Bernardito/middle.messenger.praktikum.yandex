@@ -1,3 +1,4 @@
+import { MyAvatar } from "widgets/my-avatar";
 import { offcanvasBody, offcanvasBodyModals } from "widgets/offcanvas-body";
 
 import {
@@ -71,7 +72,7 @@ export class ChatPage extends Block {
       ...({
         header: new MessagesHeader({
           left: new UserCard({
-            avatar: new Avatar({ className: "avatar_xs", img: img }),
+            avatar: new MyAvatar({ className: "avatar_xs" }),
             name: "<span class='text-base'>Алексей</span>",
             message: "<span class='text-base text-gray-500'>был(а) 33 минуты назад</span>",
             className: "not-interactive",

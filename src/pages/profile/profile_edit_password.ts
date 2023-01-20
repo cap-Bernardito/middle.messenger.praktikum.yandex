@@ -1,9 +1,10 @@
+import { MyAvatar } from "widgets/my-avatar";
 import { ProfileEditPasswordForm } from "widgets/profile_edit_password-form";
 
 import { Form, templateUserInfo, TUserInfoProps } from "entities";
 
 import { Block } from "shared/core";
-import { Avatar, Button } from "shared/ui";
+import { Button } from "shared/ui";
 
 export class ProfileEditPasswordPage extends Block<TUserInfoProps> {
   static cName = "ProfileEditPasswordPage";
@@ -12,7 +13,7 @@ export class ProfileEditPasswordPage extends Block<TUserInfoProps> {
     super();
 
     this.setProps({
-      avatar: new Avatar(),
+      avatar: new MyAvatar({}),
       info: ProfileEditPasswordForm.call(this, (refs) => Form.getFormParts(refs.formRef), {
         button: new Button({ value: "Изменить пароль", title: "Изменить пароль", className: "btn-primary btn-block" }),
         decorated: false,

@@ -1,4 +1,7 @@
+import { store } from "app/store";
+
 import { FormWithAuth } from "widgets/form-with-auth";
+import { profileEditAvatar } from "widgets/profile_edit_avatar-form";
 
 import { TFormProps } from "entities/form";
 
@@ -13,12 +16,13 @@ export function ProfileEditAvatarForm(
 ) {
   return new FormWithAuth({
     onSubmit: (event) => {
-      const { isFormValid, formData } = getForm(this.getRefs()).form.check(
-        event,
-        Object.values(getForm(this.getRefs()).fields)
-      );
+      const { isFormValid } = getForm(this.getRefs()).form.check(event, Object.values(getForm(this.getRefs()).fields));
 
-      console.log(`Form is${isFormValid ? "" : " not"} valid. FormData: `, formData);
+      const formInDOM = getForm(this.getRefs()).form.getContent();
+
+      if (isFormValid) {
+        store.dispatch(profileEditAvatar, new FormData(formInDOM));
+      }
     },
     ...props,
     fields: (

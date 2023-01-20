@@ -1,7 +1,6 @@
 import { authAPI, authModel } from "processes/auth";
 
-import { transformUser } from "shared/api";
-import { UserDTO } from "shared/api/types";
+import { transformUser, UserDTO } from "shared/api";
 import { apiHasError } from "shared/utils";
 
 export async function initApp(dispatch: Dispatch<AppState>) {

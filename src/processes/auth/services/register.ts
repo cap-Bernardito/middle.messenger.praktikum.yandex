@@ -1,7 +1,6 @@
 import { authAPI, authModel, authTypes } from "processes/auth";
 
-import { transformUser } from "shared/api";
-import { UserDTO } from "shared/api/types";
+import { transformUser, UserDTO } from "shared/api";
 import { router } from "shared/core";
 import { apiHasError } from "shared/utils";
 

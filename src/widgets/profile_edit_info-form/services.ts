@@ -2,8 +2,7 @@ import { authAPI, authModel } from "processes/auth";
 
 import { ChangeUserInfoRequestData, profileEditInfoAPI } from "widgets/profile_edit_info-form";
 
-import { transformUser } from "shared/api";
-import { UserDTO } from "shared/api/types";
+import { transformUser, UserDTO } from "shared/api";
 import { apiHasError } from "shared/utils";
 
 export const profileEditInfo = async (

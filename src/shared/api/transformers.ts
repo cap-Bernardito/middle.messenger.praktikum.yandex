@@ -1,6 +1,6 @@
 import { authModel } from "processes/auth";
 
-import { UserDTO } from "shared/api/types";
+import { UserDTO } from "shared/api";
 
 export const transformUser = (data: UserDTO): authModel.User => {
   return {

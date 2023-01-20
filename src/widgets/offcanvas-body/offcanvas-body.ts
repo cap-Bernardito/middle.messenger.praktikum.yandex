@@ -1,4 +1,5 @@
 import { authModel, authServices } from "processes/auth";
+import { User } from "processes/auth/model";
 
 import { store } from "app/store";
 
@@ -44,75 +45,72 @@ const changeUserPasswordModalButton = new Button({
   className: "btn-menu",
 });
 
-const getProfileModalHeader = () =>
+const getProfileModalHeader = (user: User) =>
   new UserCard({
     avatar: new MyAvatar({ className: "avatar_md mr-3" }),
-    name: "<div class='text-lg'>Вася Василёк</div>",
+    name: `<div class='text-lg'>${user.fullName}</div>`,
     message: new List({
-      items: ["<span class='text-sm'>@BuHHeTy</span>"].map((entry) => new ListItem({ body: entry })),
+      items: [`<span class='text-sm'>@${user.displayName}</span>`].map((entry) => new ListItem({ body: entry })),
       className: "list-modal-header",
     }),
     className: "not-interactive",
   });
 
 export const offcanvasBodyModals = function (this: { getRefs: () => TRefs }) {
-  const result = [];
-
   const { user } = authModel.selectUser();
 
-  if (user) {
-    result.push(
-      new Modal({
-        showBackButton: true,
-        runButton: modalInfo,
-        overlay: overlay,
-        title: "Настройки",
-        header: getProfileModalHeader(),
-        preBody: new ListV1({
-          items: [
-            {
-              name: "Почта",
-              value: user.email,
-            },
-            {
-              name: "Логин",
-              value: user.login,
-            },
-            {
-              name: "Имя",
-              value: user.firstName,
-            },
-            {
-              name: "Фамилия",
-              value: user.secondName,
-            },
-            {
-              name: "Имя в чате",
-              value: user.displayName,
-            },
-            {
-              name: "Телефон",
-              value: user.phone,
-            },
-          ].map((listItem) => new ListV1Item(listItem)),
-        }),
-        body: new List({
-          items: [changeUserAvatarModalButton, changeUserInfoModalButton, changeUserPasswordModalButton].map(
-            (entry) => new ListItem({ body: entry })
-          ),
-          className: "list-menu",
-        }),
-      })
-    );
+  if (!user) {
+    return [];
   }
 
-  result.push(
+  return [
+    new Modal({
+      showBackButton: true,
+      runButton: modalInfo,
+      overlay: overlay,
+      title: "Настройки",
+      header: getProfileModalHeader(user),
+      preBody: new ListV1({
+        items: [
+          {
+            name: "Почта",
+            value: user.email,
+          },
+          {
+            name: "Логин",
+            value: user.login,
+          },
+          {
+            name: "Имя",
+            value: user.firstName,
+          },
+          {
+            name: "Фамилия",
+            value: user.secondName,
+          },
+          {
+            name: "Имя в чате",
+            value: user.displayName,
+          },
+          {
+            name: "Телефон",
+            value: user.phone,
+          },
+        ].map((listItem) => new ListV1Item(listItem)),
+      }),
+      body: new List({
+        items: [changeUserAvatarModalButton, changeUserInfoModalButton, changeUserPasswordModalButton].map(
+          (entry) => new ListItem({ body: entry })
+        ),
+        className: "list-menu",
+      }),
+    }),
     new Modal({
       showBackButton: true,
       runButton: changeUserAvatarModalButton,
       overlay: overlay,
       title: "Изменить аватар",
-      header: getProfileModalHeader(),
+      header: getProfileModalHeader(user),
       ref: "changeUserAvatardModal",
       body: ProfileEditAvatarForm.call(this, (refs) => Form.getFormParts(refs.changeUserAvatardModal.refs.formRef), {
         className: "px-3 pt-3 pb-0",
@@ -125,7 +123,7 @@ export const offcanvasBodyModals = function (this: { getRefs: () => TRefs }) {
       runButton: changeUserInfoModalButton,
       overlay: overlay,
       title: "Изменить данные",
-      header: getProfileModalHeader(),
+      header: getProfileModalHeader(user),
       ref: "changeUserInfoModal",
       body: ProfileEditInfoForm.call(this, (refs) => Form.getFormParts(refs.changeUserInfoModal.refs.formRef), {
         className: "px-3 pt-3 pb-0",
@@ -138,17 +136,15 @@ export const offcanvasBodyModals = function (this: { getRefs: () => TRefs }) {
       runButton: changeUserPasswordModalButton,
       overlay: overlay,
       title: "Изменить пароль",
-      header: getProfileModalHeader(),
+      header: getProfileModalHeader(user),
       ref: "changeUserPasswordModal",
       body: ProfileEditPasswordForm.call(this, (refs) => Form.getFormParts(refs.changeUserPasswordModal.refs.formRef), {
         className: "px-3 pt-3 pb-0",
         button: new Button({ value: "Сохранить", title: "Сохранить", className: "btn-form-modal" }),
         decorated: false,
       }),
-    })
-  );
-
-  return result;
+    }),
+  ];
 };
 
 const logout = new Button({
@@ -162,12 +158,13 @@ const logout = new Button({
   },
 });
 
-export const offcanvasBody = new SettingsPanel({
-  userInfo: new UserCard({
-    avatar: new MyAvatar({ className: "avatar_xs" }),
-    name: "<span class='text-lg'>Вася Василёк</span>",
-    className: "not-interactive",
-  }),
-  menu: [modalInfo, logout],
-  about: "Учебное приложение для обмена сообщениями",
-});
+export const offcanvasBody = (user: User) =>
+  new SettingsPanel({
+    userInfo: new UserCard({
+      avatar: new MyAvatar({ className: "avatar_xs" }),
+      name: `<span class='text-lg'>${user.fullName}</span>`,
+      className: "not-interactive",
+    }),
+    menu: [modalInfo, logout],
+    about: "Учебное приложение для обмена сообщениями",
+  });

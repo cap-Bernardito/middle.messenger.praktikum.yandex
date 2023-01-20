@@ -1,3 +1,5 @@
+import { authModel } from "processes/auth";
+
 import { MyAvatar } from "widgets/my-avatar";
 import { offcanvasBody, offcanvasBodyModals } from "widgets/offcanvas-body";
 
@@ -38,6 +40,12 @@ export class ChatPage extends Block {
   constructor() {
     super();
 
+    const { user } = authModel.selectUser();
+
+    if (!user) {
+      return;
+    }
+
     this.setProps({
       overlay,
 
@@ -47,7 +55,7 @@ export class ChatPage extends Block {
 
       offcanvas: new Offcanvas({
         control: hamburger,
-        body: offcanvasBody,
+        body: offcanvasBody(user),
         overlay: overlay,
       }),
 
@@ -73,7 +81,7 @@ export class ChatPage extends Block {
         header: new MessagesHeader({
           left: new UserCard({
             avatar: new MyAvatar({ className: "avatar_xs" }),
-            name: "<span class='text-base'>Алексей</span>",
+            name: "<span class='text-base'>Вася</span>",
             message: "<span class='text-base text-gray-500'>был(а) 33 минуты назад</span>",
             className: "not-interactive",
           }),

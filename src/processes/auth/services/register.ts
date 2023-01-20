@@ -24,15 +24,13 @@ export const register = async (
 
   const responseUser = await authAPI.me();
 
-  dispatch(authModel.setUser({ loading: false, error: null }));
-
   if (apiHasError(response)) {
     dispatch(logout);
 
     return;
   }
 
-  dispatch(authModel.setUser({ user: transformUser(responseUser as UserDTO), loading: false }));
+  dispatch(authModel.setUser({ user: transformUser(responseUser as UserDTO), loading: false, error: null }));
 
   router.restart();
 };

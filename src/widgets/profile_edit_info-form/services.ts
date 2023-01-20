@@ -23,13 +23,11 @@ export const profileEditInfo = async (
 
   const responseUser = await authAPI.me();
 
-  dispatch(authModel.setUser({ loading: false, error: null }));
-
   if (apiHasError(response)) {
     dispatch(authModel.setUser({ user: null, loading: false, error: response.reason }));
 
     return;
   }
 
-  dispatch(authModel.setUser({ user: transformUser(responseUser as UserDTO), loading: false }));
+  dispatch(authModel.setUser({ user: transformUser(responseUser as UserDTO), loading: false, error: null }));
 };

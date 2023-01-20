@@ -2,7 +2,7 @@ import { authModel, authServices } from "processes/auth";
 
 import { store } from "app/store";
 
-import { Form } from "entities";
+import { Form, SplashScreen } from "entities";
 
 import { Block, Link } from "shared/core";
 import { Button, Input, TInputProps } from "shared/ui";
@@ -68,6 +68,10 @@ class LoginPage extends Block {
   componentDidUpdate(oldProps: any, newProps: any): boolean {
     if (oldProps.authError !== newProps.authError) {
       this.getForm().form.setProps({ formError: newProps.authError });
+    }
+
+    if (oldProps.authLoading !== newProps.authLoading) {
+      this.getForm().form.setProps({ loading: newProps.authLoading });
     }
 
     return true;

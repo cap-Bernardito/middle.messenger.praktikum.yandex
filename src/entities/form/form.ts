@@ -15,6 +15,7 @@ export type TFormProps = TPropsWithEvents<
     className?: string;
     decorated?: boolean;
     formError?: TNullable<string>;
+    loading?: boolean;
     onSubmit?: (event: Event) => void;
   }>
 >;

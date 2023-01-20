@@ -31,6 +31,24 @@
     text-align: center;
   }
 
+  .error,
+  &__loader {
+    margin-top: 2rem;
+    margin-bottom: -2rem;
+    text-align: center;
+  }
+
+  &__loader {
+    color: $gray-500;
+  }
+
+  &_loading {
+    button {
+      pointer-events: none;
+      opacity: 0.5;
+    }
+  }
+
   .form-control {
     &:not(:last-child) {
       margin-bottom: $spacer * 5;

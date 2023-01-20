@@ -1,4 +1,4 @@
-<form novalidate autocomplete="off" class="form {{#if decorated}}form_decorated{{/if}} {{#if className}}{{className}}{{/if}}">
+<form novalidate autocomplete="off" class="form {{#if decorated}}form_decorated{{/if}} {{#if loading}}form_loading{{/if}} {{#if className}}{{className}}{{/if}}">
   {{#if title}}
     <h1 class="form__title">
       {{{title}}}
@@ -13,6 +13,10 @@
 
   {{#if formError}}
     {{{Error value=formError ref="formErrorRef"}}}
+  {{/if}}
+
+  {{#if loading}}
+    <div class="form__loader">Загрузка...</div>
   {{/if}}
 
   <div class="form__button">

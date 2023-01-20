@@ -130,6 +130,10 @@ class RegisterPage extends Block {
       this.getForm().form.setProps({ formError: newProps.authError });
     }
 
+    if (oldProps.authLoading !== newProps.authLoading) {
+      this.getForm().form.setProps({ loading: newProps.authLoading });
+    }
+
     return true;
   }
 

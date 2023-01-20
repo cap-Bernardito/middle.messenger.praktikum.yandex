@@ -1,6 +1,12 @@
+import { authModel } from "processes/auth";
+
+import { store } from "app/store";
+
 import { Form, TFormProps } from "entities/form";
 
 import { Input, TInputProps } from "shared/ui";
+
+import { profileEditInfo } from "..";
 
 export function ProfileEditInfoForm(
   this: {
@@ -9,6 +15,12 @@ export function ProfileEditInfoForm(
   getForm: (refs: TRefs) => TFormPartials,
   props: Omit<TFormProps, "fields">
 ) {
+  const { user } = authModel.selectUser();
+
+  if (!user) {
+    return;
+  }
+
   return new Form({
     onSubmit: (event) => {
       const { isFormValid, formData } = getForm(this.getRefs()).form.check(
@@ -16,14 +28,16 @@ export function ProfileEditInfoForm(
         Object.values(getForm(this.getRefs()).fields)
       );
 
-      console.log(`Form is${isFormValid ? "" : " not"} valid. FormData: `, formData);
+      if (isFormValid) {
+        store.dispatch(profileEditInfo, formData);
+      }
     },
     ...props,
     fields: (
       [
         {
           label: "Почта",
-          value: "pochta@yandex.ru",
+          value: user.email,
           name: "email",
           type: "email",
           required: true,
@@ -37,7 +51,7 @@ export function ProfileEditInfoForm(
         },
         {
           label: "Логин",
-          value: "vasya_vasilek",
+          value: user.login,
           name: "login",
           required: true,
           ref: "loginInput",
@@ -50,7 +64,7 @@ export function ProfileEditInfoForm(
         },
         {
           label: "Имя",
-          value: "Вася",
+          value: user.firstName,
           name: "first_name",
           required: true,
           ref: "first_nameInput",
@@ -63,7 +77,7 @@ export function ProfileEditInfoForm(
         },
         {
           label: "Фамилия",
-          value: "Василёк",
+          value: user.secondName,
           name: "second_name",
           required: true,
           ref: "second_nameInput",
@@ -76,7 +90,7 @@ export function ProfileEditInfoForm(
         },
         {
           label: "Имя в чате",
-          value: "Вася Василёк",
+          value: user.displayName,
           name: "display_name",
           required: true,
           ref: "display_nameInput",
@@ -89,7 +103,7 @@ export function ProfileEditInfoForm(
         },
         {
           label: "Телефон",
-          value: "+79099673030",
+          value: user.phone,
           name: "phone",
           type: "tel",
           required: true,

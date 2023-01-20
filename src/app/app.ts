@@ -1,7 +1,8 @@
 // eslint-disable-next-line simple-import-sort/imports
 import "./registerComponents";
 
-import { Block, renderDOM } from "shared/core";
+import { renderDOM } from "shared/core";
+import { SplashScreen } from "entities";
 
 import { store } from "./store";
 
@@ -9,17 +10,7 @@ import "./styles/index.scss";
 import { initApp, initRouter } from "./services";
 
 document.addEventListener("DOMContentLoaded", () => {
-  const splashScreen = new (class extends Block {
-    render() {
-      return `
-        {{#LayoutCentered}}
-          Загрузка...
-        {{/LayoutCentered}}
-      `;
-    }
-  })();
-
-  renderDOM(splashScreen);
+  renderDOM(new SplashScreen({}));
 
   store.dispatch(initApp);
 

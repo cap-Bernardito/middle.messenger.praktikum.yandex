@@ -9,6 +9,10 @@ const testCases: [string, PlainObject[], Record<string, any>][] = [
     [{ a: { b: [{ d: { f: 3 } }] } }, { a: { b: [{ d: { c: 4 } }] } }],
     { a: { b: [{ d: { f: 3 } }, { d: { c: 4 } }] } },
   ],
+  ["Object with null", [{ a: null, b: 2 }, { a: "text" }], { a: "text", b: 2 }],
+  ["Object with null 2", [{ a: "text", b: 2 }, { a: null }], { a: null, b: 2 }],
+  ["Object with undefined", [{ a: 1, b: 2 }, { a: undefined }], { a: undefined, b: 2 }],
+  ["Object with undefined 2", [{ a: undefined, b: 2 }, { a: 1 }], { a: 1, b: 2 }],
 ];
 
 describe("Should merge", () => {

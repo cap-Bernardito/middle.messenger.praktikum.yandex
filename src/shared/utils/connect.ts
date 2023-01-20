@@ -11,8 +11,8 @@ export function connect<P extends Record<string, any> = any>(mapStateToProps: (s
 
         super({ ...props, ...state });
 
-        store.on("changed", () => {
-          const newState = mapStateToProps(store.getState());
+        store.on("changed", (_prevState, newState) => {
+          newState = mapStateToProps(newState);
 
           if (!_.isEqual(state, newState)) {
             // @ts-expect-error this is not typed

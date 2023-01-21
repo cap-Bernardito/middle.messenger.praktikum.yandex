@@ -1,7 +1,9 @@
+import { chatsTypes } from "pages/chat/chats";
+
 import { APIError, request } from "shared/api";
 
-import { TChatDTO } from "./types";
-
 export const chatsAPI = {
-  getChats: () => request.get<TChatDTO[] | APIError>("chats"),
+  getChats: () => request.get<chatsTypes.TChatDTO[] | APIError>("chats"),
+
+  createChat: (data: chatsTypes.createChatRequestData) => request.post<chatsTypes.ResponseData>("chats", { data }),
 };

@@ -18,7 +18,7 @@ export const transformUser = (data: authTypes.UserDTO): authTypes.User => {
 
 export const transformChats = (dataArray: chatsTypes.TChatDTO[]): chatsTypes.TChat[] => {
   return dataArray.map((data) => {
-    const lastMessage = {
+    const lastMessage = data.last_message && {
       user: transformUser(data.last_message.user),
       time: data.last_message.time,
       content: data.last_message.content,

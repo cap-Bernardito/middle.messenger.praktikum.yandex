@@ -37,7 +37,11 @@ const checks = {
   },
   message: {
     regex: /.*\S.*/,
-    message: "Пустое поле",
+    message: "Поле не должно быть пустым",
+  },
+  title: {
+    regex: /.*\S.*/,
+    message: "Поле не должно быть пустым",
   },
 };
 

@@ -22,8 +22,8 @@ export const UserListWithChats = chatsModel.withChats(
               return {
                 avatar: new Avatar({ className: "avatar_sm", img: getFile(chat.avatar) }),
                 name: chat.title,
-                message: chat.lastMessage.content,
-                date: formattedDate(new Date(chat.lastMessage.time)),
+                message: chat.lastMessage && chat.lastMessage.content,
+                date: chat.lastMessage && formattedDate(new Date(chat.lastMessage.time)),
                 counter: chat.unreadCount,
                 // className: "active",
               };

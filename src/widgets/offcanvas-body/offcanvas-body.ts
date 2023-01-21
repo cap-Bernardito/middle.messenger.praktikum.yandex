@@ -3,6 +3,8 @@ import { authTypes } from "processes/auth";
 
 import { store } from "app/store";
 
+import { chatsServices } from "pages/chat/chats";
+
 import { MyAvatar } from "widgets/my-avatar";
 import { ProfileEditAvatarForm } from "widgets/profile_edit_avatar-form";
 import { ProfileEditInfoForm } from "widgets/profile_edit_info-form";
@@ -10,15 +12,21 @@ import { ProfileEditPasswordForm } from "widgets/profile_edit_password-form";
 
 import { Form, Modal, Overlay, SettingsPanel, UserCard } from "entities";
 
-import { mdiAccountCircle, mdiCog, mdiExitToApp, mdiFileImageOutline, mdiShieldAccount } from "@mdi/js";
-import { Button, List, ListItem, ListV1, ListV1Item, renderIcon } from "shared/ui";
+import { mdiAccountCircle, mdiBullhorn, mdiCog, mdiExitToApp, mdiFileImageOutline, mdiShieldAccount } from "@mdi/js";
+import { Button, Input, List, ListItem, ListV1, ListV1Item, renderIcon, TInputProps } from "shared/ui";
 
 const overlay = new Overlay();
 
 const modalInfo = new Button({
   value: `<span class="icon-square icon-square-coral">${renderIcon({ value: mdiCog })}</span> Настройки`,
   title: "Настройки",
-  className: "btn-menu",
+  className: "btn-menu mb-4",
+});
+
+const createChatModalButton = new Button({
+  value: `<span class="icon-square icon-square-success">${renderIcon({ value: mdiBullhorn })}</span> Добавить чат`,
+  title: "Добавить чат",
+  className: "btn-menu mb-4",
 });
 
 const changeUserAvatarModalButton = new Button({
@@ -144,6 +152,49 @@ export const offcanvasBodyModals = function (this: { getRefs: () => TRefs }) {
         decorated: false,
       }),
     }),
+    new Modal({
+      showBackButton: true,
+      runButton: createChatModalButton,
+      overlay: overlay,
+      title: "Добавить чат",
+      ref: "createChatModal",
+      body: new Form({
+        onSubmit: (event) => {
+          // @ts-ignore
+          const form = this.refs.createChatModal.childrenFromProps.body as Form;
+          const { isFormValid, formData } = form.check(event, Object.values(Form.getFormParts(form).fields));
+
+          if (isFormValid) {
+            store.dispatch(chatsServices.createChat, formData);
+          }
+        },
+        fields: (
+          [
+            {
+              label: "Название",
+              name: "title",
+              required: true,
+              ref: "titleInput",
+              onInput: (event) => {
+                // @ts-ignore
+                const form = this.refs.createChatModal.childrenFromProps.body as Form;
+
+                (Form.getFormParts(form).fields.titleInput as Input).check(event).setValue(event);
+              },
+              onBlur: (event) => {
+                // @ts-ignore
+                const form = this.refs.createChatModal.childrenFromProps.body as Form;
+
+                (Form.getFormParts(form).fields.titleInput as Input).check(event).setValue(event);
+              },
+            },
+          ] as TInputProps[]
+        ).map((inputProps) => new Input(inputProps)),
+        className: "px-3 pt-3 pb-0",
+        button: new Button({ value: "Сохранить", title: "Сохранить", className: "btn-form-modal" }),
+        decorated: false,
+      }),
+    }),
   ];
 };
 
@@ -165,6 +216,6 @@ export const offcanvasBody = (user: authTypes.User) =>
       name: () => `<span class='text-lg'>${user.fullName}</span>`,
       className: "not-interactive",
     }),
-    menu: [modalInfo, logout],
+    menu: [createChatModalButton, modalInfo, logout],
     about: "Учебное приложение для обмена сообщениями",
   });

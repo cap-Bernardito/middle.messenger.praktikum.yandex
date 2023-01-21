@@ -22,5 +22,10 @@ export const FormWithAuth = authModel.withAuth(
         },
       });
     }
+
+    componentDidUpdate() {
+      // TODO: разобраться с этим (в формах не отображается статус загрузки)
+      return true;
+    }
   }
 );

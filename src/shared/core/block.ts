@@ -115,12 +115,10 @@ export class Block<P extends Record<string, any> = any> {
     this._render();
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   componentDidUpdate(oldProps: P, newProps: P) {
-    // TODO: разобраться с этим
-    // if (_.isEqual(oldProps, newProps)) {
-    //   return false;
-    // }
+    if (_.isEqual(oldProps, newProps)) {
+      return false;
+    }
 
     return true;
   }

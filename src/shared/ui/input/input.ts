@@ -16,6 +16,7 @@ export type TInputProps = TPropsWithRef<{
   classNameInput?: string;
   required?: boolean;
   disabled?: boolean;
+  accept?: string;
   onInput?: (event: Event) => void;
   onBlur?: (event: Event) => void;
   onFocus?: (event: Event) => void;

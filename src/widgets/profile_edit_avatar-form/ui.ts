@@ -16,12 +16,15 @@ export function ProfileEditAvatarForm(
 ) {
   return new FormWithAuth({
     onSubmit: (event) => {
-      const { isFormValid } = getForm(this.getRefs()).form.check(event, Object.values(getForm(this.getRefs()).fields));
+      event.preventDefault();
 
-      const formInDOM = getForm(this.getRefs()).form.getContent();
+      const form = getForm(this.getRefs()).form.getContent();
+      const formData = new FormData(form);
 
-      if (isFormValid) {
-        store.dispatch(profileEditAvatar, new FormData(formInDOM));
+      // @ts-ignore
+      if (Number(formData.get("avatar")?.size) > 0) {
+        form.reset();
+        store.dispatch(profileEditAvatar, formData);
       }
     },
     ...props,
@@ -32,6 +35,7 @@ export function ProfileEditAvatarForm(
           placeholder: "Выбрать файл на компьютере",
           name: "avatar",
           type: "file",
+          accept: "image/*",
           className: "form-control_file",
           required: true,
           ref: "fileInput",

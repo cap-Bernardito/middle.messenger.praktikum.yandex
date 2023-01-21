@@ -38,7 +38,7 @@ export class Block<P extends Record<string, any> = any> {
 
     this.props = this._makePropsProxy(props || ({} as P));
     this.state = this._makePropsProxy(this.state);
-    this.childrenFromProps = children;
+    this.childrenFromProps = this._makePropsProxy(children);
     this.executableProps = executableProps;
 
     this.eventBus = () => eventBus;
@@ -251,11 +251,15 @@ export class Block<P extends Record<string, any> = any> {
 
     const stubs: Record<string, string | string[]> = {};
 
+    const executableProps: typeof this.executableProps = {};
+
     for (const [key, value] of Object.entries(this.executableProps)) {
-      this.childrenFromProps[key] = value.call(this);
+      executableProps[key] = value.call(this);
     }
 
-    for (const [key, value] of Object.entries(this.childrenFromProps)) {
+    const requiringProcessingProps = Object.assign({}, executableProps, this.childrenFromProps);
+
+    for (const [key, value] of Object.entries(requiringProcessingProps)) {
       if (Array.isArray(value)) {
         stubs[key] = [];
 
@@ -308,13 +312,5 @@ export class Block<P extends Record<string, any> = any> {
     }
 
     return newElement;
-  }
-
-  show() {
-    this.getContent().style.display = "block";
-  }
-
-  hide() {
-    this.getContent().style.display = "none";
   }
 }

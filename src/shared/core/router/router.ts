@@ -5,6 +5,7 @@ class Router {
   private _routes: Route[] = [];
   private _history = window.history;
   private _currentRoute: Route | null = null;
+  private _cache: Record<string, any> = {};
 
   constructor() {
     if (Router._instance) {
@@ -24,8 +25,8 @@ class Router {
     this._onRoute(window.location.pathname);
   }
 
-  private _onRoute(pathname: string): boolean {
-    const route = this.getRoute(pathname) || this.getRoute("*");
+  private _onRoute(pathname: string, isRenderRoute = true): boolean {
+    const route = (this.getRoute(pathname) || this.getRoute("*")).route;
 
     if (!route) {
       throw new Error(`Component is not available on "${pathname}"`);
@@ -41,7 +42,9 @@ class Router {
 
     this._currentRoute = route;
 
-    route.render();
+    if (isRenderRoute) {
+      route.render();
+    }
 
     return true;
   }
@@ -52,8 +55,8 @@ class Router {
     return this;
   }
 
-  go(pathname: string) {
-    if (this._onRoute(pathname)) {
+  go(pathname: string, isRenderRoute?: boolean) {
+    if (this._onRoute(pathname, isRenderRoute)) {
       this._history.pushState({}, "", pathname);
     }
   }
@@ -71,13 +74,26 @@ class Router {
   }
 
   getRoute(pathname: string) {
-    return this._routes.find((route) => route.match(pathname));
+    if (!this._cache[pathname]) {
+      const route = this._routes.find((route) => route.match(pathname));
+
+      if (!route) {
+        return null;
+      }
+
+      this._cache[pathname] = {
+        route: route,
+        params: route.getParams(),
+      };
+    }
+
+    return this._cache[pathname];
   }
 
   getParams() {
     const route = this.getRoute(window.location.pathname);
 
-    return route ? route.getParams() : {};
+    return route ? route.params : {};
   }
 }
 

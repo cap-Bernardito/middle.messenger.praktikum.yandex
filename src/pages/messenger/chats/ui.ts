@@ -5,6 +5,7 @@ import { chatsModel, chatsServices } from "pages/messenger/chats";
 import { TUserListProps, UserList } from "entities";
 
 import { getFile } from "shared/api";
+import { router } from "shared/core";
 import { Avatar } from "shared/ui";
 import { formattedDate } from "shared/utils";
 
@@ -15,7 +16,8 @@ export const UserListWithChats = chatsModel.withChats(
 
       this.setProps({
         users: () => {
-          const { chats, activeChat } = chatsModel.selectChats();
+          const { activeChat, chats } = chatsModel.selectChats();
+          const { chatId } = router.getParams();
 
           return (
             chats &&
@@ -26,8 +28,12 @@ export const UserListWithChats = chatsModel.withChats(
                 message: chat.lastMessage && chat.lastMessage.content,
                 date: chat.lastMessage && formattedDate(new Date(chat.lastMessage.time)),
                 counter: chat.unreadCount,
-                className: () => (chat.id === activeChat ? "active" : ""),
-                onClick: () => store.dispatch(chatsServices.selectChat, chat.id),
+                className: () => (Number(chat.id) === Number(chatId) ? "active" : ""),
+                onClick: () => {
+                  if (chat.id !== activeChat) {
+                    store.dispatch(chatsServices.selectChat, chat.id);
+                  }
+                },
               };
             })
           );

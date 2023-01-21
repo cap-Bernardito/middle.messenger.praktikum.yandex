@@ -8,6 +8,7 @@ import { ChatToolbar, Form, MessagesFooter, Offcanvas, Overlay, TMessagesProps }
 
 import { mdiChevronRight, mdiMenu, mdiPaperclip, mdiSend } from "@mdi/js";
 import { Block } from "shared/core";
+import { router } from "shared/core";
 import { Button, renderIcon, Search, Textarea } from "shared/ui";
 
 import { MessagesWithChat } from "./chat/ui";
@@ -28,7 +29,9 @@ export class MessengerPage extends Block {
   constructor() {
     super();
 
-    store.dispatch(chatsServices.getChats);
+    const { chatId } = router.getParams();
+
+    store.dispatch(chatsServices.getChats, chatId);
 
     const { user } = authModel.selectUser();
 

@@ -1,9 +1,9 @@
-import { chatsAPI, chatsModel, chatsTypes } from "pages/messenger/chats";
+import { chatsAPI, chatsModel, chatsServices, chatsTypes } from "pages/messenger/chats";
 
 import { transformChats } from "shared/api";
 import { apiHasError } from "shared/utils";
 
-export const getChats = async (dispatch: Dispatch<AppState>) => {
+export const getChats = async (dispatch: Dispatch<AppState>, state: AppState, action: number) => {
   dispatch(chatsModel.setChats({ loading: true }));
 
   const response = await chatsAPI.getChats();
@@ -20,4 +20,8 @@ export const getChats = async (dispatch: Dispatch<AppState>) => {
   dispatch(
     chatsModel.setChats({ chats: transformChats(response as chatsTypes.TChatDTO[]), loading: false, error: null })
   );
+
+  if (action) {
+    dispatch(chatsServices.isChatExist, action);
+  }
 };

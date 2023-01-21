@@ -3,7 +3,7 @@ export const ROUTES = {
   login: { path: "/sign-in", title: "Авторизация" },
   register: { path: "/sign-up", title: "Регистрация" },
   messenger: { path: "/messenger", title: "Мессенджер" },
-  chat: { path: "/messenger/:id", title: "Чат" },
+  chat: { path: "/messenger/:chatId", title: "Чат" },
   profile: { path: "/settings", title: "Профиль" },
   profileEditAvatar: { path: "/settings_edit_avatar", title: "Изменить аватар" },
   profileEditInfo: { path: "/settings_edit_info", title: "Изменить данные" },

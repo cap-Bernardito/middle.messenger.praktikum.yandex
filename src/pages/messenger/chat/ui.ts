@@ -4,6 +4,7 @@ import { Messages, MessagesBody, MessagesHeader, TMessagesProps, UserCard } from
 
 import { mdiDotsVertical } from "@mdi/js";
 import { getFile } from "shared/api";
+import { router } from "shared/core";
 import { Avatar, Message, renderIcon } from "shared/ui";
 
 import { messagesMock } from "../mockData";
@@ -15,18 +16,20 @@ export const MessagesWithChat = chatsModel.withChats(
 
       this.setProps({
         placeholder: () => {
-          const { activeChat } = chatsModel.selectChats();
+          const { chatId } = router.getParams();
 
-          return !activeChat && "Выберите, кому хотели бы написать";
+          return !chatId && "Выберите, кому хотели бы написать";
         },
         header: function execProps() {
-          const { chats, activeChat } = chatsModel.selectChats();
+          const { chats } = chatsModel.selectChats();
 
           if (!chats) {
             return null;
           }
 
-          const [currentChat] = chats.filter((chat) => chat.id === activeChat);
+          const { chatId } = router.getParams();
+
+          const [currentChat] = chats.filter((chat) => Number(chat.id) === Number(chatId));
 
           if (!currentChat) {
             return null;

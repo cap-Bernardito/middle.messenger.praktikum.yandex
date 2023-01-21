@@ -1,4 +1,4 @@
-import { chatsAPI, chatsModel, chatsTypes } from "pages/chat/chats";
+import { chatsAPI, chatsModel, chatsTypes } from "pages/messenger/chats";
 
 import { Overlay } from "entities";
 

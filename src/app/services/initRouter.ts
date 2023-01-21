@@ -1,8 +1,8 @@
 import * as authLib from "processes/auth/model/lib";
 
 import {
-  ChatPage,
   LoginPage,
+  MessengerPage,
   Page_404,
   Page_500,
   ProfileAvatarPage,
@@ -106,13 +106,13 @@ const routes: TRouteObject[] = [
   {
     path: ROUTES.chat.path,
     title: ROUTES.chat.title,
-    element: ChatPage,
+    element: MessengerPage,
     shouldAuthorized: true,
   },
   {
     path: ROUTES.messenger.path,
     title: ROUTES.messenger.title,
-    element: ChatPage,
+    element: MessengerPage,
     shouldAuthorized: true,
   },
 ];

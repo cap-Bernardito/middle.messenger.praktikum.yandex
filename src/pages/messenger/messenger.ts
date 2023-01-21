@@ -34,8 +34,8 @@ const hamburger = new Button({
 
 const overlay = new Overlay();
 
-export class ChatPage extends Block {
-  static cName = "ChatPage";
+export class MessengerPage extends Block {
+  static cName = "MessengerPage";
 
   constructor() {
     super();

@@ -1,4 +1,4 @@
-import { chatsTypes } from "pages/chat/chats";
+import { chatsTypes } from "pages/messenger/chats";
 
 import { APIError, request } from "shared/api";
 

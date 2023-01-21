@@ -3,7 +3,7 @@ import { authTypes } from "processes/auth";
 
 import { store } from "app/store";
 
-import { chatsServices } from "pages/chat/chats";
+import { chatsServices } from "pages/messenger/chats";
 
 import { MyAvatar } from "widgets/my-avatar";
 import { ProfileEditAvatarForm } from "widgets/profile_edit_avatar-form";

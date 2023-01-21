@@ -1,6 +1,6 @@
 import { authModel } from "processes/auth";
 
-import { chatsModel } from "pages/chat/chats";
+import { chatsModel } from "pages/messenger/chats";
 
 import { Store } from "shared/core/store";
 

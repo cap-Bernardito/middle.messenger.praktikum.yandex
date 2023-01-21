@@ -1,6 +1,6 @@
 import { authTypes } from "processes/auth";
 
-import { chatsTypes } from "pages/chat/chats";
+import { chatsTypes } from "pages/messenger/chats";
 
 export const transformUser = (data: authTypes.UserDTO): authTypes.User => {
   return {

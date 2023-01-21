@@ -1,4 +1,4 @@
-import { chatsAPI, chatsModel, chatsTypes } from "pages/chat/chats";
+import { chatsAPI, chatsModel, chatsTypes } from "pages/messenger/chats";
 
 import { transformChats } from "shared/api";
 import { apiHasError } from "shared/utils";
@@ -13,6 +13,9 @@ export const getChats = async (dispatch: Dispatch<AppState>) => {
 
     return;
   }
+
+  // В пропсах компонента рекурсивный мердж, потому сперва очищаем перед получением новых чатов
+  dispatch(chatsModel.setChats({ chats: null }));
 
   dispatch(
     chatsModel.setChats({ chats: transformChats(response as chatsTypes.TChatDTO[]), loading: false, error: null })

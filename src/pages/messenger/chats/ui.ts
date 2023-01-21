@@ -1,6 +1,6 @@
 import { store } from "app/store";
 
-import { chatsModel, chatsServices } from "pages/chat/chats";
+import { chatsModel, chatsServices } from "pages/messenger/chats";
 
 import { TUserListProps, UserList } from "entities";
 

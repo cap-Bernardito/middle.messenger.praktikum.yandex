@@ -2,29 +2,17 @@ import { authModel } from "processes/auth";
 
 import { store } from "app/store";
 
-import { MyAvatar } from "widgets/my-avatar";
 import { offcanvasBody, offcanvasBodyModals } from "widgets/offcanvas-body";
 
-import {
-  ChatToolbar,
-  Form,
-  MessagesBody,
-  MessagesFooter,
-  MessagesHeader,
-  Offcanvas,
-  Overlay,
-  templateMessages,
-  TMessagesProps,
-  UserCard,
-} from "entities";
+import { ChatToolbar, Form, MessagesFooter, Offcanvas, Overlay, TMessagesProps } from "entities";
 
-import { mdiChevronRight, mdiDotsVertical, mdiMenu, mdiPaperclip, mdiSend } from "@mdi/js";
+import { mdiChevronRight, mdiMenu, mdiPaperclip, mdiSend } from "@mdi/js";
 import { Block } from "shared/core";
-import { Button, Message, renderIcon, Search, Textarea } from "shared/ui";
+import { Button, renderIcon, Search, Textarea } from "shared/ui";
 
+import { MessagesWithChat } from "./chat/ui";
 import { UserListWithChats } from "./chats/ui";
 import { chatsServices } from "./chats";
-import { messagesMock } from "./mockData";
 
 const hamburger = new Button({
   value: `${renderIcon({ value: mdiMenu })}`,
@@ -69,22 +57,8 @@ export class MessengerPage extends Block {
         users: null,
       }),
 
-      ...({
-        placeholder: "Выберите, кому хотели бы написать",
-        header: new MessagesHeader({
-          left: new UserCard({
-            avatar: new MyAvatar({ className: "avatar_xs" }),
-            name: "<span class='text-base'>Вася</span>",
-            message: "<span class='text-base text-gray-500'>был(а) 33 минуты назад</span>",
-            className: "not-interactive",
-          }),
-          right: `<a href="#" title="Открыть меню" class="link-icon">${renderIcon({ value: mdiDotsVertical })}</a>`,
-        }),
-        body: new MessagesBody({
-          messages: messagesMock.map((m) => new Message(m)),
-          // .concat(messagesMock.map((m) => new Message(m)))
-          // .concat(messagesMock.map((m) => new Message(m))),
-        }),
+      messages: new MessagesWithChat({
+        ref: "messagesRef",
         footer: new MessagesFooter({
           ref: "formRef",
           onSubmit: (event) => {
@@ -113,7 +87,7 @@ export class MessengerPage extends Block {
     });
   }
 
-  getForm = () => Form.getFormParts(this.refs.formRef, MessagesFooter.isForm);
+  getForm = () => Form.getFormParts(this.refs.messagesRef.childrenFromProps.footer, MessagesFooter.isForm);
 
   getRefs = () => this.refs;
 
@@ -129,7 +103,7 @@ export class MessengerPage extends Block {
   {{/LayoutFullScreenAside}}
 
   {{#LayoutFullScreenMain}}
-    ${templateMessages}
+    {{{messages}}}
   {{/LayoutFullScreenMain}}
 
   {{{overlay}}}

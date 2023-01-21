@@ -8,13 +8,11 @@ export const FormWithAuth = authModel.withAuth(
       super(props);
 
       this.setProps({
-        // @ts-ignore
         formError: () => {
           const { error } = authModel.selectUser();
 
           return error;
         },
-        // @ts-ignore
         loading: () => {
           const { loading } = authModel.selectUser();
 

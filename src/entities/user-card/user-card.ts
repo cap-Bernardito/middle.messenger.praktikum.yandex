@@ -9,8 +9,8 @@ export type TUserCardProps = TPropsWithEvents<{
   name: string;
   message?: Block | string;
   date?: string;
-  counter?: string;
-  className?: string;
+  counter?: string | number;
+  className?: TFnProps<string>;
   onClick?: (event: Event) => void;
 }>;
 

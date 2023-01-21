@@ -14,7 +14,6 @@ export const UserListWithChats = chatsModel.withChats(
       super(props);
 
       this.setProps({
-        // @ts-ignore
         users: () => {
           const { chats, activeChat } = chatsModel.selectChats();
 

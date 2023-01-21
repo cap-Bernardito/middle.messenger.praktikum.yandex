@@ -8,6 +8,20 @@
   flex-direction: column;
   height: 100%;
 
+  &__placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+  }
+
+  &__info {
+    padding: 0.5rem 1.2rem;
+    font-weight: 500;
+    background: $gray-700;
+    border-radius: $border-radius;
+  }
+
   &__header {
     position: relative;
 

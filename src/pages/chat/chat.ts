@@ -78,6 +78,7 @@ export class ChatPage extends Block {
       } as TUserListProps),
 
       ...({
+        placeholder: "Выберите, кому хотели бы написать",
         header: new MessagesHeader({
           left: new UserCard({
             avatar: new MyAvatar({ className: "avatar_xs" }),

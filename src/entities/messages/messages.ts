@@ -10,6 +10,7 @@ export type TMessagesProps = {
   header: MessagesHeader | string;
   body: MessagesBody | string;
   footer: MessagesFooter | string;
+  placeholder?: Block | string | false;
 };
 
 export class Messages extends Block<TMessagesProps> {

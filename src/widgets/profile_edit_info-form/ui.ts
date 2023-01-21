@@ -8,7 +8,7 @@ import { TFormProps } from "entities/form";
 
 import { Input, TInputProps } from "shared/ui";
 
-import { profileEditInfo } from "..";
+import { profileEditInfo } from ".";
 
 export function ProfileEditInfoForm(
   this: {

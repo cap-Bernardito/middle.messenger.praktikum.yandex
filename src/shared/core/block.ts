@@ -17,6 +17,7 @@ export class Block<P extends Record<string, any> = any> {
   public id = nanoid(8);
   public refs: TRefs = {};
   public readonly props: P;
+  public readonly executableProps: { [propName: string]: any };
   public readonly childrenFromProps: { [propName: string]: Block } = {};
 
   protected _element = this._createDocumentElement("div");
@@ -29,7 +30,7 @@ export class Block<P extends Record<string, any> = any> {
   public constructor(propsAndChildren?: P) {
     const eventBus = new EventBus<EventBusEvents>();
 
-    const { children, props, refs } = this._getChildren(propsAndChildren);
+    const { children, props, refs, executableProps } = this._getChildren(propsAndChildren);
 
     this.getStateFromProps(props);
 
@@ -37,7 +38,8 @@ export class Block<P extends Record<string, any> = any> {
 
     this.props = this._makePropsProxy(props || ({} as P));
     this.state = this._makePropsProxy(this.state);
-    this.childrenFromProps = this._makePropsProxy(children);
+    this.childrenFromProps = children;
+    this.executableProps = executableProps;
 
     this.eventBus = () => eventBus;
 
@@ -50,6 +52,7 @@ export class Block<P extends Record<string, any> = any> {
     const children: { [key: string]: any } = {};
     const props: { [key: string]: any } = {};
     const refs: typeof this.refs = {};
+    const executableProps: { [key: string]: any } = {};
 
     Object.entries(propsAndChildren).forEach(([key, value]) => {
       if (Array.isArray(value)) {
@@ -76,11 +79,15 @@ export class Block<P extends Record<string, any> = any> {
           }
         } else {
           props[key] = value;
+
+          if (typeof value === "function" && value.name === "execProps") {
+            executableProps[key] = value;
+          }
         }
       }
     });
 
-    return { children, props, refs };
+    return { children, props, refs, executableProps };
   }
 
   _registerEvents(eventBus: EventBus<EventBusEvents>) {
@@ -124,11 +131,12 @@ export class Block<P extends Record<string, any> = any> {
   }
 
   setProps = (nextProps: Partial<P>) => {
-    const { children, props, refs } = this._getChildren(nextProps);
+    const { children, props, refs, executableProps } = this._getChildren(nextProps);
 
     _.merge(this.childrenFromProps, children);
     _.merge(this.refs, refs);
     _.merge(this.props, props);
+    _.merge(this.executableProps, executableProps);
   };
 
   setState = (nextState: any) => {
@@ -242,6 +250,10 @@ export class Block<P extends Record<string, any> = any> {
     const template = Handlebars.compile(this.render());
 
     const stubs: Record<string, string | string[]> = {};
+
+    for (const [key, value] of Object.entries(this.executableProps)) {
+      this.childrenFromProps[key] = value.call(this);
+    }
 
     for (const [key, value] of Object.entries(this.childrenFromProps)) {
       if (Array.isArray(value)) {

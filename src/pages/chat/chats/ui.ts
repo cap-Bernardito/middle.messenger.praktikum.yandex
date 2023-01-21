@@ -1,4 +1,6 @@
-import { chatsModel } from "pages/chat/chats";
+import { store } from "app/store";
+
+import { chatsModel, chatsServices } from "pages/chat/chats";
 
 import { TUserListProps, UserList } from "entities";
 
@@ -14,7 +16,7 @@ export const UserListWithChats = chatsModel.withChats(
       this.setProps({
         // @ts-ignore
         users: () => {
-          const { chats } = chatsModel.selectChats();
+          const { chats, activeChat } = chatsModel.selectChats();
 
           return (
             chats &&
@@ -25,7 +27,8 @@ export const UserListWithChats = chatsModel.withChats(
                 message: chat.lastMessage && chat.lastMessage.content,
                 date: chat.lastMessage && formattedDate(new Date(chat.lastMessage.time)),
                 counter: chat.unreadCount,
-                // className: "active",
+                className: () => (chat.id === activeChat ? "active" : ""),
+                onClick: () => store.dispatch(chatsServices.selectChat, chat.id),
               };
             })
           );

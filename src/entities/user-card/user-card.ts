@@ -4,21 +4,25 @@ import source from "./user-card.hbs";
 
 import "./user-card.scss";
 
-export type TUserCardProps = {
+export type TUserCardProps = TPropsWithEvents<{
   avatar: Block;
   name: string;
   message?: Block | string;
   date?: string;
   counter?: string;
   className?: string;
-};
+  onClick?: (event: Event) => void;
+}>;
 
 export class UserCard extends Block<TUserCardProps> {
   static cName = "UserCard";
 
-  constructor({ ...props }: TUserCardProps) {
+  constructor({ onClick, ...props }: TUserCardProps) {
     super({
       ...props,
+      events: {
+        click: onClick,
+      },
     });
   }
 

@@ -88,10 +88,9 @@ export class ChatPage extends Block {
           right: `<a href="#" title="Открыть меню" class="link-icon">${renderIcon({ value: mdiDotsVertical })}</a>`,
         }),
         body: new MessagesBody({
-          messages: messagesMock
-            .map((m) => new Message(m))
-            .concat(messagesMock.map((m) => new Message(m)))
-            .concat(messagesMock.map((m) => new Message(m))),
+          messages: messagesMock.map((m) => new Message(m)),
+          // .concat(messagesMock.map((m) => new Message(m)))
+          // .concat(messagesMock.map((m) => new Message(m))),
         }),
         footer: new MessagesFooter({
           ref: "formRef",

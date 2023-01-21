@@ -1,6 +1,8 @@
 import { authTypes } from "processes/auth";
 
-import { APIError, request, UserDTO } from "shared/api";
+import { APIError, request } from "shared/api";
+
+import { UserDTO } from "./types";
 
 export const authAPI = {
   login: (data: authTypes.LoginRequestData) => request.post<authTypes.ResponseData>("auth/signin", { data }),

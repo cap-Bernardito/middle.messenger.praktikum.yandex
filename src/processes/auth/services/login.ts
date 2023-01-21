@@ -1,6 +1,6 @@
 import { authAPI, authModel, authTypes } from "processes/auth";
 
-import { transformUser, UserDTO } from "shared/api";
+import { transformUser } from "shared/api";
 import { router } from "shared/core";
 import { apiHasError } from "shared/utils";
 
@@ -25,7 +25,7 @@ export const login = async (dispatch: Dispatch<AppState>, state: AppState, actio
     return;
   }
 
-  dispatch(authModel.setUser({ user: transformUser(responseUser as UserDTO), loading: false, error: null }));
+  dispatch(authModel.setUser({ user: transformUser(responseUser as authTypes.UserDTO), loading: false, error: null }));
 
   router.restart();
 };

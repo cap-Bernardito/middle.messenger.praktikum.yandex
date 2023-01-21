@@ -9,8 +9,14 @@ export const setUser = (data: Partial<TUserState>) => _.set<Partial<{ auth: TUse
 
 export const selectUser = <T = TUserState>() => <T>useSelector((state) => state.auth);
 
-export const withAuth = connect((state) => ({
-  authError: state.auth.error,
-  authLoading: state.auth.loading,
-  authUser: state.auth.user,
-}));
+export const withAuth = connect((state) => {
+  if (typeof state.auth === "undefined") {
+    return {};
+  }
+
+  return {
+    authError: state.auth.error,
+    authLoading: state.auth.loading,
+    authUser: state.auth.user,
+  };
+});

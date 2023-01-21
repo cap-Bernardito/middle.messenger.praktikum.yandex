@@ -1,10 +1,13 @@
 import { authModel } from "processes/auth";
 
+import { chatsModel } from "pages/chat/chats";
+
 import { Store } from "shared/core/store";
 
 export const initialState = {
   appIsInited: false,
   auth: authModel.userState,
+  chats: chatsModel.chatsState,
 };
 
 export const store = new Store<AppState>(initialState);

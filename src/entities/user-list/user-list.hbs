@@ -8,7 +8,15 @@
   {{#if users}}
   <div class="user-list__body custom-scroll custom-scroll-controled active">
     {{#each users}}
-      {{{this}}}
+      {{{
+        UserCard
+          avatar=this.avatar
+          name=this.name
+          message=this.message
+          date=this.date
+          counter=this.counter
+          className=this.className
+      }}}
     {{/each}}
   </div>
   {{/if}}

@@ -1,6 +1,6 @@
-import { authAPI, authModel } from "processes/auth";
+import { authAPI, authModel, authTypes } from "processes/auth";
 
-import { transformUser, UserDTO } from "shared/api";
+import { transformUser } from "shared/api";
 import { apiHasError } from "shared/utils";
 
 export async function initApp(dispatch: Dispatch<AppState>) {
@@ -15,7 +15,7 @@ export async function initApp(dispatch: Dispatch<AppState>) {
       return;
     }
 
-    dispatch(authModel.setUser({ user: transformUser(response as UserDTO), loading: false }));
+    dispatch(authModel.setUser({ user: transformUser(response as authTypes.UserDTO), loading: false }));
   } catch (err) {
     dispatch(authModel.setUser({ user: null, loading: false }));
 

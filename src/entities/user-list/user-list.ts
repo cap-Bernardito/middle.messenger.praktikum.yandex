@@ -9,7 +9,7 @@ import "./user-list.scss";
 
 export type TUserListProps = {
   header_search: Search;
-  users: UserCard[];
+  users: TNullable<UserCard[]>;
 };
 
 export class UserList extends Block<TUserListProps> {

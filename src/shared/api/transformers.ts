@@ -1,8 +1,8 @@
-import { authModel } from "processes/auth";
+import { authTypes } from "processes/auth";
 
-import { UserDTO } from "shared/api";
+import { chatsTypes } from "pages/chat/chats";
 
-export const transformUser = (data: UserDTO): authModel.User => {
+export const transformUser = (data: authTypes.UserDTO): authTypes.User => {
   return {
     id: data.id,
     login: data.login,
@@ -14,4 +14,22 @@ export const transformUser = (data: UserDTO): authModel.User => {
     email: data.email,
     fullName: `${data.first_name} ${data.second_name}`,
   };
+};
+
+export const transformChats = (dataArray: chatsTypes.TChatDTO[]): chatsTypes.TChat[] => {
+  return dataArray.map((data) => {
+    const lastMessage = {
+      user: transformUser(data.last_message.user),
+      time: data.last_message.time,
+      content: data.last_message.content,
+    };
+
+    return {
+      id: data.id,
+      title: data.title,
+      avatar: data.avatar,
+      unreadCount: data.unread_count,
+      lastMessage,
+    };
+  });
 };

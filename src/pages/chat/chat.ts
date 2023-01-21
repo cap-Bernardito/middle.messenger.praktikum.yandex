@@ -1,5 +1,7 @@
 import { authModel } from "processes/auth";
 
+import { store } from "app/store";
+
 import { MyAvatar } from "widgets/my-avatar";
 import { offcanvasBody, offcanvasBodyModals } from "widgets/offcanvas-body";
 
@@ -12,19 +14,17 @@ import {
   Offcanvas,
   Overlay,
   templateMessages,
-  templateUserList,
   TMessagesProps,
-  TUserListProps,
   UserCard,
 } from "entities";
 
 import { mdiChevronRight, mdiDotsVertical, mdiMenu, mdiPaperclip, mdiSend } from "@mdi/js";
-import img from "shared/assets/images/tigger.jpg";
 import { Block } from "shared/core";
-import { Avatar, Button, Message, renderIcon, Search, Textarea } from "shared/ui";
-import { _ } from "shared/utils";
+import { Button, Message, renderIcon, Search, Textarea } from "shared/ui";
 
-import { dateMock, messagesMock } from "./mockData";
+import { UserListWithChats } from "./chats/ui";
+import { chatsServices } from "./chats";
+import { messagesMock } from "./mockData";
 
 const hamburger = new Button({
   value: `${renderIcon({ value: mdiMenu })}`,
@@ -39,6 +39,8 @@ export class ChatPage extends Block {
 
   constructor() {
     super();
+
+    store.dispatch(chatsServices.getChats);
 
     const { user } = authModel.selectUser();
 
@@ -61,21 +63,11 @@ export class ChatPage extends Block {
 
       modals: offcanvasBodyModals.call(this),
 
-      ...({
+      userList: new UserListWithChats({
         header_link: `<a href="/profile" class="link-icon">Профиль ${renderIcon({ value: mdiChevronRight })}</a>`,
         header_search: new Search({ value: "" }),
-        users: _.range(10).map(
-          (index) =>
-            new UserCard({
-              avatar: new Avatar({ className: "avatar_sm", img: index % 3 === 0 ? "" : img }),
-              name: "Вася Василёк",
-              message: "Привет май френдз. Привет! Смотри, тут всплыл",
-              date: dateMock[index] || `${index}.12.2022`,
-              counter: index > 0 ? String(index) : undefined,
-              className: index === 2 ? "active" : undefined,
-            })
-        ),
-      } as TUserListProps),
+        users: null,
+      }),
 
       ...({
         placeholder: "Выберите, кому хотели бы написать",
@@ -133,7 +125,7 @@ export class ChatPage extends Block {
   {{/LayoutFullScreenToolbar}}
 
   {{#LayoutFullScreenAside}}
-    ${templateUserList}
+    {{{userList}}}
   {{/LayoutFullScreenAside}}
 
   {{#LayoutFullScreenMain}}

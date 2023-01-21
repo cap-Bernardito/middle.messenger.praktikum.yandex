@@ -1,5 +1,5 @@
 import { authModel, authServices } from "processes/auth";
-import { User } from "processes/auth/model";
+import { authTypes } from "processes/auth";
 
 import { store } from "app/store";
 
@@ -48,7 +48,7 @@ const changeUserPasswordModalButton = new Button({
 const UserCardWithAuth = authModel.withAuth(UserCard);
 const ListV1ItemWithAuth = authModel.withAuth(ListV1Item);
 
-const getProfileModalHeader = (user: User) =>
+const getProfileModalHeader = (user: authTypes.User) =>
   new UserCardWithAuth({
     avatar: new MyAvatar({ className: "avatar_md mr-3" }),
     name: () => `<div class='text-lg'>${user.fullName}</div>`,
@@ -158,7 +158,7 @@ const logout = new Button({
   },
 });
 
-export const offcanvasBody = (user: User) =>
+export const offcanvasBody = (user: authTypes.User) =>
   new SettingsPanel({
     userInfo: new UserCardWithAuth({
       avatar: new MyAvatar({ className: "avatar_xs" }),

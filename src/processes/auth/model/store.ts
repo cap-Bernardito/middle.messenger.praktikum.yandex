@@ -1,19 +1,9 @@
-export type User = {
-  id: number;
-  login: string;
-  firstName: string;
-  secondName: string;
-  displayName: string;
-  avatar: string;
-  phone: string;
-  email: string;
-  fullName: string;
-};
+import { User } from "../types";
 
 export type TUserState = {
-  user: null | User;
+  user: TNullable<User>;
   loading: boolean;
-  error: null | string;
+  error: TNullable<string>;
 };
 
 export const userState: TUserState = {

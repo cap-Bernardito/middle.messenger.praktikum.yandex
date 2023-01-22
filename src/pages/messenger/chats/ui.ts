@@ -30,7 +30,7 @@ export const UserListWithChats = chatsModel.withChats(
                 counter: chat.unreadCount,
                 className: () => (Number(chat.id) === Number(chatId) ? "active" : ""),
                 onClick: () => {
-                  if (chat.id !== chatId) {
+                  if (Number(chat.id) !== Number(chatId)) {
                     store.dispatch(chatsServices.selectChat, chat.id);
                   }
                 },

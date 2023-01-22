@@ -1,5 +1,7 @@
 import * as authLib from "processes/auth/model/lib";
 
+import { store } from "app/store";
+
 import {
   LoginPage,
   MessengerPage,
@@ -11,6 +13,8 @@ import {
   ProfilePage,
   RegisterPage,
 } from "pages";
+
+import { chatMenuServices } from "widgets/chat-menu";
 
 import { Route, router } from "shared/core";
 import { Store } from "shared/core/store";
@@ -108,6 +112,11 @@ const routes: TRouteObject[] = [
     title: ROUTES.chat.title,
     element: MessengerPage,
     shouldAuthorized: true,
+    routeDidMount: ({ params: { chatId } }) => {
+      if (chatId) {
+        store.dispatch(chatMenuServices.getUsers, { id: chatId });
+      }
+    },
   },
   {
     path: ROUTES.messenger.path,

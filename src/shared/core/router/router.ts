@@ -26,13 +26,13 @@ class Router {
   }
 
   private _onRoute(pathname: string, isRenderRoute = true): boolean {
-    const route = (this.getRoute(pathname) || this.getRoute("*")).route;
+    const routeData = this.getRoute(pathname) || this.getRoute("*");
 
-    if (!route) {
+    if (!routeData) {
       throw new Error(`Component is not available on "${pathname}"`);
     }
 
-    if (!route.routeShouldMount(route)) {
+    if (!routeData.route.routeShouldMount(routeData.route)) {
       return false;
     }
 
@@ -40,11 +40,13 @@ class Router {
       this._currentRoute.leave();
     }
 
-    this._currentRoute = route;
+    this._currentRoute = routeData.route;
 
     if (isRenderRoute) {
-      route.render();
+      routeData.route.render();
     }
+
+    routeData.route.routeDidMount(routeData);
 
     return true;
   }
@@ -73,18 +75,23 @@ class Router {
     this._history.forward();
   }
 
-  getRoute(pathname: string) {
+  getRoute(pathname: string): TRouteData | null {
     if (!this._cache[pathname]) {
-      const route = this._routes.find((route) => route.match(pathname));
+      let result = null;
 
-      if (!route) {
+      for (const route of this._routes) {
+        if (result) {
+          continue;
+        }
+
+        result = route.match(pathname);
+      }
+
+      if (!result) {
         return null;
       }
 
-      this._cache[pathname] = {
-        route: route,
-        params: route.getParams(),
-      };
+      this._cache[pathname] = result;
     }
 
     return this._cache[pathname];

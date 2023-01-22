@@ -1,3 +1,4 @@
+import { chatModel } from "pages/messenger/chat";
 import { chatsModel } from "pages/messenger/chats";
 
 import { chatMenuServices } from "widgets/chat-menu";
@@ -10,4 +11,22 @@ export const selectChat = (dispatch: Dispatch<AppState>, state: AppState, action
 
   dispatch(chatsModel.setChats({ activeChat: action }));
   dispatch(chatMenuServices.getUsers, { id: action });
+
+  const { chats } = chatsModel.selectChats();
+
+  if (!chats) {
+    dispatch(chatModel.setChat({ chatData: null }));
+
+    return;
+  }
+
+  const currentChat = chats.find((chat) => Number(chat.id) === Number(action));
+
+  if (!currentChat) {
+    dispatch(chatModel.setChat({ chatData: null }));
+
+    return;
+  }
+
+  dispatch(chatModel.setChat({ chatData: currentChat }));
 };

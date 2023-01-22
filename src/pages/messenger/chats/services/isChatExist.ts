@@ -1,3 +1,4 @@
+import { chatModel } from "pages/messenger/chat";
 import { chatsModel } from "pages/messenger/chats";
 
 import { router } from "shared/core";
@@ -10,9 +11,13 @@ export const isChatExist = (dispatch: Dispatch<AppState>, state: AppState, actio
     return;
   }
 
-  const chatPageIsExist = chats?.find((chat) => String(chat.id) === String(action));
+  const currentChat = chats?.find((chat) => String(chat.id) === String(action));
 
-  if (!chatPageIsExist) {
+  if (!currentChat) {
     router.go(ROUTES.messenger.path);
+
+    return;
   }
+
+  dispatch(chatModel.setChat({ chatData: currentChat }));
 };

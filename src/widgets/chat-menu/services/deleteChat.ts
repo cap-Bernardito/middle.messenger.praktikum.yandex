@@ -30,15 +30,15 @@ export const deleteChat = async (dispatch: Dispatch<AppState>, state: AppState, 
   }
 
   // В пропсах компонента рекурсивный мердж, потому сперва очищаем перед получением новых чатов
-  dispatch(chatsModel.setChats({ chats: null }));
+  dispatch(chatsModel.setChats({ chats: null, activeChat: null }));
 
   dispatch(chatsModel.setChats({ chats: transformChats(responseChats as chatsTypes.TChatDTO[]) }));
 
-  dispatch(chatModel.setChat({ loading: false, error: null }));
+  dispatch(chatModel.setChat({ loading: false, error: null, users: 0, chatData: null }));
 
   const overlay = new Overlay();
 
   overlay.closeWidgets();
 
-  router.go(ROUTES.messenger.path, true);
+  router.go(ROUTES.messenger.path, false);
 };

@@ -16,7 +16,7 @@ export const UserListWithChats = chatsModel.withChats(
 
       this.setProps({
         users: () => {
-          const { activeChat, chats } = chatsModel.selectChats();
+          const { chats } = chatsModel.selectChats();
           const { chatId } = router.getParams();
 
           return (
@@ -30,7 +30,7 @@ export const UserListWithChats = chatsModel.withChats(
                 counter: chat.unreadCount,
                 className: () => (Number(chat.id) === Number(chatId) ? "active" : ""),
                 onClick: () => {
-                  if (chat.id !== activeChat) {
+                  if (chat.id !== chatId) {
                     store.dispatch(chatsServices.selectChat, chat.id);
                   }
                 },

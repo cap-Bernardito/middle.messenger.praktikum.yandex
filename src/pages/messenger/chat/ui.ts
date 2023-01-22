@@ -1,6 +1,6 @@
 import { chatsModel } from "pages/messenger/chats";
 
-import { chatMenuModalButton, chatMenuModals } from "widgets/chat-menu";
+import { chatMenuUi } from "widgets/chat-menu";
 
 import { Messages, MessagesBody, MessagesHeader, TMessagesProps, UserCard } from "entities";
 
@@ -42,8 +42,8 @@ export const MessagesWithChat = chatsModel.withChats(
               name: `<span class='text-base'>${currentChat.title}</span>`,
               className: "not-interactive",
             }),
-            right: chatMenuModalButton,
-            modals: chatMenuModals.call(this, currentChat),
+            right: chatMenuUi.chatMenuModalButton,
+            modals: chatMenuUi.chatMenuModals.call(this, currentChat),
           });
         },
 

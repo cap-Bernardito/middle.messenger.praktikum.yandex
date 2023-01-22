@@ -1,4 +1,4 @@
-import { UserCard } from "entities";
+import { Modal, UserCard } from "entities";
 
 import { Block } from "shared/core";
 
@@ -9,6 +9,7 @@ import "./messages-header.scss";
 export type TMessagesHeaderProps = {
   left: UserCard | string;
   right: Block | string;
+  modals: Modal[];
 };
 
 export class MessagesHeader extends Block<TMessagesHeaderProps> {

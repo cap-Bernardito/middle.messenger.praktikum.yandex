@@ -1,11 +1,12 @@
 import { chatsModel } from "pages/messenger/chats";
 
+import { chatMenuModalButton, chatMenuModals } from "widgets/chat-menu";
+
 import { Messages, MessagesBody, MessagesHeader, TMessagesProps, UserCard } from "entities";
 
-import { mdiDotsVertical } from "@mdi/js";
 import { getFile } from "shared/api";
 import { router } from "shared/core";
-import { Avatar, Message, renderIcon } from "shared/ui";
+import { Avatar, Message } from "shared/ui";
 
 import { messagesMock } from "../mockData";
 
@@ -29,7 +30,7 @@ export const MessagesWithChat = chatsModel.withChats(
 
           const { chatId } = router.getParams();
 
-          const [currentChat] = chats.filter((chat) => Number(chat.id) === Number(chatId));
+          const currentChat = chats.find((chat) => Number(chat.id) === Number(chatId));
 
           if (!currentChat) {
             return null;
@@ -41,7 +42,8 @@ export const MessagesWithChat = chatsModel.withChats(
               name: `<span class='text-base'>${currentChat.title}</span>`,
               className: "not-interactive",
             }),
-            right: `<a href="#" title="Открыть меню" class="link-icon">${renderIcon({ value: mdiDotsVertical })}</a>`,
+            right: chatMenuModalButton,
+            modals: chatMenuModals.call(this, currentChat),
           });
         },
 

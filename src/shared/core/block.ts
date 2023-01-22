@@ -18,6 +18,7 @@ export class Block<P extends Record<string, any> = any> {
   public refs: TRefs = {};
   public readonly props: P;
   public readonly executableProps: { [propName: string]: any };
+  public readonly extractedExecutableProps: { [propName: string]: any } = {};
   public readonly childrenFromProps: { [propName: string]: Block } = {};
 
   protected _element = this._createDocumentElement("div");
@@ -251,13 +252,11 @@ export class Block<P extends Record<string, any> = any> {
 
     const stubs: Record<string, string | string[]> = {};
 
-    const executableProps: typeof this.executableProps = {};
-
     for (const [key, value] of Object.entries(this.executableProps)) {
-      executableProps[key] = value.call(this);
+      this.extractedExecutableProps[key] = value.call(this);
     }
 
-    const requiringProcessingProps = Object.assign({}, executableProps, this.childrenFromProps);
+    const requiringProcessingProps = Object.assign({}, this.extractedExecutableProps, this.childrenFromProps);
 
     for (const [key, value] of Object.entries(requiringProcessingProps)) {
       if (Array.isArray(value)) {

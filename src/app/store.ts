@@ -1,5 +1,6 @@
 import { authModel } from "processes/auth";
 
+import { chatModel } from "pages/messenger/chat";
 import { chatsModel } from "pages/messenger/chats";
 
 import { Store } from "shared/core/store";
@@ -8,6 +9,7 @@ export const initialState = {
   appIsInited: false,
   auth: authModel.userState,
   chats: chatsModel.chatsState,
+  chat: chatModel.chatState,
 };
 
 export const store = new Store<AppState>(initialState);

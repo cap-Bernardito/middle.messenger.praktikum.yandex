@@ -5,12 +5,13 @@ import { store } from "app/store";
 
 import { chatsServices } from "pages/messenger/chats";
 
+import { FormWithChat } from "widgets/form-with-chat";
 import { MyAvatar } from "widgets/my-avatar";
 import { ProfileEditAvatarForm } from "widgets/profile_edit_avatar-form";
 import { ProfileEditInfoForm } from "widgets/profile_edit_info-form";
 import { ProfileEditPasswordForm } from "widgets/profile_edit_password-form";
 
-import { Form, Modal, Overlay, SettingsPanel, UserCard } from "entities";
+import { Form, Modal, Overlay, SettingsPanel, TFormProps, UserCard } from "entities";
 
 import { mdiAccountCircle, mdiBullhorn, mdiCog, mdiExitToApp, mdiFileImageOutline, mdiShieldAccount } from "@mdi/js";
 import { Button, Input, List, ListItem, ListV1, ListV1Item, renderIcon, TInputProps } from "shared/ui";
@@ -158,7 +159,7 @@ export const offcanvasBodyModals = function (this: { getRefs: () => TRefs }) {
       overlay: overlay,
       title: "Добавить чат",
       ref: "createChatModal",
-      body: new Form({
+      body: new FormWithChat({
         onSubmit: (event) => {
           // @ts-ignore
           const form = this.refs.createChatModal.childrenFromProps.body as Form;
@@ -193,7 +194,7 @@ export const offcanvasBodyModals = function (this: { getRefs: () => TRefs }) {
         className: "px-3 pt-3 pb-0",
         button: new Button({ value: "Сохранить", title: "Сохранить", className: "btn-form-modal" }),
         decorated: false,
-      }),
+      } as TFormProps),
     }),
   ];
 };

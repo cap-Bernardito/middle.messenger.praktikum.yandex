@@ -2,9 +2,11 @@ import { store } from "app/store";
 
 import { chatsModel, chatsTypes } from "pages/messenger/chats";
 
-import { Form, Modal, Overlay, UserCard } from "entities";
+import { FormWithChat } from "widgets/form-with-chat";
 
-import { mdiDeleteSweep, mdiDotsVertical, mdiFileImageOutline } from "@mdi/js";
+import { Form, Modal, Overlay, TFormProps, UserCard } from "entities";
+
+import { mdiAccountPlus, mdiDeleteSweep, mdiDotsVertical, mdiFileImageOutline } from "@mdi/js";
 import { getFile } from "shared/api";
 import { Avatar, Button, Input, List, ListItem, renderIcon, TInputProps } from "shared/ui";
 
@@ -34,6 +36,14 @@ const deleteChatModalButton = new Button({
   className: "btn-menu",
 });
 
+const addUserModalButton = new Button({
+  value: `<span class="icon-square icon-square-success">${renderIcon({
+    value: mdiAccountPlus,
+  })}</span> Пригласить пользователя`,
+  title: "Пригласить пользователя",
+  className: "btn-menu",
+});
+
 const UserCardWithAuth = chatsModel.withChats(UserCard);
 
 const getchatMenuModalHeader = (chat: chatsTypes.TChat) =>
@@ -59,7 +69,9 @@ export const chatMenuModals = function (currentChat: chatsTypes.TChat) {
       header: getchatMenuModalHeader(currentChat),
       ref: "chatMenuModal",
       body: new List({
-        items: [chatAvatarModalButton, deleteChatModalButton].map((entry) => new ListItem({ body: entry })),
+        items: [addUserModalButton, chatAvatarModalButton, deleteChatModalButton].map(
+          (entry) => new ListItem({ body: entry })
+        ),
         className: "list-menu",
       }),
     }),
@@ -70,18 +82,7 @@ export const chatMenuModals = function (currentChat: chatsTypes.TChat) {
       title: "Изменить аватар",
       header: getchatMenuModalHeader(currentChat),
       ref: "chatAvatarModal",
-      body: new Form({
-        // onSubmit: (event) => {
-        //   event.preventDefault();
-        //   // @ts-ignore
-        //   const {form, fields} = getModalFormParts(this, "chatAvatarModal");
-
-        //   const { isFormValid, formData } = form.check(event, Object.values(fields));
-
-        //   if (isFormValid) {
-        //     store.dispatch(chatsServices.createChat, formData);
-        //   }
-        // },
+      body: new FormWithChat({
         onSubmit: (event) => {
           event.preventDefault();
 
@@ -121,30 +122,12 @@ export const chatMenuModals = function (currentChat: chatsTypes.TChat) {
                 (fields.fileInput as Input).setValue(event);
               },
             },
-            // {
-            //   label: "MockInput",
-            //   name: "mock",
-            //   required: true,
-            //   ref: "mockInput",
-            //   // onInput: (event) => {
-            //   //   // @ts-ignore
-            //   //   const { fields} = getModalFormParts(this, "chatMenuModal");
-
-            //   //   (fields.titleInput as Input).check(event).setValue(event);
-            //   // },
-            //   // onBlur: (event) => {
-            //   //   // @ts-ignore
-            //   //   const { fields} = getModalFormParts(this, "chatMenuModal");
-
-            //   //   (fields.titleInput as Input).check(event).setValue(event);
-            //   // },
-            // },
           ] as TInputProps[]
         ).map((inputProps) => new Input(inputProps)),
         className: "px-3 pt-3 pb-0",
         button: new Button({ value: "Сохранить", title: "Сохранить", className: "btn-form-modal" }),
         decorated: false,
-      }),
+      } as TFormProps),
     }),
 
     new Modal({
@@ -154,7 +137,7 @@ export const chatMenuModals = function (currentChat: chatsTypes.TChat) {
       title: "Удалить чат",
       header: getchatMenuModalHeader(currentChat),
       ref: "deleteChatModal",
-      body: new Form({
+      body: new FormWithChat({
         onSubmit: (event) => {
           event.preventDefault();
           // @ts-ignore
@@ -173,7 +156,6 @@ export const chatMenuModals = function (currentChat: chatsTypes.TChat) {
               name: "chatId",
               type: "hidden",
               value: currentChat.id,
-              className: "form-control_file",
               required: true,
               ref: "chatIdInput",
             },
@@ -182,7 +164,62 @@ export const chatMenuModals = function (currentChat: chatsTypes.TChat) {
         className: "px-3 pt-3 pb-0",
         button: new Button({ value: "Удалить чат", title: "Удалить чат", className: "btn-form-modal" }),
         decorated: false,
-      }),
+      } as TFormProps),
+    }),
+
+    new Modal({
+      showBackButton: true,
+      runButton: addUserModalButton,
+      overlay: overlay,
+      title: "Пригласить пользователя",
+      header: getchatMenuModalHeader(currentChat),
+      ref: "addUserModal",
+      body: new FormWithChat({
+        onSubmit: (event) => {
+          event.preventDefault();
+          // @ts-ignore
+          const { form, fields } = getModalFormParts(this, "addUserModal");
+
+          const { isFormValid, formData } = form.check(event, Object.values(fields));
+
+          if (isFormValid) {
+            store.dispatch(chatMenuServices.addUser, formData);
+          }
+        },
+        fields: (
+          [
+            {
+              check: false,
+              name: "chatId",
+              type: "hidden",
+              value: currentChat.id,
+              required: true,
+              ref: "chatIdInput",
+            },
+            {
+              label: "Имя пользователя",
+              name: "login",
+              required: true,
+              ref: "loginInput",
+              onInput: (event) => {
+                // @ts-ignore
+                const { fields } = getModalFormParts(this, "addUserModal");
+
+                (fields.loginInput as Input).check(event).setValue(event);
+              },
+              onBlur: (event) => {
+                // @ts-ignore
+                const { fields } = getModalFormParts(this, "addUserModal");
+
+                (fields.loginInput as Input).check(event).setValue(event);
+              },
+            },
+          ] as TInputProps[]
+        ).map((inputProps) => new Input(inputProps)),
+        className: "px-3 pt-3 pb-0",
+        button: new Button({ value: "Пригласить", title: "Пригласить", className: "btn-form-modal" }),
+        decorated: false,
+      } as TFormProps),
     }),
   ];
 };

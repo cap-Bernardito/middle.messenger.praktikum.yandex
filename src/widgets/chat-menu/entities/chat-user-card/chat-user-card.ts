@@ -4,7 +4,7 @@ import { chatModel } from "pages/messenger/chat";
 
 import { TUserCardProps, UserCard } from "entities";
 
-export const UserCardWithChat = chatModel.withChat(
+export const ChatUserCardWithChat = chatModel.withChat(
   class extends UserCard {
     constructor(props: TUserCardProps) {
       super(props);

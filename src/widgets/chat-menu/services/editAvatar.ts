@@ -1,9 +1,7 @@
 import { chatModel } from "pages/messenger/chat";
 import { chatsAPI, chatsModel, chatsTypes } from "pages/messenger/chats";
 
-import { Overlay } from "entities";
-
-import { transformChats } from "shared/api";
+import { transformChat, transformChats } from "shared/api";
 import { apiHasError } from "shared/utils";
 
 import { chatMenuApi } from "../api";
@@ -32,9 +30,7 @@ export const chatEditAvatar = async (dispatch: Dispatch<AppState>, state: AppSta
 
   dispatch(chatsModel.setChats({ chats: transformChats(responseChats as chatsTypes.TChatDTO[]) }));
 
-  dispatch(chatModel.setChat({ loading: false, error: null }));
-
-  const overlay = new Overlay();
-
-  overlay.closeWidgets();
+  dispatch(
+    chatModel.setChat({ loading: false, error: null, chatData: transformChat(response as chatsTypes.TChatDTO) })
+  );
 };

@@ -1,10 +1,9 @@
 import { chatModel } from "pages/messenger/chat";
 
-import { Overlay } from "entities";
-
 import { apiHasError } from "shared/utils";
 
 import { chatMenuApi, SearchUserRequestData } from "../api";
+import { chatMenuServices } from "..";
 
 export const addUser = async (
   dispatch: Dispatch<AppState>,
@@ -41,7 +40,5 @@ export const addUser = async (
 
   dispatch(chatModel.setChat({ loading: false, error: null }));
 
-  const overlay = new Overlay();
-
-  overlay.closeWidgets();
+  dispatch(chatMenuServices.getUsers, { id: chatId });
 };

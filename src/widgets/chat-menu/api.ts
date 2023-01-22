@@ -35,7 +35,7 @@ export const chatMenuApi = {
   getUser: (options: GetUserRequestData) => {
     const { id, ...data } = options;
 
-    return request.get<authTypes.UserDTO[] | APIError>(`chats/${id}/users`, { data });
+    return request.get<TNullable<authTypes.UserDTO[]> | APIError>(`chats/${id}/users`, { data });
   },
 
   searchUser: (data: SearchUserRequestData) => request.post<authTypes.UserDTO[] | APIError>("user/search", { data }),

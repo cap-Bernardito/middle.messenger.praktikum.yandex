@@ -1,5 +1,5 @@
 import { chatModel } from "pages/messenger/chat";
-import { chatsAPI, chatsModel, chatsTypes } from "pages/messenger/chats";
+import { chatsAPI, chatsModel, chatsServices, chatsTypes } from "pages/messenger/chats";
 
 import { Overlay } from "entities";
 
@@ -35,6 +35,8 @@ export const createChat = async (
   dispatch(chatsModel.setChats({ chats: transformChats(responseChats as chatsTypes.TChatDTO[]) }));
 
   dispatch(chatModel.setChat({ loading: false, error: null }));
+
+  dispatch(chatsServices.selectChat, response.id);
 
   const overlay = new Overlay();
 

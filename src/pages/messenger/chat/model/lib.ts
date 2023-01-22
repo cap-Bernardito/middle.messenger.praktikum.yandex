@@ -18,5 +18,6 @@ export const withChat = connect((state) => {
     chatError: state.chat.error,
     chatLoading: state.chat.loading,
     chatUsers: state.chat.users,
+    chatChatData: state.chat.chatData,
   };
 });

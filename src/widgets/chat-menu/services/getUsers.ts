@@ -15,5 +15,11 @@ export const getUsers = async (dispatch: Dispatch<AppState>, state: AppState, ac
     return;
   }
 
+  if (!response) {
+    dispatch(chatModel.setChat({ error: null }));
+
+    return;
+  }
+
   dispatch(chatModel.setChat({ users: (response as authTypes.UserDTO[]).length, error: null }));
 };

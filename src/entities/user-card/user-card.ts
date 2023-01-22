@@ -5,8 +5,8 @@ import source from "./user-card.hbs";
 import "./user-card.scss";
 
 export type TUserCardProps = TPropsWithEvents<{
-  avatar: Block;
-  name: string;
+  avatar: TFnProps<Block>;
+  name: TFnProps<string>;
   message?: TFnProps<Block | string>;
   date?: string;
   counter?: string | number;

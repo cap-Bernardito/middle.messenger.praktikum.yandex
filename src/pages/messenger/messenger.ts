@@ -2,6 +2,7 @@ import { authModel } from "processes/auth";
 
 import { store } from "app/store";
 
+import { chatMenuUi } from "widgets/chat-menu";
 import { offcanvasBody, offcanvasBodyModals } from "widgets/offcanvas-body";
 
 import { ChatToolbar, Form, MessagesFooter, Offcanvas, Overlay, TMessagesProps } from "entities";
@@ -53,6 +54,8 @@ export class MessengerPage extends Block {
       }),
 
       modals: offcanvasBodyModals.call(this),
+
+      chatMenuModals: chatMenuUi.chatMenuModals.call(this),
 
       userList: new UserListWithChats({
         header_link: `<a href="/profile" class="link-icon">Профиль ${renderIcon({ value: mdiChevronRight })}</a>`,
@@ -113,6 +116,9 @@ export class MessengerPage extends Block {
   {{{offcanvas}}}
 
   {{#each modals}}
+    {{{this}}}
+  {{/each}}
+  {{#each chatMenuModals}}
     {{{this}}}
   {{/each}}
 {{/LayoutFullScreen}}

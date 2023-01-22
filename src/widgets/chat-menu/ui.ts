@@ -1,15 +1,15 @@
 import { store } from "app/store";
 
-import { chatsModel, chatsTypes } from "pages/messenger/chats";
+import { chatModel } from "pages/messenger/chat";
 
 import { FormWithChat } from "widgets/form-with-chat";
 
-import { Form, Modal, Overlay, TFormProps, UserCard } from "entities";
+import { Form, Modal, Overlay, TFormProps } from "entities";
 
 import { mdiAccountPlus, mdiAccountRemove, mdiDeleteSweep, mdiDotsVertical, mdiFileImageOutline } from "@mdi/js";
-import { getFile } from "shared/api";
-import { Avatar, Button, Input, List, ListItem, renderIcon, TInputProps } from "shared/ui";
+import { Button, Input, List, ListItem, renderIcon, TInputProps } from "shared/ui";
 
+import { ChatModalHeaderWithChat } from "./entities/chat-modal-header";
 import { chatMenuServices } from ".";
 
 const overlay = new Overlay();
@@ -52,29 +52,22 @@ const deleteUserModalButton = new Button({
   className: "btn-menu",
 });
 
-const UserCardWithAuth = chatsModel.withChats(UserCard);
-
-const getchatMenuModalHeader = (chat: chatsTypes.TChat) =>
-  new UserCardWithAuth({
-    avatar: new Avatar({ className: "avatar_xs mr-3", img: getFile(chat.avatar) }),
-    name: () => `<div class='text-lg'>${chat.title}</div>`,
-    className: "not-interactive",
-  });
+const getchatMenuModalHeader = () => new ChatModalHeaderWithChat({});
 
 const getModalFormParts = (target: any, modalRef: string) => {
-  const form = target.extractedExecutableProps.header.refs[modalRef].refs.formRef;
+  const form = target.refs[modalRef].refs.formRef;
 
   return Form.getFormParts(form);
 };
 
-export const chatMenuModals = function (currentChat: chatsTypes.TChat) {
+export const chatMenuModals = function () {
   return [
     new Modal({
       showBackButton: false,
       runButton: chatMenuModalButton,
       overlay: overlay,
       title: "Настройки чата",
-      header: getchatMenuModalHeader(currentChat),
+      header: getchatMenuModalHeader(),
       ref: "chatMenuModal",
       body: new List({
         items: [addUserModalButton, deleteUserModalButton, chatAvatarModalButton, deleteChatModalButton].map(
@@ -88,15 +81,19 @@ export const chatMenuModals = function (currentChat: chatsTypes.TChat) {
       runButton: chatAvatarModalButton,
       overlay: overlay,
       title: "Изменить аватар",
-      header: getchatMenuModalHeader(currentChat),
+      header: getchatMenuModalHeader(),
       ref: "chatAvatarModal",
       body: new FormWithChat({
         onSubmit: (event) => {
           event.preventDefault();
 
           // @ts-ignore
-          const form = getModalFormParts(this, "chatAvatarModal").form.getContent() as HTMLFormElement;
+          const formBlock = getModalFormParts(this, "chatAvatarModal").form;
+          const form = formBlock.getContent() as HTMLFormElement;
           const formData = new FormData(form);
+          const { chatData } = chatModel.selectChat();
+
+          formData.set("chatId", String(chatData?.id));
 
           // @ts-ignore
           if (Number(formData.get("avatar")?.size) > 0) {
@@ -109,7 +106,7 @@ export const chatMenuModals = function (currentChat: chatsTypes.TChat) {
             {
               name: "chatId",
               type: "hidden",
-              value: currentChat.id,
+              // value: currentChat.id,
               className: "form-control_file",
               required: true,
               ref: "chatIdInput",
@@ -143,19 +140,15 @@ export const chatMenuModals = function (currentChat: chatsTypes.TChat) {
       runButton: deleteChatModalButton,
       overlay: overlay,
       title: "Удалить чат",
-      header: getchatMenuModalHeader(currentChat),
+      header: getchatMenuModalHeader(),
       ref: "deleteChatModal",
       body: new FormWithChat({
         onSubmit: (event) => {
           event.preventDefault();
-          // @ts-ignore
-          const { form, fields } = getModalFormParts(this, "deleteChatModal");
 
-          const { isFormValid, formData } = form.check(event, Object.values(fields));
+          const { chatData } = chatModel.selectChat();
 
-          if (isFormValid) {
-            store.dispatch(chatMenuServices.deleteChat, formData);
-          }
+          store.dispatch(chatMenuServices.deleteChat, { chatId: chatData?.id });
         },
         fields: (
           [
@@ -163,7 +156,7 @@ export const chatMenuModals = function (currentChat: chatsTypes.TChat) {
               check: false,
               name: "chatId",
               type: "hidden",
-              value: currentChat.id,
+              // value: currentChat.id,
               required: true,
               ref: "chatIdInput",
             },
@@ -180,15 +173,17 @@ export const chatMenuModals = function (currentChat: chatsTypes.TChat) {
       runButton: addUserModalButton,
       overlay: overlay,
       title: "Пригласить пользователя",
-      header: getchatMenuModalHeader(currentChat),
+      header: getchatMenuModalHeader(),
       ref: "addUserModal",
       body: new FormWithChat({
         onSubmit: (event) => {
           event.preventDefault();
           // @ts-ignore
           const { form, fields } = getModalFormParts(this, "addUserModal");
-
           const { isFormValid, formData } = form.check(event, Object.values(fields));
+          const { chatData } = chatModel.selectChat();
+
+          formData.chatId = String(chatData?.id);
 
           if (isFormValid) {
             store.dispatch(chatMenuServices.addUser, formData);
@@ -200,7 +195,7 @@ export const chatMenuModals = function (currentChat: chatsTypes.TChat) {
               check: false,
               name: "chatId",
               type: "hidden",
-              value: currentChat.id,
+              // value: currentChat.id,
               required: true,
               ref: "chatIdInput",
             },
@@ -235,15 +230,17 @@ export const chatMenuModals = function (currentChat: chatsTypes.TChat) {
       runButton: deleteUserModalButton,
       overlay: overlay,
       title: "Удалить пользователя",
-      header: getchatMenuModalHeader(currentChat),
+      header: getchatMenuModalHeader(),
       ref: "deleteUserModal",
       body: new FormWithChat({
         onSubmit: (event) => {
           event.preventDefault();
           // @ts-ignore
           const { form, fields } = getModalFormParts(this, "deleteUserModal");
-
           const { isFormValid, formData } = form.check(event, Object.values(fields));
+          const { chatData } = chatModel.selectChat();
+
+          formData.chatId = String(chatData?.id);
 
           if (isFormValid) {
             store.dispatch(chatMenuServices.deleteUser, formData);
@@ -255,7 +252,7 @@ export const chatMenuModals = function (currentChat: chatsTypes.TChat) {
               check: false,
               name: "chatId",
               type: "hidden",
-              value: currentChat.id,
+              // value: currentChat.id,
               required: true,
               ref: "chatIdInput",
             },

@@ -20,20 +20,22 @@ export const transformUsers = (data: authTypes.UserDTO[]): authTypes.User[] => {
   return data.map((user) => transformUser(user));
 };
 
-export const transformChats = (dataArray: chatsTypes.TChatDTO[]): chatsTypes.TChat[] => {
-  return dataArray.map((data) => {
-    const lastMessage = data.last_message && {
-      user: transformUser(data.last_message.user),
-      time: data.last_message.time,
-      content: data.last_message.content,
-    };
+export const transformChat = (data: chatsTypes.TChatDTO): chatsTypes.TChat => {
+  const lastMessage = data.last_message && {
+    user: transformUser(data.last_message.user),
+    time: data.last_message.time,
+    content: data.last_message.content,
+  };
 
-    return {
-      id: data.id,
-      title: data.title,
-      avatar: data.avatar,
-      unreadCount: data.unread_count,
-      lastMessage,
-    };
-  });
+  return {
+    id: data.id,
+    title: data.title,
+    avatar: data.avatar,
+    unreadCount: data.unread_count,
+    lastMessage,
+  };
+};
+
+export const transformChats = (dataArray: chatsTypes.TChatDTO[]): chatsTypes.TChat[] => {
+  return dataArray.map((data) => transformChat(data));
 };

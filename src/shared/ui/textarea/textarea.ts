@@ -6,6 +6,7 @@ import source from "./textarea.hbs";
 import "./textarea.scss";
 
 export type TTextareaProps = TPropsWithRef<{
+  check?: boolean;
   name: string;
   value?: string;
   placeholder?: string;
@@ -19,8 +20,8 @@ export type TTextareaProps = TPropsWithRef<{
 export class Textarea extends Block<TTextareaProps> {
   static cName = "Textarea";
 
-  constructor({ ...props }: TTextareaProps) {
-    super(props);
+  constructor({ check = true, ...props }: TTextareaProps) {
+    super({ ...props, check });
   }
 
   check(event: Event) {

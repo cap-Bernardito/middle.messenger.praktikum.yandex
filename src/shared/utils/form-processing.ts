@@ -78,7 +78,7 @@ const checkField = (event: Event | null, field: TFormFields) => {
   const { value, files } = getInputValue(event, field);
   const fieldName = field.props.name;
 
-  if (checksIgnoreFields.includes(field.props.name) || isFileInput(field)) {
+  if (!field.props.check || checksIgnoreFields.includes(field.props.name) || isFileInput(field)) {
     return { isValid: true, fieldValue: value, fieldFiles: files, fieldName };
   }
 

@@ -1,8 +1,8 @@
-import { authAPI, authModel } from "processes/auth";
+import { authAPI, authModel, authTypes } from "processes/auth";
 
 import { ChangeUserInfoRequestData, profileEditInfoAPI } from "widgets/profile_edit_info-form";
 
-import { transformUser, UserDTO } from "shared/api";
+import { transformUser } from "shared/api";
 import { apiHasError } from "shared/utils";
 
 export const profileEditInfo = async (
@@ -28,5 +28,5 @@ export const profileEditInfo = async (
     return;
   }
 
-  dispatch(authModel.setUser({ user: transformUser(responseUser as UserDTO), loading: false, error: null }));
+  dispatch(authModel.setUser({ user: transformUser(responseUser as authTypes.UserDTO), loading: false, error: null }));
 };

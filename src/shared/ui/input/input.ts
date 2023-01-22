@@ -6,11 +6,12 @@ import source from "./input.hbs";
 import "./input.scss";
 
 export type TInputProps = TPropsWithRef<{
-  label: string;
+  check?: boolean;
+  label?: string;
   name: string;
-  type?: "text" | "number" | "password" | "email" | "tel" | "file";
+  type?: "text" | "number" | "password" | "email" | "tel" | "file" | "hidden";
   id?: string;
-  value?: string;
+  value?: string | number;
   placeholder?: string;
   className?: string;
   classNameInput?: string;
@@ -25,10 +26,10 @@ export type TInputProps = TPropsWithRef<{
 export class Input extends Block<TInputProps> {
   static cName = "Input";
 
-  constructor({ type = "text", name, id, ...props }: TInputProps) {
+  constructor({ type = "text", name, id, check = true, ...props }: TInputProps) {
     const inputId = id ? id : name;
 
-    super({ type, name, id: inputId, ...props });
+    super({ type, name, id: inputId, check, ...props });
   }
 
   check(event: Event) {

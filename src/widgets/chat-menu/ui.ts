@@ -6,7 +6,7 @@ import { FormWithChat } from "widgets/form-with-chat";
 
 import { Form, Modal, Overlay, TFormProps, UserCard } from "entities";
 
-import { mdiAccountPlus, mdiDeleteSweep, mdiDotsVertical, mdiFileImageOutline } from "@mdi/js";
+import { mdiAccountPlus, mdiAccountRemove, mdiDeleteSweep, mdiDotsVertical, mdiFileImageOutline } from "@mdi/js";
 import { getFile } from "shared/api";
 import { Avatar, Button, Input, List, ListItem, renderIcon, TInputProps } from "shared/ui";
 
@@ -44,6 +44,14 @@ const addUserModalButton = new Button({
   className: "btn-menu",
 });
 
+const deleteUserModalButton = new Button({
+  value: `<span class="icon-square icon-square-fiolet">${renderIcon({
+    value: mdiAccountRemove,
+  })}</span> Удалить пользователя`,
+  title: "Удалить пользователя",
+  className: "btn-menu",
+});
+
 const UserCardWithAuth = chatsModel.withChats(UserCard);
 
 const getchatMenuModalHeader = (chat: chatsTypes.TChat) =>
@@ -69,7 +77,7 @@ export const chatMenuModals = function (currentChat: chatsTypes.TChat) {
       header: getchatMenuModalHeader(currentChat),
       ref: "chatMenuModal",
       body: new List({
-        items: [addUserModalButton, chatAvatarModalButton, deleteChatModalButton].map(
+        items: [addUserModalButton, deleteUserModalButton, chatAvatarModalButton, deleteChatModalButton].map(
           (entry) => new ListItem({ body: entry })
         ),
         className: "list-menu",
@@ -218,6 +226,61 @@ export const chatMenuModals = function (currentChat: chatsTypes.TChat) {
         ).map((inputProps) => new Input(inputProps)),
         className: "px-3 pt-3 pb-0",
         button: new Button({ value: "Пригласить", title: "Пригласить", className: "btn-form-modal" }),
+        decorated: false,
+      } as TFormProps),
+    }),
+
+    new Modal({
+      showBackButton: true,
+      runButton: deleteUserModalButton,
+      overlay: overlay,
+      title: "Удалить пользователя",
+      header: getchatMenuModalHeader(currentChat),
+      ref: "deleteUserModal",
+      body: new FormWithChat({
+        onSubmit: (event) => {
+          event.preventDefault();
+          // @ts-ignore
+          const { form, fields } = getModalFormParts(this, "deleteUserModal");
+
+          const { isFormValid, formData } = form.check(event, Object.values(fields));
+
+          if (isFormValid) {
+            store.dispatch(chatMenuServices.deleteUser, formData);
+          }
+        },
+        fields: (
+          [
+            {
+              check: false,
+              name: "chatId",
+              type: "hidden",
+              value: currentChat.id,
+              required: true,
+              ref: "chatIdInput",
+            },
+            {
+              label: "Имя пользователя",
+              name: "login",
+              required: true,
+              ref: "loginInput",
+              onInput: (event) => {
+                // @ts-ignore
+                const { fields } = getModalFormParts(this, "deleteUserModal");
+
+                (fields.loginInput as Input).check(event).setValue(event);
+              },
+              onBlur: (event) => {
+                // @ts-ignore
+                const { fields } = getModalFormParts(this, "deleteUserModal");
+
+                (fields.loginInput as Input).check(event).setValue(event);
+              },
+            },
+          ] as TInputProps[]
+        ).map((inputProps) => new Input(inputProps)),
+        className: "px-3 pt-3 pb-0",
+        button: new Button({ value: "Удалить", title: "Удалить", className: "btn-form-modal" }),
         decorated: false,
       } as TFormProps),
     }),

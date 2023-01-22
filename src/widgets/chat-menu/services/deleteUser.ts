@@ -7,7 +7,7 @@ import { apiHasError } from "shared/utils";
 import { chatMenuApi, SearchUserRequestData } from "../api";
 import { chatMenuServices } from "..";
 
-export const addUser = async (
+export const deleteUser = async (
   dispatch: Dispatch<AppState>,
   state: AppState,
   action: SearchUserRequestData & { chatId: number }
@@ -29,7 +29,7 @@ export const addUser = async (
     return;
   }
 
-  const responseUsers = await chatMenuApi.addUser({
+  const responseUsers = await chatMenuApi.deleteUser({
     chatId,
     users: response.map((item) => item.id),
   });

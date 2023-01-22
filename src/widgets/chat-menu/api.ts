@@ -42,5 +42,7 @@ export const chatMenuApi = {
 
   addUser: (data: AddUserRequestData) => request.put<chatsTypes.ResponseData | APIError>("chats/users", { data }),
 
+  deleteUser: (data: AddUserRequestData) => request.delete<chatsTypes.ResponseData | APIError>("chats/users", { data }),
+
   deleteChat: (data: DeleteChatRequestData) => request.delete<chatsTypes.ResponseData | APIError>("chats", { data }),
 };

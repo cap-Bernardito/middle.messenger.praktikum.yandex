@@ -1,4 +1,4 @@
-import { Modal, UserCard } from "entities";
+import { Modal } from "entities";
 
 import { Block } from "shared/core";
 
@@ -7,7 +7,7 @@ import source from "./messages-header.hbs";
 import "./messages-header.scss";
 
 export type TMessagesHeaderProps = {
-  left: UserCard | string;
+  left: Block | string;
   right: Block | string;
   modals: Modal[];
 };

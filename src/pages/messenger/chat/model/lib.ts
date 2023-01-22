@@ -17,5 +17,6 @@ export const withChat = connect((state) => {
   return {
     chatError: state.chat.error,
     chatLoading: state.chat.loading,
+    chatUsers: state.chat.users,
   };
 });

@@ -1,8 +1,9 @@
 import { chatsModel } from "pages/messenger/chats";
 
 import { chatMenuUi } from "widgets/chat-menu";
+import { UserCardWithChat } from "widgets/user-card-with-chat";
 
-import { Messages, MessagesBody, MessagesHeader, TMessagesProps, UserCard } from "entities";
+import { Messages, MessagesBody, MessagesHeader, TMessagesProps } from "entities";
 
 import { getFile } from "shared/api";
 import { router } from "shared/core";
@@ -37,7 +38,7 @@ export const MessagesWithChat = chatsModel.withChats(
           }
 
           return new MessagesHeader({
-            left: new UserCard({
+            left: new UserCardWithChat({
               avatar: new Avatar({ className: "avatar_xs", img: getFile(currentChat.avatar) }),
               name: `<span class='text-base'>${currentChat.title}</span>`,
               className: "not-interactive",

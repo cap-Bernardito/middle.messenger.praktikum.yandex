@@ -6,6 +6,7 @@ import { Overlay } from "entities";
 import { apiHasError } from "shared/utils";
 
 import { chatMenuApi, SearchUserRequestData } from "../api";
+import { chatMenuServices } from "..";
 
 export const addUser = async (
   dispatch: Dispatch<AppState>,
@@ -41,6 +42,8 @@ export const addUser = async (
   }
 
   dispatch(chatsModel.setChats({ loading: false, error: null }));
+
+  dispatch(chatMenuServices.getUsers, { id: chatId });
 
   const overlay = new Overlay();
 

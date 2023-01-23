@@ -6,8 +6,20 @@ import { TUserCardProps, UserCard } from "entities";
 
 import { getFile } from "shared/api";
 import { Avatar } from "shared/ui";
+import { connect } from "shared/utils/connect";
 
-export const ChatModalHeaderWithChat = chatModel.withChat(
+const withChat = connect((state) => {
+  if (typeof state.chat === "undefined") {
+    return {};
+  }
+
+  return {
+    chatUsers: state.chat.users,
+    chatChatData: state.chat.chatData,
+  };
+});
+
+export const ChatModalHeaderWithChat = withChat(
   class extends UserCard {
     constructor(props: TUserCardProps) {
       super(props);

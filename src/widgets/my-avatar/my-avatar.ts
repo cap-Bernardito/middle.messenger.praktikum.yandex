@@ -2,6 +2,7 @@ import { authModel } from "processes/auth";
 
 import { getFile } from "shared/api";
 import { Avatar, TAvatarProps } from "shared/ui";
+import { connect } from "shared/utils/connect";
 
 const { user } = authModel.selectUser();
 const avatarProps: TAvatarProps = {};
@@ -10,7 +11,17 @@ if (user && user.avatar) {
   avatarProps.img = getFile(user.avatar);
 }
 
-export const MyAvatar = authModel.withAuth(
+const withAuth = connect((state) => {
+  if (typeof state.auth === "undefined") {
+    return {};
+  }
+
+  return {
+    authUser: state.auth.user,
+  };
+});
+
+export const MyAvatar = withAuth(
   class extends Avatar {
     constructor(props?: TAvatarProps) {
       super(props);

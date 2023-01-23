@@ -15,6 +15,7 @@ import { Form, Modal, Overlay, SettingsPanel, TFormProps, UserCard } from "entit
 
 import { mdiAccountCircle, mdiBullhorn, mdiCog, mdiExitToApp, mdiFileImageOutline, mdiShieldAccount } from "@mdi/js";
 import { Button, Input, List, ListItem, ListV1, ListV1Item, renderIcon, TInputProps } from "shared/ui";
+import { connect } from "shared/utils/connect";
 
 const overlay = new Overlay();
 
@@ -54,8 +55,17 @@ const changeUserPasswordModalButton = new Button({
   className: "btn-menu",
 });
 
-const UserCardWithAuth = authModel.withAuth(UserCard);
-const ListV1ItemWithAuth = authModel.withAuth(ListV1Item);
+const withAuth = connect((state) => {
+  if (typeof state.auth === "undefined") {
+    return {};
+  }
+
+  return {
+    authUser: state.auth.user,
+  };
+});
+const UserCardWithAuth = withAuth(UserCard);
+const ListV1ItemWithAuth = withAuth(ListV1Item);
 
 const getProfileModalHeader = (user: authTypes.User) =>
   new UserCardWithAuth({

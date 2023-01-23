@@ -23,11 +23,6 @@ export class Button extends Block<TButtonProps> {
     });
   }
 
-  // componentDidUpdate() {
-  //   // TODO: разобраться с этим (страница чата, кнопка меню)
-  //   return true;
-  // }
-
   render() {
     // console.log(`%c Button block render id=${this.id}`, "background: green; color: white");
 

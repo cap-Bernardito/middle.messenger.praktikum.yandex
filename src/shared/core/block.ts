@@ -16,10 +16,10 @@ export class Block<P extends Record<string, any> = any> {
 
   public id = nanoid(8);
   public refs: TRefs = {};
-  public readonly props: P;
+  public props: P;
   public readonly executableProps: { [propName: string]: any };
   public readonly extractedExecutableProps: { [propName: string]: any } = {};
-  public readonly childrenFromProps: { [propName: string]: Block } = {};
+  public childrenFromProps: { [propName: string]: Block } = {};
 
   protected _element = this._createDocumentElement("div");
   protected _childrenForReplace: { [id: string]: Block } = {};
@@ -33,7 +33,8 @@ export class Block<P extends Record<string, any> = any> {
 
     this.refs = refs;
 
-    this.props = this._makePropsProxy(props || ({} as P));
+    // @ts-ignore
+    this.props = props || ({} as P);
     this.childrenFromProps = this._makePropsProxy(children);
     this.executableProps = executableProps;
 
@@ -113,21 +114,33 @@ export class Block<P extends Record<string, any> = any> {
     this._render();
   }
 
-  componentDidUpdate(oldProps: P, newProps: P) {
-    if (_.isEqual(oldProps, newProps)) {
-      return false;
-    }
-
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  componentDidUpdate(_oldProps: P, _newProps: P) {
     return true;
   }
 
-  setProps = (nextProps: Partial<P>) => {
-    const { children, props, refs, executableProps } = this._getChildren(nextProps);
+  setProps = (nextPartialProps: Partial<P>) => {
+    if (!nextPartialProps) {
+      return;
+    }
 
-    _.merge(this.childrenFromProps, children);
-    _.merge(this.refs, refs);
+    const { children, props, refs, executableProps } = this._getChildren(nextPartialProps);
+
+    const prevProps = _.cloneDeep(this.props, (item) => {
+      if (item instanceof Block) {
+        return item;
+      }
+    });
+
     _.merge(this.props, props);
-    _.merge(this.executableProps, executableProps);
+    Object.assign(this.refs, refs);
+    Object.assign(this.executableProps, executableProps);
+    Object.assign(this.childrenFromProps, children);
+
+    // @ts-ignore
+    if (!_.isEqual(prevProps, this.props)) {
+      this.eventBus().emit(Block.EVENTS.FLOW_CDU, prevProps, this.props);
+    }
   };
 
   get element() {
@@ -176,15 +189,17 @@ export class Block<P extends Record<string, any> = any> {
           throw new Error("Нет прав");
         }
 
-        const oldProps = _.cloneDeep(target, (item) => {
-          if (item instanceof Block) {
-            return item;
-          }
-        });
+        if (!target[prop]) {
+          target[prop] = value;
 
-        Reflect.set(target, prop, value);
+          this.eventBus().emit(Block.EVENTS.FLOW_CDU);
 
-        this.eventBus().emit(Block.EVENTS.FLOW_CDU, oldProps, target);
+          return true;
+        }
+
+        target[prop] = value;
+
+        this.eventBus().emit(Block.EVENTS.FLOW_CDU);
 
         return true;
       },
@@ -259,7 +274,7 @@ export class Block<P extends Record<string, any> = any> {
     }
 
     fragment.innerHTML = template({
-      ..._.merge({ ...this.props }, stubs),
+      ..._.merge({}, this.props, stubs),
       children: this._childrenForReplace,
       refs: this.refs,
     });

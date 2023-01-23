@@ -8,8 +8,20 @@ import { getFile } from "shared/api";
 import { router } from "shared/core";
 import { Avatar } from "shared/ui";
 import { formattedDate } from "shared/utils";
+import { connect } from "shared/utils/connect";
 
-export const UserListWithChats = chatsModel.withChats(
+export const withChats = connect((state) => {
+  if (typeof state.chats === "undefined") {
+    return {};
+  }
+
+  return {
+    chatsChats: state.chats.chats,
+    chatsActiveChat: state.chats.activeChat,
+  };
+});
+
+export const UserListWithChats = withChats(
   class extends UserList {
     constructor(props: TUserListProps) {
       super(props);

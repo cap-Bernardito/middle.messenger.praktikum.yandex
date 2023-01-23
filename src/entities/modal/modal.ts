@@ -49,9 +49,7 @@ export class Modal extends Block<TModalProps & { btnClose: Button; backButton: B
     this.overlay.on(this);
 
     runButton.setProps({
-      ...runButton.props,
       events: {
-        ...runButton.props.events,
         click: () => this.show(),
       },
     });
@@ -59,17 +57,13 @@ export class Modal extends Block<TModalProps & { btnClose: Button; backButton: B
     const { btnClose, backButton } = this.childrenFromProps;
 
     btnClose.setProps({
-      ...btnClose.props,
       events: {
-        ...btnClose.props.events,
         click: () => this.hide(),
       },
     });
 
     backButton.setProps({
-      ...backButton.props,
       events: {
-        ...backButton.props.events,
         click: () => overlay.showPrevWidget(),
       },
     });

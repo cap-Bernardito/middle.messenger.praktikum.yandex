@@ -14,6 +14,7 @@ describe("Should work with isEqual", () => {
     [false, { error: null }, { error: "error" }],
     [false, { a: 1 }, { a: 2 }],
     [false, { a: [1, 2] }, { a: [1, 2, 3] }],
+    [false, { a: { b: 1 }, c: 2, d: true }, { a: { b: 1 }, c: 2, d: false }],
   ];
 
   testCases.forEach((testCase) => {

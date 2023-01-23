@@ -40,7 +40,11 @@ export const isEqual = (a: PlainArrayOrObject | undefined, b: PlainArrayOrObject
       }
 
       if (isArrayOrObject(aValue) && isArrayOrObject(bValue)) {
-        return isEqual(aValue, bValue);
+        if (!isEqual(aValue, bValue)) {
+          return false;
+        }
+
+        continue;
       }
 
       return false;

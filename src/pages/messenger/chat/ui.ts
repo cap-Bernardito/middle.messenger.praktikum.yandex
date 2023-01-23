@@ -7,10 +7,22 @@ import { Messages, MessagesBody, MessagesHeader, TMessagesProps } from "entities
 
 import { getFile } from "shared/api";
 import { Avatar, Message } from "shared/ui";
+import { connect } from "shared/utils/connect";
 
 import { messagesMock } from "../mockData";
 
-export const MessagesWithChat = chatModel.withChat(
+const withChat = connect((state) => {
+  if (typeof state.chat === "undefined") {
+    return {};
+  }
+
+  return {
+    chatUsers: state.chat.users,
+    chatChatData: state.chat.chatData,
+  };
+});
+
+export const MessagesWithChat = withChat(
   class extends Messages {
     constructor(props: TMessagesProps) {
       super(props);

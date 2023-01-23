@@ -1,7 +1,5 @@
 import { Block } from "shared/core";
 
-import source from "./button.hbs";
-
 import "./button.scss";
 
 export type TButtonProps = TPropsWithEvents<{
@@ -25,12 +23,22 @@ export class Button extends Block<TButtonProps> {
     });
   }
 
-  componentDidUpdate() {
-    // TODO: разобраться с этим (страница чата, кнопка меню)
-    return true;
-  }
+  // componentDidUpdate() {
+  //   // TODO: разобраться с этим (страница чата, кнопка меню)
+  //   return true;
+  // }
 
   render() {
-    return source;
+    // console.log(`%c Button block render id=${this.id}`, "background: green; color: white");
+
+    return `
+    <button class="btn {{#if className}}{{className}}{{/if}}"
+      {{#if htmlType}} type={{htmlType}}  {{/if}}
+      {{#if title}} title={{title}}  {{/if}}
+      data-id="${this.id}"
+    >
+      {{{value}}}
+    </button>
+    `;
   }
 }

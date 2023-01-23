@@ -2,6 +2,8 @@
 @use "sass:color";
 
 .btn {
+  // @include debug-label;
+
   cursor: pointer;
 
   padding: $spacer * 3 $spacer * 10;

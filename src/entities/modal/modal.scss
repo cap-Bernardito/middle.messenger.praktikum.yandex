@@ -1,6 +1,8 @@
 @use "../../app/styles/variables.scss" as *;
 
 .modal {
+  // @include debug-label;
+
   pointer-events: none;
 
   position: absolute;

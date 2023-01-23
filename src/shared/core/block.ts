@@ -26,19 +26,14 @@ export class Block<P extends Record<string, any> = any> {
 
   eventBus: () => EventBus<EventBusEvents>;
 
-  protected state: any = {};
-
   public constructor(propsAndChildren?: P) {
     const eventBus = new EventBus<EventBusEvents>();
 
     const { children, props, refs, executableProps } = this._getChildren(propsAndChildren);
 
-    this.getStateFromProps(props);
-
     this.refs = refs;
 
     this.props = this._makePropsProxy(props || ({} as P));
-    this.state = this._makePropsProxy(this.state);
     this.childrenFromProps = this._makePropsProxy(children);
     this.executableProps = executableProps;
 
@@ -97,11 +92,6 @@ export class Block<P extends Record<string, any> = any> {
     eventBus.on(Block.EVENTS.FLOW_RENDER, this._render.bind(this));
   }
 
-  protected getStateFromProps(props?: any): void;
-  protected getStateFromProps() {
-    this.state = {};
-  }
-
   _componentDidMount(props: P) {
     this.componentDidMount(props);
   }
@@ -138,14 +128,6 @@ export class Block<P extends Record<string, any> = any> {
     _.merge(this.refs, refs);
     _.merge(this.props, props);
     _.merge(this.executableProps, executableProps);
-  };
-
-  setState = (nextState: any) => {
-    if (!nextState) {
-      return;
-    }
-
-    _.merge(this.state, nextState);
   };
 
   get element() {
@@ -277,7 +259,7 @@ export class Block<P extends Record<string, any> = any> {
     }
 
     fragment.innerHTML = template({
-      ..._.merge({ ...this.state }, { ...this.props }, stubs),
+      ..._.merge({ ...this.props }, stubs),
       children: this._childrenForReplace,
       refs: this.refs,
     });

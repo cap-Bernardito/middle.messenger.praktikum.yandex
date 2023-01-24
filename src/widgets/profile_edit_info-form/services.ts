@@ -15,7 +15,7 @@ export const profileEditInfo = async (
   const response = await profileEditInfoAPI(action);
 
   if (apiHasError(response)) {
-    dispatch(authModel.setUser({ user: null, loading: false, error: response.reason }));
+    dispatch(authModel.setUser({ loading: false, error: response.reason }));
 
     return;
   }
@@ -23,7 +23,7 @@ export const profileEditInfo = async (
   const responseUser = await authAPI.me();
 
   if (apiHasError(response)) {
-    dispatch(authModel.setUser({ user: null, loading: false, error: response.reason }));
+    dispatch(authModel.setUser({ loading: false, error: response.reason }));
 
     return;
   }

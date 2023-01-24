@@ -11,7 +11,7 @@ export const profileEditAvatar = async (dispatch: Dispatch<AppState>, state: App
   const response = await profileEditAvatarAPI(action);
 
   if (apiHasError(response)) {
-    dispatch(authModel.setUser({ user: null, loading: false, error: response.reason }));
+    dispatch(authModel.setUser({ loading: false, error: response.reason }));
 
     return;
   }

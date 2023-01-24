@@ -1,6 +1,10 @@
-import { Route } from "..";
+import { EventBus, Route } from "..";
 
-class Router {
+export class Router extends EventBus {
+  static EVENTS = {
+    WIDGET_TOGGLE: "widget:toggle",
+  } as const;
+
   private static _instance: Router;
   private _routes: Route[] = [];
   private _history = window.history;
@@ -8,6 +12,8 @@ class Router {
   private _cache: Record<string, any> = {};
 
   constructor() {
+    super();
+
     if (Router._instance) {
       return Router._instance;
     }
@@ -51,8 +57,12 @@ class Router {
     return true;
   }
 
-  use(routeProps: TRouteObject, routeShouldMount: (route: Route) => boolean) {
-    this._routes.push(new Route({ routeShouldMount, ...routeProps }));
+  use(
+    routeProps: TRouteObject,
+    routeShouldMount: (route: Route) => boolean,
+    routeDidMount?: (routeData: TRouteData) => void
+  ) {
+    this._routes.push(new Route({ routeShouldMount, routeDidMount, ...routeProps }));
 
     return this;
   }

@@ -1,7 +1,7 @@
 import { Overlay } from "entities/overlay";
 
 import { mdiArrowLeft, mdiClose } from "@mdi/js";
-import { Block } from "shared/core";
+import { Block, Router, router } from "shared/core";
 import { Button, renderIcon } from "shared/ui";
 
 import source from "./modal.hbs";
@@ -83,6 +83,8 @@ export class Modal extends Block<TModalProps & { btnClose: Button; backButton: B
     this.getContent().classList.remove(this.activeClass);
     this.isVisible = false;
     this.overlay.notify(Overlay.commands.hide, this);
+
+    router.emit(Router.EVENTS.WIDGET_TOGGLE);
   }
 
   render() {

@@ -1,3 +1,4 @@
+import { authModel, authServices } from "processes/auth";
 import * as authLib from "processes/auth/model/lib";
 
 import { store } from "app/store";
@@ -13,10 +14,12 @@ import {
   ProfilePage,
   RegisterPage,
 } from "pages";
+import { chatModel, chatServices } from "pages/messenger/chat";
+import { chatsModel, chatsServices } from "pages/messenger/chats";
 
 import { chatMenuServices } from "widgets/chat-menu";
 
-import { Route, router } from "shared/core";
+import { Route, Router, router } from "shared/core";
 import { Store } from "shared/core/store";
 import { ROUTES } from "shared/utils/constants";
 
@@ -128,22 +131,37 @@ const routes: TRouteObject[] = [
 
 export const initRouter = (store: Store<AppState>) => {
   routes.forEach((routeProps) => {
-    router.use(routeProps, (route: Route) => {
-      const { user } = authLib.selectUser();
+    router.use(
+      routeProps,
+      (route: Route) => {
+        const { user } = authLib.selectUser();
 
-      if (!route.isPrivate() || Boolean(user)) {
-        return true;
+        if (!route.isPrivate() || Boolean(user)) {
+          return true;
+        }
+
+        router.go(ROUTES.login.path);
+
+        return false;
+      },
+      () => {
+        store.dispatch(authServices.resetLoadStatus);
       }
-
-      router.go(ROUTES.login.path);
-
-      return false;
-    });
+    );
   });
 
   store.on("changed", (prevState, nextState) => {
     if (!prevState.appIsInited && nextState.appIsInited) {
       router.start();
+      router.on(Router.EVENTS.WIDGET_TOGGLE, () => {
+        const { error: authError, loading: authLoading } = authModel.selectUser();
+        const { error: chatsChangeError, loading: chatsChangeLoading } = chatsModel.selectChats();
+        const { error: chatChangeError, loading: chatChangeLoading } = chatModel.selectChat();
+
+        (authError || authLoading) && store.dispatch(authServices.resetLoadStatus);
+        (chatsChangeError || chatsChangeLoading) && store.dispatch(chatsServices.resetLoadStatus);
+        (chatChangeError || chatChangeLoading) && store.dispatch(chatServices.resetLoadStatus);
+      });
     }
   });
 };

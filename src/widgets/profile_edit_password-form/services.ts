@@ -14,7 +14,7 @@ export const profileEditPassword = async (
   const response = await profileEditPasswordAPI(action);
 
   if (apiHasError(response)) {
-    dispatch(authModel.setUser({ user: null, loading: false, error: response.reason }));
+    dispatch(authModel.setUser({ loading: false, error: response.reason }));
 
     return;
   }

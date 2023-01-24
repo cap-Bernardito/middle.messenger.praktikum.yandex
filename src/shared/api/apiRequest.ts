@@ -1,7 +1,13 @@
 import { HTTPTransport, TOptionsGet, TOptionsNotGet, TResponse } from "shared/utils/http-transport";
 
-const normalizeResponse = <T>(response: TResponse<T>) => {
-  return response.response;
+const normalizeResponse = <T>(error: unknown, response?: TResponse<T>) => {
+  if (error) {
+    console.error(error);
+
+    return { reason: "Что-то пошло не так" };
+  }
+
+  return response?.response;
 };
 
 const myFetch = new HTTPTransport();
@@ -15,26 +21,42 @@ const defaultOptions = {
 
 export const request = {
   get: async <T>(path: string, options?: TOptionsGet) => {
-    const result = await myFetch.get<T>(`${process.env.API_ENDPOINT}/${path}`, { ...defaultOptions, ...options });
+    try {
+      const result = await myFetch.get<T>(`${process.env.API_ENDPOINT}/${path}`, { ...defaultOptions, ...options });
 
-    return normalizeResponse<T>(result);
+      return normalizeResponse<T>(null, result);
+    } catch (error) {
+      return normalizeResponse<T>(error);
+    }
   },
 
   post: async <T>(path: string, options?: TOptionsNotGet) => {
-    const result = await myFetch.post<T>(`${process.env.API_ENDPOINT}/${path}`, { ...defaultOptions, ...options });
+    try {
+      const result = await myFetch.post<T>(`${process.env.API_ENDPOINT}/${path}`, { ...defaultOptions, ...options });
 
-    return normalizeResponse<T>(result);
+      return normalizeResponse<T>(null, result);
+    } catch (error) {
+      return normalizeResponse<T>(error);
+    }
   },
 
   put: async <T>(path: string, options?: TOptionsNotGet) => {
-    const result = await myFetch.put<T>(`${process.env.API_ENDPOINT}/${path}`, { ...defaultOptions, ...options });
+    try {
+      const result = await myFetch.put<T>(`${process.env.API_ENDPOINT}/${path}`, { ...defaultOptions, ...options });
 
-    return normalizeResponse<T>(result);
+      return normalizeResponse<T>(null, result);
+    } catch (error) {
+      return normalizeResponse<T>(error);
+    }
   },
 
   delete: async <T>(path: string, options?: TOptionsNotGet) => {
-    const result = await myFetch.delete<T>(`${process.env.API_ENDPOINT}/${path}`, { ...defaultOptions, ...options });
+    try {
+      const result = await myFetch.delete<T>(`${process.env.API_ENDPOINT}/${path}`, { ...defaultOptions, ...options });
 
-    return normalizeResponse<T>(result);
+      return normalizeResponse<T>(null, result);
+    } catch (error) {
+      return normalizeResponse<T>(error);
+    }
   },
 };

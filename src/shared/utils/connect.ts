@@ -7,19 +7,18 @@ export function connect<P extends Record<string, any> = any>(mapStateToProps: (s
     // @ts-expect-error No base constructor has the specified
     return class extends Component<P> {
       constructor(props: P) {
-        let state = mapStateToProps(store.getState());
+        const state = mapStateToProps(store.getState());
 
         super({ ...props, ...state });
 
         store.on("changed", (_prevState, newState) => {
-          newState = mapStateToProps(newState);
+          const prevState = mapStateToProps(_prevState);
+          const nextState = mapStateToProps(newState);
 
-          if (!_.isEqual(state, newState)) {
+          if (!_.isEqual(prevState, nextState)) {
             // @ts-expect-error this is not typed
-            this.setProps({ ...newState });
+            this.setProps({ ...nextState });
           }
-
-          state = newState;
         });
       }
     } as BlockConstructable<P>;

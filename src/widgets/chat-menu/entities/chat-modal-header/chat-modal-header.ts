@@ -9,10 +9,6 @@ import { Avatar } from "shared/ui";
 import { connect } from "shared/utils/connect";
 
 const withChat = connect((state) => {
-  if (typeof state.chat === "undefined") {
-    return {};
-  }
-
   return {
     chatUsers: state.chat.users,
     chatChatData: state.chat.chatData,
@@ -30,11 +26,7 @@ export const ChatModalHeaderWithChat = withChat(
 
           return `${plural(users, "%d участник", "%d участника", "%d участников")}`;
         },
-        avatar: function execProps() {
-          const { chatData } = chatModel.selectChat();
-
-          return new Avatar({ className: "avatar_xs mr-3", img: getFile(chatData ? chatData.avatar : "") });
-        },
+        avatar: new Avatar({ className: "avatar_xs mr-3" }),
         name: () => {
           const { chatData } = chatModel.selectChat();
 
@@ -42,6 +34,18 @@ export const ChatModalHeaderWithChat = withChat(
         },
         className: "not-interactive",
       });
+    }
+
+    componentDidUpdate() {
+      const avatar = this.childrenFromProps.avatar;
+
+      const { chatData } = chatModel.selectChat();
+
+      if (avatar.props.img !== chatData?.avatar) {
+        avatar.setProps({ img: getFile(chatData ? chatData.avatar : "") });
+      }
+
+      return true;
     }
   }
 );

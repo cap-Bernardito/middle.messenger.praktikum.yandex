@@ -11,10 +11,6 @@ import { formattedDate } from "shared/utils";
 import { connect } from "shared/utils/connect";
 
 export const withChats = connect((state) => {
-  if (typeof state.chats === "undefined") {
-    return {};
-  }
-
   return {
     chatsChats: state.chats.chats,
     chatsActiveChat: state.chats.activeChat,

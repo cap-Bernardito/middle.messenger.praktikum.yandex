@@ -56,10 +56,6 @@ const changeUserPasswordModalButton = new Button({
 });
 
 const withAuth = connect((state) => {
-  if (typeof state.auth === "undefined") {
-    return {};
-  }
-
   return {
     authUser: state.auth.user,
   };

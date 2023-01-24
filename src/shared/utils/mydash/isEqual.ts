@@ -49,6 +49,10 @@ export const isEqual = (a: PlainArrayOrObject | undefined, b: PlainArrayOrObject
 
       return false;
     }
+
+    if (typeof aValue === "function" && typeof bValue === "function") {
+      return false;
+    }
   }
 
   return true;

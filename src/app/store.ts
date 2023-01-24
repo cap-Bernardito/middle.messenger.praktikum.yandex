@@ -14,9 +14,9 @@ export const initialState = {
 
 export const store = new Store<AppState>(initialState);
 
-store.on("changed", (prevState, nextState) => {
+store.on("changed", (_prevState, _nextState, partedNewState) => {
   if (process.env.DEBUG) {
-    console.log("%cstore updated", "background: #222; color: #bada55", nextState);
+    console.log("%cstore updated", "background: #222; color: #bada55", partedNewState);
   }
 });
 

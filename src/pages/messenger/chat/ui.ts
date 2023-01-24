@@ -12,10 +12,6 @@ import { connect } from "shared/utils/connect";
 import { messagesMock } from "../mockData";
 
 const withChat = connect((state) => {
-  if (typeof state.chat === "undefined") {
-    return {};
-  }
-
   return {
     chatUsers: state.chat.users,
     chatChatData: state.chat.chatData,

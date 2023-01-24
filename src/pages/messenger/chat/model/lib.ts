@@ -10,10 +10,6 @@ export const setChat = (data: Partial<TChatState>) => _.set<Partial<{ chats: TCh
 export const selectChat = <T = TChatState>() => <T>useSelector((state) => state.chat);
 
 export const withChat = connect((state) => {
-  if (typeof state.chat === "undefined") {
-    return {};
-  }
-
   return {
     chatError: state.chat.error,
     chatLoading: state.chat.loading,

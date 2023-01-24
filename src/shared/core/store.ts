@@ -20,9 +20,9 @@ export class Store<State extends Record<string, any>> extends EventBus {
     const prevState = _.cloneDeep(this.state);
 
     // @ts-ignore
-    this.state = { ..._.merge(this.state, nextState) };
+    this.state = _.merge(this.state, nextState);
 
-    this.emit("changed", prevState, nextState);
+    this.emit("changed", prevState, this.state, nextState);
   }
 
   dispatch(nextStateOrAction: Partial<State> | Action<State>, payload?: any) {

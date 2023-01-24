@@ -42,9 +42,7 @@ describe("Should work cloneDeep", () => {
     const [input, expected] = [{ key: () => true }, { key: () => true }];
 
     const result = _.cloneDeep(input) as typeof expected;
-    const result2 = _.isEqual(input, result as typeof expected);
 
-    expect(result2).toEqual(true);
     expect(result === expected).toEqual(false);
     expect(result.key === expected.key).toEqual(false);
   });

@@ -1,6 +1,6 @@
 import { store } from "app/store";
 
-import { FormWithAuth } from "widgets/form-with-auth";
+import { FormWithAuthStatus } from "widgets/form-with-auth";
 import { profileEditPassword } from "widgets/profile_edit_password-form";
 
 import { TFormProps } from "entities/form";
@@ -14,7 +14,7 @@ export function ProfileEditPasswordForm(
   getForm: (refs: TRefs) => TFormPartials,
   props: Omit<TFormProps, "fields">
 ) {
-  return new FormWithAuth({
+  return new FormWithAuthStatus({
     onSubmit: (event) => {
       const { isFormValid, formData } = getForm(this.getRefs()).form.check(
         event,

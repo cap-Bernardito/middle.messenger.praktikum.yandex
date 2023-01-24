@@ -98,7 +98,7 @@ export class Block<P extends Record<string, any> = any> {
   }
 
   // eslint-disable-next-line @typescript-eslint/no-empty-function, @typescript-eslint/no-unused-vars
-  componentDidMount(props: P) {}
+  componentDidMount(_props: P) {}
 
   dispatchComponentDidMount(): void {
     this.eventBus().emit(Block.EVENTS.FLOW_CDM);

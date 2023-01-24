@@ -3,7 +3,7 @@ import { chatsAPI, chatsModel, chatsServices, chatsTypes } from "pages/messenger
 import { transformChats } from "shared/api";
 import { apiHasError } from "shared/utils";
 
-export const getChats = async (dispatch: Dispatch<AppState>, state: AppState, action: number) => {
+export const getChats = async (dispatch: Dispatch<AppState>, _state: AppState, action: number) => {
   dispatch(chatsModel.setChats({ loading: true }));
 
   const response = await chatsAPI.getChats();

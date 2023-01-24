@@ -2,7 +2,7 @@ import { store } from "app/store";
 
 import { chatModel } from "pages/messenger/chat";
 
-import { FormWithChat } from "widgets/form-with-chat";
+import { FormWithChatLoadStatus } from "widgets/form-with-chat";
 
 import { Form, Modal, Overlay, TFormProps } from "entities";
 
@@ -83,7 +83,7 @@ export const chatMenuModals = function () {
       title: "Изменить аватар",
       header: getchatMenuModalHeader(),
       ref: "chatAvatarModal",
-      body: new FormWithChat({
+      body: new FormWithChatLoadStatus({
         onSubmit: (event) => {
           event.preventDefault();
 
@@ -142,7 +142,7 @@ export const chatMenuModals = function () {
       title: "Удалить чат",
       header: getchatMenuModalHeader(),
       ref: "deleteChatModal",
-      body: new FormWithChat({
+      body: new FormWithChatLoadStatus({
         onSubmit: (event) => {
           event.preventDefault();
 
@@ -175,7 +175,7 @@ export const chatMenuModals = function () {
       title: "Пригласить пользователя",
       header: getchatMenuModalHeader(),
       ref: "addUserModal",
-      body: new FormWithChat({
+      body: new FormWithChatLoadStatus({
         onSubmit: (event) => {
           event.preventDefault();
           // @ts-ignore
@@ -232,7 +232,7 @@ export const chatMenuModals = function () {
       title: "Удалить пользователя",
       header: getchatMenuModalHeader(),
       ref: "deleteUserModal",
-      body: new FormWithChat({
+      body: new FormWithChatLoadStatus({
         onSubmit: (event) => {
           event.preventDefault();
           // @ts-ignore

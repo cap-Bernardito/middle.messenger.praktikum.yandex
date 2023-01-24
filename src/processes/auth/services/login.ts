@@ -6,7 +6,7 @@ import { apiHasError } from "shared/utils";
 
 import { logout } from "./logout";
 
-export const login = async (dispatch: Dispatch<AppState>, state: AppState, action: authTypes.LoginRequestData) => {
+export const login = async (dispatch: Dispatch<AppState>, _state: AppState, action: authTypes.LoginRequestData) => {
   dispatch(authModel.setUser({ loading: true }));
 
   const response = await authAPI.login(action);

@@ -5,7 +5,7 @@ import { store } from "app/store";
 
 import { chatsServices } from "pages/messenger/chats";
 
-import { FormWithChat } from "widgets/form-with-chat";
+import { FormWithChatLoadStatus } from "widgets/form-with-chat";
 import { MyAvatar } from "widgets/my-avatar";
 import { ProfileEditAvatarForm } from "widgets/profile_edit_avatar-form";
 import { ProfileEditInfoForm } from "widgets/profile_edit_info-form";
@@ -55,13 +55,13 @@ const changeUserPasswordModalButton = new Button({
   className: "btn-menu",
 });
 
-const withAuth = connect((state) => {
+const withAuthUser = connect((state) => {
   return {
     authUser: state.auth.user,
   };
 });
-const UserCardWithAuth = withAuth(UserCard);
-const ListV1ItemWithAuth = withAuth(ListV1Item);
+const UserCardWithAuth = withAuthUser(UserCard);
+const ListV1ItemWithAuth = withAuthUser(ListV1Item);
 
 const getProfileModalHeader = (user: authTypes.User) =>
   new UserCardWithAuth({
@@ -165,7 +165,7 @@ export const offcanvasBodyModals = function (this: { getRefs: () => TRefs }) {
       overlay: overlay,
       title: "Добавить чат",
       ref: "createChatModal",
-      body: new FormWithChat({
+      body: new FormWithChatLoadStatus({
         onSubmit: (event) => {
           // @ts-ignore
           const form = this.refs.createChatModal.childrenFromProps.body as Form;

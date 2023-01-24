@@ -1,6 +1,6 @@
 import { store } from "app/store";
 
-import { FormWithAuth } from "widgets/form-with-auth";
+import { FormWithAuthStatus } from "widgets/form-with-auth";
 import { profileEditAvatar } from "widgets/profile_edit_avatar-form";
 
 import { TFormProps } from "entities/form";
@@ -14,7 +14,7 @@ export function ProfileEditAvatarForm(
   getForm: (refs: TRefs) => TFormPartials,
   props: Omit<TFormProps, "fields">
 ) {
-  return new FormWithAuth({
+  return new FormWithAuthStatus({
     onSubmit: (event) => {
       event.preventDefault();
 

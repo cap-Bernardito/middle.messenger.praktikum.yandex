@@ -2,14 +2,14 @@ import { Form, TFormProps } from "entities";
 
 import { connect } from "shared/utils/connect";
 
-const withAuth = connect((state) => {
+const withAuthLoadStatus = connect((state) => {
   return {
     formError: state.auth.error,
     loading: state.auth.loading,
   };
 });
 
-export const FormWithAuth = withAuth(
+export const FormWithAuthStatus = withAuthLoadStatus(
   class extends Form {
     constructor(props: TFormProps) {
       super(props);

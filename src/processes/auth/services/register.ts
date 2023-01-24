@@ -8,7 +8,7 @@ import { logout } from "./logout";
 
 export const register = async (
   dispatch: Dispatch<AppState>,
-  state: AppState,
+  _state: AppState,
   action: authTypes.RegisterRequestData
 ) => {
   dispatch(authModel.setUser({ loading: true }));

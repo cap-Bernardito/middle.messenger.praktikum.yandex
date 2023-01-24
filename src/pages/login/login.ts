@@ -2,7 +2,7 @@ import { authModel, authServices } from "processes/auth";
 
 import { store } from "app/store";
 
-import { FormWithAuth } from "widgets/form-with-auth";
+import { FormWithAuthStatus } from "widgets/form-with-auth";
 
 import { Form, TFormProps } from "entities";
 
@@ -22,7 +22,7 @@ class LoginPage extends Block {
 
     this.setProps({
       ...props,
-      body: new FormWithAuth({
+      body: new FormWithAuthStatus({
         onSubmit: (event) => {
           const { isFormValid, formData } = this.getForm().form.check(event, Object.values(this.getForm().fields));
 

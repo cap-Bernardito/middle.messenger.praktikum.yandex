@@ -8,7 +8,7 @@ import { apiHasError } from "shared/utils";
 
 export const createChat = async (
   dispatch: Dispatch<AppState>,
-  state: AppState,
+  _state: AppState,
   action: chatsTypes.createChatRequestData
 ) => {
   dispatch(chatModel.setChat({ loading: true }));

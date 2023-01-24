@@ -2,7 +2,7 @@ import { authModel } from "processes/auth";
 
 import { store } from "app/store";
 
-import { FormWithAuth } from "widgets/form-with-auth";
+import { FormWithAuthStatus } from "widgets/form-with-auth";
 
 import { TFormProps } from "entities/form";
 
@@ -23,7 +23,7 @@ export function ProfileEditInfoForm(
     return;
   }
 
-  return new FormWithAuth({
+  return new FormWithAuthStatus({
     onSubmit: (event) => {
       const { isFormValid, formData } = getForm(this.getRefs()).form.check(
         event,

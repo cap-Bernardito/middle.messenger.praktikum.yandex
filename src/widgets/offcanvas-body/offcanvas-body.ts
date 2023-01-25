@@ -216,8 +216,14 @@ const logout = new Button({
   },
 });
 
-export const offcanvasBody = (user: authTypes.User) =>
-  new SettingsPanel({
+export const offcanvasBody = () => {
+  const { user } = authModel.selectUser();
+
+  if (!user) {
+    return;
+  }
+
+  return new SettingsPanel({
     userInfo: new UserCardWithAuth({
       avatar: new MyAvatar({ className: "avatar_xs" }),
       name: () => `<span class='text-lg'>${user.fullName}</span>`,
@@ -226,3 +232,4 @@ export const offcanvasBody = (user: authTypes.User) =>
     menu: [createChatModalButton, modalInfo, logout],
     about: "Учебное приложение для обмена сообщениями",
   });
+};

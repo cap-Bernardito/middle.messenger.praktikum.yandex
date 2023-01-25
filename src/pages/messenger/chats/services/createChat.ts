@@ -36,7 +36,7 @@ export const createChat = async (
 
   dispatch(chatModel.setChat({ loading: false, error: null }));
 
-  dispatch(chatsServices.selectChat, response.id);
+  dispatch(chatsServices.selectChat, response?.id);
 
   const overlay = new Overlay();
 

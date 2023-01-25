@@ -3,7 +3,16 @@ import { chatsAPI, chatsModel, chatsServices, chatsTypes } from "pages/messenger
 import { transformChats } from "shared/api";
 import { apiHasError } from "shared/utils";
 
-export const getChats = async (dispatch: Dispatch<AppState>, _state: AppState, action: number) => {
+type TGetChatsPayload = {
+  chatId: chatsTypes.TChat["id"];
+  success?: (chats: chatsTypes.TChat[]) => void;
+};
+
+export const getChats = async (
+  dispatch: Dispatch<AppState>,
+  _state: AppState,
+  { chatId, success: successLoadCb }: TGetChatsPayload
+) => {
   dispatch(chatsModel.setChats({ loading: true }));
 
   const response = await chatsAPI.getChats();
@@ -17,11 +26,13 @@ export const getChats = async (dispatch: Dispatch<AppState>, _state: AppState, a
   // В пропсах компонента рекурсивный мердж, потому сперва очищаем перед получением новых чатов
   dispatch(chatsModel.setChats({ chats: null }));
 
-  dispatch(
-    chatsModel.setChats({ chats: transformChats(response as chatsTypes.TChatDTO[]), loading: false, error: null })
-  );
+  const chats = transformChats(response as chatsTypes.TChatDTO[]);
 
-  if (action) {
-    dispatch(chatsServices.isChatExist, action);
+  dispatch(chatsModel.setChats({ chats, loading: false, error: null }));
+
+  if (chatId) {
+    dispatch(chatsServices.isChatExist, chatId);
   }
+
+  successLoadCb && successLoadCb(chats);
 };

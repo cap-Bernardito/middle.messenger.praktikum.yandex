@@ -1,7 +1,3 @@
-import { authModel } from "processes/auth";
-
-import { store } from "app/store";
-
 import { chatMenuUi } from "widgets/chat-menu";
 import { offcanvasBody, offcanvasBodyModals } from "widgets/offcanvas-body";
 
@@ -9,12 +5,10 @@ import { ChatToolbar, Form, MessagesFooter, Offcanvas, Overlay, TMessagesProps }
 
 import { mdiChevronRight, mdiMenu, mdiPaperclip, mdiSend } from "@mdi/js";
 import { Block } from "shared/core";
-import { router } from "shared/core";
 import { Button, renderIcon, Search, Textarea } from "shared/ui";
 
 import { MessagesWithChat } from "./chat/ui";
 import { UserListWithChats } from "./chats/ui";
-import { chatsServices } from "./chats";
 
 const hamburger = new Button({
   value: `${renderIcon({ value: mdiMenu })}`,
@@ -30,16 +24,6 @@ export class MessengerPage extends Block {
   constructor() {
     super();
 
-    const { chatId } = router.getParams();
-
-    store.dispatch(chatsServices.getChats, chatId);
-
-    const { user } = authModel.selectUser();
-
-    if (!user) {
-      return;
-    }
-
     this.setProps({
       overlay,
 
@@ -49,7 +33,7 @@ export class MessengerPage extends Block {
 
       offcanvas: new Offcanvas({
         control: hamburger,
-        body: offcanvasBody(user),
+        body: offcanvasBody(),
         overlay: overlay,
       }),
 

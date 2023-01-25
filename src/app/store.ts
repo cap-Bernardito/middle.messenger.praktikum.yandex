@@ -10,6 +10,7 @@ export const initialState = {
   auth: authModel.userState,
   chats: chatsModel.chatsState,
   chat: chatModel.chatState,
+  dialogs: chatModel.dialogsState,
 };
 
 export const store = new Store<AppState>(initialState);

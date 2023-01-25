@@ -9,11 +9,15 @@ import { chatsTypes } from "pages/messenger/chats";
 import { apiHasError } from "shared/utils";
 import WSTransport from "shared/utils/ws-transport";
 
-const sockets: Record<chatsTypes.TChat["id"], WSTransport> = {};
+let sockets: Record<chatsTypes.TChat["id"], WSTransport> = {};
 
-export const getWS = async (chatId: chatsTypes.TChat["id"]) => {
+export const getWS = async (chatId: chatsTypes.TChat["id"] | "all") => {
   if (!chatId) {
     return;
+  }
+
+  if (chatId === "all") {
+    return sockets;
   }
 
   if (sockets[chatId]) {
@@ -59,7 +63,8 @@ export const getWS = async (chatId: chatsTypes.TChat["id"]) => {
       );
     })
     .on(WSTransport.EVENTS.CLOSED, () => {
-      store.dispatch(chatModel.setDialog(chatId, { loading: false, error: null }));
+      store.dispatch(chatModel.setDialog(chatId, { data: null, loading: false, error: null }));
+      sockets = {};
     });
 
   sockets[chatId] = responseWSTransport;

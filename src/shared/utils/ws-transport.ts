@@ -56,8 +56,8 @@ export default class WSTransport extends EventBus {
     this._send(JSON.stringify(data));
   }
 
-  close() {
-    this.socket?.close();
+  close(code?: number, reason?: string) {
+    this.socket?.close(code, reason);
 
     this.emit(WSTransport.EVENTS.CLOSING);
   }
@@ -83,23 +83,23 @@ export default class WSTransport extends EventBus {
   }
 
   private subscribe(socket: WebSocket) {
-    socket.addEventListener("open", () => {
+    socket.onopen = () => {
       this.emit(WSTransport.EVENTS.OPEN);
-    });
+    };
 
-    socket.addEventListener("close", (event) => {
+    socket.onclose = (event) => {
       if (!event.wasClean) {
         setTimeout(() => this.connect(), this.reconnectTimeout);
       }
 
       this.emit(WSTransport.EVENTS.CLOSED);
-    });
+    };
 
-    socket.addEventListener("error", (event) => {
+    socket.onerror = (event) => {
       this.emit(WSTransport.EVENTS.ERROR, event);
-    });
+    };
 
-    socket.addEventListener("message", (message) => {
+    socket.onmessage = (message) => {
       const data = JSON.parse(message.data);
 
       if (data.type && data.type === "pong") {
@@ -107,6 +107,6 @@ export default class WSTransport extends EventBus {
       }
 
       this.emit(WSTransport.EVENTS.GOT_MESSAGE, data);
-    });
+    };
   }
 }

@@ -1,14 +1,18 @@
+import { authModel } from "processes/auth";
+
+import { store } from "app/store";
+
+import { chatServices, chatUi } from "pages/messenger/chat";
+import { chatsServices, chatsTypes, chatsUi } from "pages/messenger/chats";
+
 import { chatMenuUi } from "widgets/chat-menu";
 import { offcanvasBody, offcanvasBodyModals } from "widgets/offcanvas-body";
 
 import { ChatToolbar, Form, MessagesFooter, Offcanvas, Overlay, TMessagesProps } from "entities";
 
 import { mdiChevronRight, mdiMenu, mdiPaperclip, mdiSend } from "@mdi/js";
-import { Block } from "shared/core";
+import { Block, router } from "shared/core";
 import { Button, renderIcon, Search, Textarea } from "shared/ui";
-
-import { MessagesWithChat } from "./chat/ui";
-import { UserListWithChats } from "./chats/ui";
 
 const hamburger = new Button({
   value: `${renderIcon({ value: mdiMenu })}`,
@@ -23,6 +27,22 @@ export class MessengerPage extends Block {
 
   constructor() {
     super();
+
+    const { chatId } = router.getParams();
+    const { user } = authModel.selectUser();
+
+    store.dispatch(chatsServices.getChats, {
+      chatId,
+      success: (chats: chatsTypes.TChat[]) => {
+        chats.forEach((chat) => {
+          store.dispatch(chatServices.loadMessages, { chatId: chat.id });
+        });
+      },
+    });
+
+    if (!user) {
+      return;
+    }
 
     this.setProps({
       overlay,
@@ -41,13 +61,13 @@ export class MessengerPage extends Block {
 
       chatMenuModals: chatMenuUi.chatMenuModals.call(this),
 
-      userList: new UserListWithChats({
+      userList: new chatsUi.UserListWithChats({
         header_link: `<a href="/profile" class="link-icon">Профиль ${renderIcon({ value: mdiChevronRight })}</a>`,
         header_search: new Search({ value: "" }),
         users: null,
       }),
 
-      messages: new MessagesWithChat({
+      messages: new chatUi.MessagesWithChat({
         ref: "messagesRef",
         footer: new MessagesFooter({
           ref: "formRef",

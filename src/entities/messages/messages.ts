@@ -1,4 +1,4 @@
-import { MessagesBody, MessagesFooter, MessagesHeader } from "entities";
+import { MessagesFooter, MessagesHeader } from "entities";
 
 import { Block } from "shared/core";
 
@@ -8,7 +8,7 @@ import "./messages.scss";
 
 export type TMessagesProps = TPropsWithRef<{
   header: TFnProps<TNullable<MessagesHeader | string>>;
-  body: TFnProps<MessagesBody | string>;
+  body: TFnProps<Block | string>;
   footer: MessagesFooter | string;
   placeholder?: TFnProps<Block | string | false>;
 }>;

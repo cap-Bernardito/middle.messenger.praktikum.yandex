@@ -3,20 +3,63 @@ import { chatModel } from "pages/messenger/chat";
 import { chatMenuUi } from "widgets/chat-menu";
 import { ChatUserCardWithChat } from "widgets/chat-menu/entities/chat-user-card";
 
-import { Messages, MessagesBody, MessagesHeader, TMessagesProps } from "entities";
+import { Messages, MessagesBody, MessagesHeader, TMessagesBodyProps, TMessagesProps } from "entities";
 
 import { getFile } from "shared/api";
 import { Avatar, Message } from "shared/ui";
 import { connect } from "shared/utils/connect";
 
-import { messagesMock } from "../mockData";
-
 const withChat = connect((state) => {
   return {
     chatUsers: state.chat.users,
     chatChatData: state.chat.chatData,
+    chatActiveChat: state.chats.activeChat,
   };
 });
+
+const withDialog = connect((state) => {
+  const { chatData } = state.chat;
+  const { activeChat } = state.chats;
+
+  const result = {
+    messages: null,
+    loading: false,
+    error: null,
+    activeChat,
+  };
+
+  if (!chatData) {
+    return result;
+  }
+
+  const dialog = state.dialogs[chatData.id];
+
+  if (!dialog) {
+    return result;
+  }
+
+  return {
+    messages: dialog.data || null,
+    loading: dialog.loading,
+    error: dialog.error,
+    activeChat,
+  };
+});
+
+const MessagesBodyWithDialogs = withDialog(
+  class extends MessagesBody {
+    constructor(props: TMessagesBodyProps) {
+      super(props);
+    }
+
+    // Не надо рекурсивно мержить диалоги
+    setProps(nextPartialProps: Partial<TMessagesBodyProps>) {
+      super.setProps(nextPartialProps, (props, nextProps) => {
+        Object.assign(props, nextProps);
+      });
+    }
+  }
+);
 
 export const MessagesWithChat = withChat(
   class extends Messages {
@@ -46,12 +89,20 @@ export const MessagesWithChat = withChat(
           });
         },
 
-        body: function execProps() {
-          return new MessagesBody({
-            messages: messagesMock.map((m) => new Message(m)),
-          });
-        },
+        body: new MessagesBodyWithDialogs({
+          messages: [].map((m) => new Message(m)),
+        }),
       });
     }
   }
 );
+// const { chatData } = chatModel.selectChat();
+
+// if (!chatData) {
+//   return null;
+
+// }
+
+// const messages = chatModel.selectDialog(chatData.id)
+
+// console.log(messages);

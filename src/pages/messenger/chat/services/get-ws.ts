@@ -3,14 +3,15 @@ import { authModel } from "processes/auth";
 import { store } from "app/store";
 
 import { chatAPI, chatModel } from "pages/messenger/chat";
-import { TChat } from "pages/messenger/chats/types";
+import { chatTypes, chatUtils } from "pages/messenger/chat";
+import { chatsTypes } from "pages/messenger/chats";
 
 import { apiHasError } from "shared/utils";
 import WSTransport from "shared/utils/ws-transport";
 
-const sockets: Record<TChat["id"], WSTransport> = {};
+const sockets: Record<chatsTypes.TChat["id"], WSTransport> = {};
 
-export const getWS = async (chatId: TChat["id"]) => {
+export const getWS = async (chatId: chatsTypes.TChat["id"]) => {
   if (!chatId) {
     return;
   }
@@ -49,7 +50,13 @@ export const getWS = async (chatId: TChat["id"]) => {
       store.dispatch(chatModel.setDialog(chatId, { loading: false, error: null }));
     })
     .on(WSTransport.EVENTS.GOT_MESSAGE, (messages) => {
-      store.dispatch(chatModel.setDialog(chatId, { data: messages, loading: false, error: null }));
+      store.dispatch(
+        chatModel.setDialog(chatId, {
+          data: chatUtils.transformMessages(messages, user) as chatTypes.TDialogMessage[],
+          loading: false,
+          error: null,
+        })
+      );
     })
     .on(WSTransport.EVENTS.CLOSED, () => {
       store.dispatch(chatModel.setDialog(chatId, { loading: false, error: null }));

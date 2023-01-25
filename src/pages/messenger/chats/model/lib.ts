@@ -1,11 +1,17 @@
-import { useSelector } from "app/store";
+import { store, useSelector } from "app/store";
 
 import { _ } from "shared/utils";
 import { connect } from "shared/utils/connect";
 
 import { TChatsState } from "./store";
 
-export const setChats = (data: Partial<TChatsState>) => _.set<Partial<{ chats: TChatsState }>>({}, "chats", data);
+export const setChats = (data: Partial<TChatsState>) => {
+  if (data.chats) {
+    store.getState().chats.chats = null;
+  }
+
+  return _.set<Partial<{ chats: TChatsState }>>({}, "chats", data);
+};
 
 export const selectChats = <T = TChatsState>() => <T>useSelector((state) => state.chats);
 

@@ -119,7 +119,7 @@ export class Block<P extends Record<string, any> = any> {
     return true;
   }
 
-  setProps = (nextPartialProps: Partial<P>) => {
+  setProps(nextPartialProps: Partial<P>, mergeCb?: (props: P, nextProps: Record<string, any>) => void) {
     if (!nextPartialProps) {
       return;
     }
@@ -132,7 +132,12 @@ export class Block<P extends Record<string, any> = any> {
       }
     });
 
-    _.merge(this.props, props);
+    if (mergeCb) {
+      mergeCb(this.props, props);
+    } else {
+      _.merge(this.props, props);
+    }
+
     Object.assign(this.refs, refs);
     Object.assign(this.executableProps, executableProps);
     Object.assign(this.childrenFromProps, children);
@@ -141,7 +146,7 @@ export class Block<P extends Record<string, any> = any> {
     if (!_.isEqual(prevProps, this.props)) {
       this.eventBus().emit(Block.EVENTS.FLOW_CDU, prevProps, this.props);
     }
-  };
+  }
 
   get element() {
     return this._element;

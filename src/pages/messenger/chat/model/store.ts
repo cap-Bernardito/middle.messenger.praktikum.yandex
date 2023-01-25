@@ -1,33 +1,17 @@
-import { TChat } from "pages/messenger/chats/types";
+import { chatTypes } from "pages/messenger/chat";
+import { chatsTypes } from "pages/messenger/chats";
 
 export type TChatState = {
-  chatData: TNullable<TChat>;
+  chatData: TNullable<chatsTypes.TChat>;
   users: number;
   loading: boolean;
   error: TNullable<string>;
 };
 
-export type TDialogMessage = {
-  id: "number";
-  chat_id: "number";
-  time: "string";
-  type: "string";
-  user_id: "string";
-  content: "string";
-  file?: {
-    id: "number";
-    user_id: "number";
-    path: "string";
-    filename: "string";
-    content_type: "string";
-    content_size: "number";
-    upload_date: "string";
-  };
-};
 export type TDialog = {
   error: TNullable<string>;
   loading: boolean;
-  data?: TNullable<TDialogMessage[]>;
+  data?: TNullable<chatTypes.TDialogMessage[]>;
 };
 
 export type TDialogsState = {

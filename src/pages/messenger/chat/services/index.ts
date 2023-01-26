@@ -1,3 +1,4 @@
+export * from "./clear-dIalogs";
 export * from "./close-ws";
 export * from "./get-ws";
 export * from "./load-messages";

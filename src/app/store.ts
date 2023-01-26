@@ -7,10 +7,10 @@ import { Store } from "shared/core/store";
 
 export const initialState = {
   appIsInited: false,
-  auth: authModel.userState,
-  chats: chatsModel.chatsState,
-  chat: chatModel.chatState,
-  dialogs: chatModel.dialogsState,
+  auth: { ...authModel.userState },
+  chats: { ...chatsModel.chatsState },
+  chat: { ...chatModel.chatState },
+  dialogs: { ...chatModel.dialogsState },
 };
 
 export const store = new Store<AppState>(initialState);

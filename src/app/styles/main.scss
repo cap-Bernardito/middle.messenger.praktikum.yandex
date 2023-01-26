@@ -173,6 +173,8 @@ $gaps: map.merge(
 
 body,
 .custom-scroll {
+  scrollbar-width: thin;
+
   &::-webkit-scrollbar {
     width: 0.3rem;
   }

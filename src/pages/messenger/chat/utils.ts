@@ -107,3 +107,7 @@ export const transformMessages = (
 
   return result.reverse();
 };
+
+export const scrollToBottom = (element: HTMLDivElement) => {
+  element.scrollTop = element.scrollHeight;
+};

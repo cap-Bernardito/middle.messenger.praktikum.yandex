@@ -12,12 +12,12 @@
   display: flex;
   align-content: flex-end;
 
-  // align-items: flex-end;
-
   &__inner {
     display: flex;
     flex-direction: column;
+
     width: 100%;
+    margin-top: auto;
     padding: $spacer * 4;
 
     > div:not(:last-child) {

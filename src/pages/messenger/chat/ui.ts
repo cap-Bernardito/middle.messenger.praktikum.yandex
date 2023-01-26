@@ -9,6 +9,8 @@ import { getFile } from "shared/api";
 import { Avatar, Message } from "shared/ui";
 import { connect } from "shared/utils/connect";
 
+import { scrollToBottom } from "./utils";
+
 const withChat = connect((state) => {
   return {
     chatUsers: state.chat.users,
@@ -57,6 +59,14 @@ const MessagesBodyWithDialogs = withDialog(
       super.setProps(nextPartialProps, (props, nextProps) => {
         Object.assign(props, nextProps);
       });
+    }
+
+    componentDidUpdate() {
+      setTimeout(() => {
+        scrollToBottom(this.getContent() as HTMLDivElement);
+      }, 10);
+
+      return true;
     }
   }
 );

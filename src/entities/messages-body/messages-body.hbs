@@ -2,7 +2,11 @@
   {{#if messages}}
     <div class="messages-body__inner">
       {{#each messages}}
-        {{{this}}}
+        {{{Message
+          type=type
+          text=text
+          date=date
+        }}}
       {{/each}}
     </div>
   {{else}}

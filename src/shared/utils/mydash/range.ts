@@ -46,6 +46,6 @@ export function range(start = 0, end?: number, step?: number, isRight = false) {
   return baseRange(start, end, step, isRight);
 }
 
-export function rangeRight(start: number, end: number, step: number) {
+export function rangeRight(start: number, end?: number, step?: number) {
   return range(start, end, step, true);
 }

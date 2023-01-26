@@ -1,6 +1,8 @@
 @use "../../app/styles/variables.scss" as *;
 
 .modal {
+  // @include debug-label;
+
   pointer-events: none;
 
   position: absolute;
@@ -42,6 +44,10 @@
 
     &-bottom {
       margin-top: $spacer * 5;
+    }
+
+    .user-card__text-title {
+      max-width: 100%;
     }
   }
 

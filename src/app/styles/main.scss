@@ -132,6 +132,22 @@ $gaps: map.merge(
   }
 }
 
+.mt-auto {
+  margin-top: auto !important;
+}
+
+.mb-auto {
+  margin-bottom: auto !important;
+}
+
+.mr-auto {
+  margin-right: auto !important;
+}
+
+.ml-auto {
+  margin-left: auto !important;
+}
+
 .sr-only {
   position: absolute !important;
 
@@ -157,6 +173,8 @@ $gaps: map.merge(
 
 body,
 .custom-scroll {
+  scrollbar-width: thin;
+
   &::-webkit-scrollbar {
     width: 0.3rem;
   }

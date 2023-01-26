@@ -2,6 +2,8 @@
 @use "sass:color";
 
 .btn {
+  // @include debug-label;
+
   cursor: pointer;
 
   padding: $spacer * 3 $spacer * 10;
@@ -73,6 +75,14 @@
 
       &-success {
         background: $success;
+      }
+
+      &-danger {
+        background: $danger;
+      }
+
+      &-fiolet {
+        background: #7595ff;
       }
     }
   }

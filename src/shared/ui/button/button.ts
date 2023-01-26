@@ -1,7 +1,5 @@
 import { Block } from "shared/core";
 
-import source from "./button.hbs";
-
 import "./button.scss";
 
 export type TButtonProps = TPropsWithEvents<{
@@ -9,16 +7,33 @@ export type TButtonProps = TPropsWithEvents<{
   title: string;
   htmlType?: "submit" | "reset" | "button";
   className?: string;
+  onClick?: (event: Event) => void;
 }>;
 
 export class Button extends Block<TButtonProps> {
   static cName = "Button";
 
-  constructor({ htmlType = "submit", ...props }: TButtonProps) {
-    super({ ...props, htmlType });
+  constructor({ htmlType = "submit", onClick, ...props }: TButtonProps) {
+    super({
+      ...props,
+      htmlType,
+      events: {
+        click: onClick,
+      },
+    });
   }
 
   render() {
-    return source;
+    // console.log(`%c Button block render id=${this.id}`, "background: green; color: white");
+
+    return `
+    <button class="btn {{#if className}}{{className}}{{/if}}"
+      {{#if htmlType}} type={{htmlType}}  {{/if}}
+      {{#if title}} title={{title}}  {{/if}}
+      data-id="${this.id}"
+    >
+      {{{value}}}
+    </button>
+    `;
   }
 }

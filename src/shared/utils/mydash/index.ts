@@ -1,7 +1,9 @@
-import { first } from "./first";
-import { identity } from "./identity";
-import { last } from "./last";
-import { merge } from "./merge";
-import { range } from "./range";
-
-export { first, identity, last, merge, range };
+export * from "./cloneDeep";
+export * from "./first";
+export * from "./identity";
+export * from "./isEqual";
+export * from "./last";
+export * from "./merge";
+export * from "./range";
+export * from "./set";
+export * from "./trim";

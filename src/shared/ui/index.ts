@@ -1,5 +1,6 @@
 export * from "./avatar";
 export * from "./button";
+export * from "./error";
 export * from "./icon";
 export * from "./icon_string";
 export * from "./input";

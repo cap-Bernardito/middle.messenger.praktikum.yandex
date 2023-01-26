@@ -1,4 +1,4 @@
-import { UserCard } from "entities";
+import { TUserCardProps, UserCard } from "entities";
 
 import { Block } from "shared/core";
 import { Search } from "shared/ui";
@@ -9,7 +9,7 @@ import "./user-list.scss";
 
 export type TUserListProps = {
   header_search: Search;
-  users: UserCard[];
+  users: TFnProps<TNullable<TUserCardProps[]>> | TNullable<UserCard[]>;
 };
 
 export class UserList extends Block<TUserListProps> {

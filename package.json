@@ -3,12 +3,12 @@
   "version": "1.0.0",
   "description": "Messenger pet-project",
   "scripts": {
-    "clear": "del-cli dist/**/* .parcel-cache",
+    "clear": "del-cli dist/**/* .parcel-cache \"node_modules/.cache/parcel-cache\"",
     "watch": "npm run clear && parcel src/index.html -p 3000 --no-cache --cache-dir \"node_modules/.cache/parcel-cache\"",
     "build": "npm run clear && parcel build src/index.html --no-cache --cache-dir \"node_modules/.cache/parcel-cache\"",
     "start": "npm run clear && npm run build && node ./server.js",
     "lint:prettier": "prettier --list-different .",
-    "lint:js": "eslint --cache --ext \".js,.jsx,.ts,.tsx\" .",
+    "lint:js": "eslint --color --cache --ext \".js,.jsx,.ts,.tsx\" .",
     "lint:scss": "stylelint --cache --cache-location \"node_modules/.cache/stylelint/.stylelintcache\" --ignore-path .gitignore \"{**/*,*}.{css,scss}\"",
     "lint": "npm-run-all -l -p \"lint:**\"",
     "test": "jest",
@@ -17,7 +17,7 @@
   },
   "alias": {
     "app": "./src/app",
-    "proccess": "./src/proccess",
+    "processes": "./src/processes",
     "pages": "./src/pages",
     "widgets": "./src/widgets",
     "features": "./src/features",
@@ -77,6 +77,7 @@
   "dependencies": {
     "@mdi/js": "7.1.96",
     "express": "4.18.2",
-    "normalize.css": "8.0.1"
+    "normalize.css": "8.0.1",
+    "plural-ru": "2.0.2"
   }
 }

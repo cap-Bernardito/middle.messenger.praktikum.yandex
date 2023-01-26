@@ -10,7 +10,7 @@ describe("Should work with isEqual", () => {
     [true, { a: [1, { c: 4 }] }, { a: [1, { c: 4 }] }],
     [true, { foo: [1, 2] }, { foo: { 0: 1, 1: 2 } }],
     [true, { foo: NaN }, { foo: NaN }],
-    [true, { foo: () => true }, { foo: () => true }],
+    [false, { foo: () => true }, { foo: () => true }],
     [false, { error: null }, { error: "error" }],
     [false, { a: 1 }, { a: 2 }],
     [false, { a: [1, 2] }, { a: [1, 2, 3] }],

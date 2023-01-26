@@ -35,10 +35,6 @@ export const isEqual = (a: PlainArrayOrObject | undefined, b: PlainArrayOrObject
         return true;
       }
 
-      if (typeof aValue === "function" && typeof bValue === "function") {
-        return aValue.toString() === bValue.toString();
-      }
-
       if (isArrayOrObject(aValue) && isArrayOrObject(bValue)) {
         if (!isEqual(aValue, bValue)) {
           return false;

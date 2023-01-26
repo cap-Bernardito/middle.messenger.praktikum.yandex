@@ -4,7 +4,32 @@ import { chatTypes } from "pages/messenger/chat";
 
 import { formattedDate } from "shared/utils";
 
-export const transformMessage = (data: chatTypes.TDialogMessageDTO, user: authTypes.User): any => {
+export const transformMessage = (
+  data: chatTypes.TDialogMessageDTO | { type: "date"; time: string },
+  user: authTypes.User
+): any => {
+  if (data.type === "date") {
+    const monthNames = [
+      "Января",
+      "Февраля",
+      "Марта",
+      "Апреля",
+      "Мая",
+      "Июня",
+      "Июля",
+      "Августа",
+      "Сентября",
+      "Октября",
+      "Ноября",
+      "Декабря",
+    ];
+
+    return {
+      type: "date",
+      date: `${new Date(data.time).getDate()} ${monthNames[new Date(data.time).getMonth()]}`,
+    };
+  }
+
   return {
     type: Number(data.user_id) === Number(user.id) ? "out" : "in",
     text: data.content,
@@ -36,5 +61,49 @@ export const transformMessages = (
   dataArray: chatTypes.TDialogMessageDTO[],
   user: authTypes.User
 ): chatTypes.TDialogMessage[] => {
-  return dataArray.map((data) => transformMessage(data, user));
+  const result: chatTypes.TDialogMessage[] = [];
+
+  let date;
+  let prevTime;
+
+  for (const message of dataArray) {
+    const messageDate = new Date(message.time).getDate();
+
+    if (!date) {
+      date = messageDate;
+      prevTime = message.time;
+    }
+
+    if (date !== messageDate) {
+      result.push(
+        transformMessage(
+          {
+            type: "date",
+            time: prevTime || message.time,
+          },
+          user
+        )
+      );
+
+      date = messageDate;
+      prevTime = message.time;
+    }
+
+    result.push(transformMessage(message, user));
+  }
+
+  if (result.length > 0) {
+    result.push(
+      transformMessage(
+        {
+          type: "date",
+          // @ts-ignore
+          time: prevTime,
+        },
+        user
+      )
+    );
+  }
+
+  return result.reverse();
 };

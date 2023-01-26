@@ -49,6 +49,7 @@
 
   &__body {
     position: relative;
+    overflow: hidden;
     flex: 1 1 100px;
 
     &::before {

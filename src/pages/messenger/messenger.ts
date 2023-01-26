@@ -2,7 +2,7 @@ import { authModel } from "processes/auth";
 
 import { store } from "app/store";
 
-import { chatServices, chatUi } from "pages/messenger/chat";
+import { chatModel, chatServices, chatUi } from "pages/messenger/chat";
 import { chatsServices, chatsTypes, chatsUi } from "pages/messenger/chats";
 
 import { chatMenuUi } from "widgets/chat-menu";
@@ -73,8 +73,31 @@ export class MessengerPage extends Block {
           ref: "formRef",
           onSubmit: (event) => {
             const { isFormValid, formData } = this.getForm().form.check(event, Object.values(this.getForm().fields));
+            const { chatData } = chatModel.selectChat();
 
-            console.log(`Form is${isFormValid ? "" : " not"} valid. FormData: `, formData);
+            if (isFormValid && chatData) {
+              store.dispatch(chatServices.sendMessage, {
+                chatId: chatData.id,
+                message: formData.message,
+              });
+
+              (this.getForm().fields.messageInput.refs.inputRef.getContent() as HTMLTextAreaElement).value = "";
+            }
+          },
+          onKeydown: (event) => {
+            if (event.key === "Enter") {
+              const { isFormValid, formData } = this.getForm().form.check(event, Object.values(this.getForm().fields));
+              const { chatData } = chatModel.selectChat();
+
+              if (isFormValid && chatData) {
+                store.dispatch(chatServices.sendMessage, {
+                  chatId: chatData.id,
+                  message: formData.message,
+                });
+
+                (this.getForm().fields.messageInput.refs.inputRef.getContent() as HTMLTextAreaElement).value = "";
+              }
+            }
           },
           file: `<a href="#" title="Приложить файл" class="link-icon link-icon-clip">${renderIcon({
             value: mdiPaperclip,

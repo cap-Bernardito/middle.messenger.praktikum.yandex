@@ -1,11 +1,6 @@
+import { chatTypes } from "pages/messenger/chat";
+
 import { EventBus } from "shared/core/event-bus";
-
-// https://ya-praktikum.tech/api/v2/openapi/ws
-
-type TWDataText = {
-  type: "ping" | "pong" | "get old" | "message" | "file" | "sticker";
-  content?: string;
-};
 
 export default class WSTransport extends EventBus {
   static EVENTS = {
@@ -52,7 +47,7 @@ export default class WSTransport extends EventBus {
     this.emit(WSTransport.EVENTS.CONNECTING);
   }
 
-  sendText(data: TWDataText) {
+  sendText(data: chatTypes.TWDataText) {
     this._send(JSON.stringify(data));
   }
 

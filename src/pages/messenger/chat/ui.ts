@@ -96,13 +96,3 @@ export const MessagesWithChat = withChat(
     }
   }
 );
-// const { chatData } = chatModel.selectChat();
-
-// if (!chatData) {
-//   return null;
-
-// }
-
-// const messages = chatModel.selectDialog(chatData.id)
-
-// console.log(messages);

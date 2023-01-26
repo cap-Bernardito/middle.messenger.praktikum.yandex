@@ -4,15 +4,15 @@ import WSTransport from "shared/utils/ws-transport";
 
 import { getWS } from "./get-ws";
 
-type loadMessagesPayload = {
+type sendMessagePayload = {
   chatId: TChat["id"];
-  offset: number; // Число, которое показывает с какого сообщения нужно отдать ещё 20
+  message: string;
 };
 
-export const loadMessages = async (
+export const sendMessage = async (
   dispatch: Dispatch<AppState>,
   _state: AppState,
-  { chatId, offset = 0 }: loadMessagesPayload
+  { chatId, message }: sendMessagePayload
 ) => {
   if (!chatId) {
     return;
@@ -25,7 +25,7 @@ export const loadMessages = async (
   }
 
   socket.sendText({
-    type: "get old",
-    content: String(offset),
+    type: "message",
+    content: message,
   });
 };

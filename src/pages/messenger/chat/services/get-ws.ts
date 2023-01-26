@@ -54,9 +54,21 @@ export const getWS = async (chatId: chatsTypes.TChat["id"] | "all") => {
       store.dispatch(chatModel.setDialog(chatId, { loading: false, error: null }));
     })
     .on(WSTransport.EVENTS.GOT_MESSAGE, (messages) => {
+      let normalizedMessages;
+
+      if (Array.isArray(messages)) {
+        normalizedMessages = chatUtils.transformMessages(messages, user);
+      } else {
+        if (messages.type === "user connected") {
+          return;
+        }
+
+        normalizedMessages = [chatUtils.transformMessage(messages, user)];
+      }
+
       store.dispatch(
         chatModel.setDialog(chatId, {
-          data: chatUtils.transformMessages(messages, user) as chatTypes.TDialogMessage[],
+          data: normalizedMessages as chatTypes.TDialogMessage[],
           loading: false,
           error: null,
         })

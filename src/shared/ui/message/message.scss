@@ -105,6 +105,7 @@
 
   &_out {
     @include media-bp-up(desktop) {
+      margin-right: auto;
       margin-left: 0;
       background: $primary;
       border-radius: $border-radius-lg $border-radius-lg $border-radius-lg 0;

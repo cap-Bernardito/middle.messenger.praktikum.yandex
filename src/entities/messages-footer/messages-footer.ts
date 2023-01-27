@@ -14,6 +14,7 @@ export type TMessagesFooterProps = TPropsWithEvents<
     text: Textarea;
     button: Button;
     onSubmit?: (event: Event) => void;
+    onKeydown?: (event: KeyboardEvent) => void;
   }>
 >;
 
@@ -24,11 +25,13 @@ export class MessagesFooter extends Block<TMessagesFooterProps> {
     return block instanceof MessagesFooter;
   }
 
-  constructor({ onSubmit, ...props }: TMessagesFooterProps) {
+  constructor({ onSubmit, onKeydown, ...props }: TMessagesFooterProps) {
     super({
       ...props,
       events: {
         submit: onSubmit,
+        // @ts-ignore
+        keydown: onKeydown,
       },
     });
   }

@@ -1,20 +1,34 @@
-import { Form } from "entities";
+import { authModel, authServices } from "processes/auth";
 
-import { Block } from "shared/core";
+import { store } from "app/store";
+
+import { FormWithAuthStatus } from "widgets/form-with-auth";
+
+import { Form, TFormProps } from "entities";
+
+import { Block, Link } from "shared/core";
 import { Button, Input, TInputProps } from "shared/ui";
+import { ROUTES } from "shared/utils/constants";
 
-import source from "./login.hbs";
+type LoginPageProps = {
+  body: Block | string;
+};
 
-export class LoginPage extends Block {
+class LoginPage extends Block {
   static cName = "LoginPage";
 
-  constructor() {
-    super({
-      body: new Form({
+  constructor(props: LoginPageProps) {
+    super(props);
+
+    this.setProps({
+      ...props,
+      body: new FormWithAuthStatus({
         onSubmit: (event) => {
           const { isFormValid, formData } = this.getForm().form.check(event, Object.values(this.getForm().fields));
 
-          console.log(`Form is${isFormValid ? "" : " not"} valid. FormData: `, formData);
+          if (isFormValid) {
+            store.dispatch(authServices.login, formData);
+          }
         },
         title: "Вход",
         fields: (
@@ -47,15 +61,23 @@ export class LoginPage extends Block {
           ] as TInputProps[]
         ).map((inputProps) => new Input(inputProps)),
         button: new Button({ value: "Войти", title: "Войти", className: "btn-primary btn-block" }),
-        meta: '<a href="/register">Зарегистрироваться</a>',
+        meta: new Link({ to: ROUTES.register.path, value: "Зарегистрироваться", title: "Зарегистрироваться" }),
         decorated: true,
-      }),
+      } as TFormProps),
     });
   }
 
   getForm = () => Form.getFormParts(this.refs.formRef);
 
   render() {
-    return source;
+    return `
+  {{#LayoutCentered}}
+    {{{body}}}
+  {{/LayoutCentered}}
+    `;
   }
 }
+
+const LoginPageWithStore = authModel.withAuth(LoginPage);
+
+export { LoginPageWithStore as LoginPage };

@@ -1,7 +1,7 @@
 import Handlebars from "handlebars";
 import { nanoid } from "nanoid";
 
-import { _ } from "shared/utils/utils";
+import { _ } from "shared/utils";
 
 import { EventBus } from ".";
 
@@ -16,28 +16,27 @@ export class Block<P extends Record<string, any> = any> {
 
   public id = nanoid(8);
   public refs: TRefs = {};
-  public readonly props: P;
-  public readonly childrenFromProps: { [propName: string]: Block } = {};
+  public props: P;
+  public readonly executableProps: { [propName: string]: any };
+  public readonly extractedExecutableProps: { [propName: string]: any } = {};
+  public childrenFromProps: { [propName: string]: Block } = {};
 
   protected _element = this._createDocumentElement("div");
   protected _childrenForReplace: { [id: string]: Block } = {};
 
   eventBus: () => EventBus<EventBusEvents>;
 
-  protected state: any = {};
-
   public constructor(propsAndChildren?: P) {
     const eventBus = new EventBus<EventBusEvents>();
 
-    const { children, props, refs } = this._getChildren(propsAndChildren);
+    const { children, props, refs, executableProps } = this._getChildren(propsAndChildren);
 
-    this.getStateFromProps(props);
-
-    this.childrenFromProps = children;
     this.refs = refs;
 
-    this.props = this._makePropsProxy(props || ({} as P));
-    this.state = this._makePropsProxy(this.state);
+    // @ts-ignore
+    this.props = props || ({} as P);
+    this.childrenFromProps = this._makePropsProxy(children);
+    this.executableProps = executableProps;
 
     this.eventBus = () => eventBus;
 
@@ -50,6 +49,7 @@ export class Block<P extends Record<string, any> = any> {
     const children: { [key: string]: any } = {};
     const props: { [key: string]: any } = {};
     const refs: typeof this.refs = {};
+    const executableProps: { [key: string]: any } = {};
 
     Object.entries(propsAndChildren).forEach(([key, value]) => {
       if (Array.isArray(value)) {
@@ -76,11 +76,15 @@ export class Block<P extends Record<string, any> = any> {
           }
         } else {
           props[key] = value;
+
+          if (typeof value === "function" && value.name === "execProps") {
+            executableProps[key] = value;
+          }
         }
       }
     });
 
-    return { children, props, refs };
+    return { children, props, refs, executableProps };
   }
 
   _registerEvents(eventBus: EventBus<EventBusEvents>) {
@@ -89,17 +93,12 @@ export class Block<P extends Record<string, any> = any> {
     eventBus.on(Block.EVENTS.FLOW_RENDER, this._render.bind(this));
   }
 
-  protected getStateFromProps(props?: any): void;
-  protected getStateFromProps() {
-    this.state = {};
-  }
-
   _componentDidMount(props: P) {
     this.componentDidMount(props);
   }
 
   // eslint-disable-next-line @typescript-eslint/no-empty-function, @typescript-eslint/no-unused-vars
-  componentDidMount(props: P) {}
+  componentDidMount(_props: P) {}
 
   dispatchComponentDidMount(): void {
     this.eventBus().emit(Block.EVENTS.FLOW_CDM);
@@ -116,53 +115,38 @@ export class Block<P extends Record<string, any> = any> {
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  componentDidUpdate(oldProps: P, newProps: P) {
-    const oldPr = Object.entries(oldProps);
-    const newPr = Object.entries(newProps);
-
-    if (oldPr.length !== newPr.length) {
-      return true;
-    }
-
-    // TODO: улучшить проверку в глубину
-    for (const [key, value] of oldPr) {
-      if (newProps[key] !== value) {
-        return true;
-      }
-    }
-
-    return false;
+  componentDidUpdate(_oldProps: P, _newProps: P) {
+    return true;
   }
 
-  setPropsWithChildren = (nextProps: P) => {
-    if (!nextProps) {
+  setProps(nextPartialProps: Partial<P>, mergeCb?: (props: P, nextProps: Record<string, any>) => void) {
+    if (!nextPartialProps) {
       return;
     }
 
-    const { children, props, refs } = this._getChildren(nextProps);
+    const { children, props, refs, executableProps } = this._getChildren(nextPartialProps);
 
-    Object.assign(this.childrenFromProps, children);
+    const prevProps = _.cloneDeep(this.props, (item) => {
+      if (item instanceof Block) {
+        return item;
+      }
+    });
+
+    if (mergeCb) {
+      mergeCb(this.props, props);
+    } else {
+      _.merge(this.props, props);
+    }
+
     Object.assign(this.refs, refs);
-    Object.assign(this.props, props);
+    Object.assign(this.executableProps, executableProps);
+    Object.assign(this.childrenFromProps, children);
 
-    this._render();
-  };
-
-  setProps = (nextProps: P) => {
-    if (!nextProps) {
-      return;
+    // @ts-ignore
+    if (!_.isEqual(prevProps, this.props)) {
+      this.eventBus().emit(Block.EVENTS.FLOW_CDU, prevProps, this.props);
     }
-
-    Object.assign(this.props, nextProps);
-  };
-
-  setState = (nextState: any) => {
-    if (!nextState) {
-      return;
-    }
-
-    Object.assign(this.state, nextState);
-  };
+  }
 
   get element() {
     return this._element;
@@ -210,12 +194,17 @@ export class Block<P extends Record<string, any> = any> {
           throw new Error("Нет прав");
         }
 
-        // TODO: улучшить клонирование
-        const oldProps = { ...target };
+        if (!target[prop]) {
+          target[prop] = value;
 
-        Reflect.set(target, prop, value);
+          this.eventBus().emit(Block.EVENTS.FLOW_CDU);
 
-        this.eventBus().emit(Block.EVENTS.FLOW_CDU, oldProps, target);
+          return true;
+        }
+
+        target[prop] = value;
+
+        this.eventBus().emit(Block.EVENTS.FLOW_CDU);
 
         return true;
       },
@@ -265,7 +254,13 @@ export class Block<P extends Record<string, any> = any> {
 
     const stubs: Record<string, string | string[]> = {};
 
-    for (const [key, value] of Object.entries(this.childrenFromProps)) {
+    for (const [key, value] of Object.entries(this.executableProps)) {
+      this.extractedExecutableProps[key] = value.call(this);
+    }
+
+    const requiringProcessingProps = Object.assign({}, this.extractedExecutableProps, this.childrenFromProps);
+
+    for (const [key, value] of Object.entries(requiringProcessingProps)) {
       if (Array.isArray(value)) {
         stubs[key] = [];
 
@@ -284,7 +279,7 @@ export class Block<P extends Record<string, any> = any> {
     }
 
     fragment.innerHTML = template({
-      ..._.merge({ ...this.state }, { ...this.props }, stubs),
+      ..._.merge({}, this.props, stubs),
       children: this._childrenForReplace,
       refs: this.refs,
     });
@@ -318,13 +313,5 @@ export class Block<P extends Record<string, any> = any> {
     }
 
     return newElement;
-  }
-
-  show() {
-    this.getContent().style.display = "block";
-  }
-
-  hide() {
-    this.getContent().style.display = "none";
   }
 }

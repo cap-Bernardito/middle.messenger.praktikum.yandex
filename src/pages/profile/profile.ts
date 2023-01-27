@@ -1,53 +1,77 @@
+import { authModel, authServices } from "processes/auth";
+
+import { store } from "app/store";
+
+import { MyAvatar } from "widgets/my-avatar";
+
 import { templateUserInfo, TUserInfoProps } from "entities";
 
-import { Block } from "shared/core";
-import { Avatar, ListV1, ListV1Item } from "shared/ui";
+import { Block, Link } from "shared/core";
+import { Button, ListV1, ListV1Item } from "shared/ui";
+import { ROUTES } from "shared/utils/constants";
 
 export class ProfilePage extends Block<TUserInfoProps> {
   static cName = "ProfilePage";
 
   constructor() {
+    const { user } = authModel.selectUser();
+
+    if (!user) {
+      return;
+    }
+
     super({
-      avatar: new Avatar(),
-      title: "Вася",
+      avatar: new MyAvatar({}),
+      title: user.fullName,
       info: new ListV1({
         items: [
           {
             name: "Почта",
-            value: "pochta@yandex.ru",
+            value: user.email,
           },
           {
             name: "Логин",
-            value: "vasya_vasilek",
+            value: user.login,
           },
           {
             name: "Имя",
-            value: "Вася",
+            value: user.firstName,
           },
           {
             name: "Фамилия",
-            value: "Василёк",
+            value: user.secondName,
           },
           {
             name: "Имя в чате",
-            value: "Вася Василёк",
+            value: user.displayName,
           },
           {
             name: "Телефон",
-            value: "+7 (909) 967 30 30",
+            value: user.phone,
           },
         ].map((listItem) => new ListV1Item(listItem)),
       }),
       controls: new ListV1({
         items: [
           {
-            name: '<a href="/profile_edit_info">Изменить данные</a>',
+            name: new Link({ to: ROUTES.profileEditInfo.path, value: "Изменить данные", title: "Изменить данные" }),
           },
           {
-            name: '<a href="/profile_edit_password">Изменить пароль</a>',
+            name: new Link({ to: ROUTES.profileEditPassword.path, value: "Изменить пароль", title: "Изменить пароль" }),
           },
           {
-            name: '<a href="#" class="text-danger">Выйти</a>',
+            name: new Link({ to: ROUTES.profileEditAvatar.path, value: "Изменить аватар", title: "Изменить аватар" }),
+          },
+          {
+            name: new Button({
+              value: "Выйти",
+              title: "Выйти",
+              className: "text-danger btn-link",
+              htmlType: "button",
+              onClick: () => {
+                store.dispatch(authServices.logout);
+              },
+            }),
           },
         ].map((listItem) => new ListV1Item(listItem)),
       }),

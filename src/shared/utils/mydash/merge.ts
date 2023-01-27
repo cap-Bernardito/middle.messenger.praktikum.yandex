@@ -1,6 +1,7 @@
-export function merge(...args: Record<string, any>[]) {
-  const dst: Record<string, any> = {};
-  let src: Record<string, any>;
+import { isPlainObject } from "../utils";
+
+export function merge(dst: PlainObject, ...args: PlainObject[]) {
+  let src: PlainObject;
   let p: string;
 
   while (args.length > 0) {
@@ -8,10 +9,13 @@ export function merge(...args: Record<string, any>[]) {
 
     for (p in src) {
       if (Object.prototype.hasOwnProperty.call(src, p)) {
-        if (toString.call(src[p]) == "[object Object]") {
-          dst[p] = merge(dst[p] || {}, src[p]);
-        } else if (Array.isArray(src[p])) {
-          dst[p] = [...(dst[p] || []), ...src[p]];
+        const srcValue = src[p];
+        const distValue = dst[p];
+
+        if (isPlainObject(srcValue) && (isPlainObject(distValue) || typeof distValue === "undefined")) {
+          dst[p] = merge(distValue || {}, srcValue);
+        } else if (Array.isArray(srcValue) && (Array.isArray(distValue) || typeof distValue === "undefined")) {
+          dst[p] = [...(distValue || []), ...srcValue];
         } else {
           dst[p] = src[p];
         }

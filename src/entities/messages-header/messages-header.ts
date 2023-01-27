@@ -1,5 +1,3 @@
-import { UserCard } from "entities";
-
 import { Block } from "shared/core";
 
 import source from "./messages-header.hbs";
@@ -7,7 +5,7 @@ import source from "./messages-header.hbs";
 import "./messages-header.scss";
 
 export type TMessagesHeaderProps = {
-  left: UserCard | string;
+  left: Block | string;
   right: Block | string;
 };
 

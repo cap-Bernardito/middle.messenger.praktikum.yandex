@@ -3,7 +3,7 @@ import { Block } from "shared/core";
 import source from "./list-v1-item.hbs";
 
 export type TListV1ItemProps = {
-  name: string;
+  name: Block | string;
   value?: string;
 };
 

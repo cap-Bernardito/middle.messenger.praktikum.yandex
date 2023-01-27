@@ -11,6 +11,7 @@ type TInputFieldProps = TPropsWithEvents<{
   value?: string;
   placeholder?: string;
   classNameInput?: string;
+  accept?: string;
   required?: boolean;
   disabled?: boolean;
 }>;

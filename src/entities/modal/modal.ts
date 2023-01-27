@@ -1,7 +1,7 @@
 import { Overlay } from "entities/overlay";
 
 import { mdiArrowLeft, mdiClose } from "@mdi/js";
-import { Block } from "shared/core";
+import { Block, Router, router } from "shared/core";
 import { Button, renderIcon } from "shared/ui";
 
 import source from "./modal.hbs";
@@ -49,9 +49,7 @@ export class Modal extends Block<TModalProps & { btnClose: Button; backButton: B
     this.overlay.on(this);
 
     runButton.setProps({
-      ...runButton.props,
       events: {
-        ...runButton.props.events,
         click: () => this.show(),
       },
     });
@@ -59,17 +57,13 @@ export class Modal extends Block<TModalProps & { btnClose: Button; backButton: B
     const { btnClose, backButton } = this.childrenFromProps;
 
     btnClose.setProps({
-      ...btnClose.props,
       events: {
-        ...btnClose.props.events,
         click: () => this.hide(),
       },
     });
 
     backButton.setProps({
-      ...backButton.props,
       events: {
-        ...backButton.props.events,
         click: () => overlay.showPrevWidget(),
       },
     });
@@ -89,6 +83,8 @@ export class Modal extends Block<TModalProps & { btnClose: Button; backButton: B
     this.getContent().classList.remove(this.activeClass);
     this.isVisible = false;
     this.overlay.notify(Overlay.commands.hide, this);
+
+    router.emit(Router.EVENTS.WIDGET_TOGGLE);
   }
 
   render() {

@@ -18,8 +18,13 @@
   }
 
   &__menu {
+    display: flex;
     flex: 1 1 auto;
+    flex-direction: column;
+
+    height: 100%;
     padding: $padding;
+
     border-bottom: 1px solid $gray-900;
   }
 

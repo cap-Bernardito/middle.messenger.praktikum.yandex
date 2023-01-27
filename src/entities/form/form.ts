@@ -11,9 +11,11 @@ export type TFormProps = TPropsWithEvents<
     fields: Input[];
     button: Button;
     title?: string;
-    meta?: string;
+    meta?: Block | string;
     className?: string;
     decorated?: boolean;
+    formError?: TFnProps<TNullable<string>>;
+    loading?: TFnProps<boolean>;
     onSubmit?: (event: Event) => void;
   }>
 >;
@@ -31,7 +33,10 @@ export class Form extends Block<TFormProps> {
     return block instanceof Input || block instanceof Textarea;
   }
 
-  static getFormParts = (form: Block | undefined, cb?: typeof Form.isForm) => {
+  static getFormParts = (
+    form: Block | undefined,
+    cb?: typeof Form.isForm
+  ): { form: Form; fields: Record<string, TFormFields>; error: Error } => {
     if (form && cache.has(form)) {
       return cache.get(form);
     }
@@ -51,6 +56,7 @@ export class Form extends Block<TFormProps> {
     cache.set(form, {
       form: form,
       fields: fields,
+      error: form.refs.formErrorRef,
     });
 
     return cache.get(form);

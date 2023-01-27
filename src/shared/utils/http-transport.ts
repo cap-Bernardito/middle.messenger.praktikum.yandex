@@ -1,3 +1,5 @@
+import { isArrayOrObject, isPlainObject } from "./utils";
+
 const enum METHODS {
   GET = "GET",
   POST = "POST",
@@ -7,7 +9,7 @@ const enum METHODS {
 
 type TOptions = {
   method: METHODS;
-  data?: Record<string, string>;
+  data?: Record<string, any>;
   body?: Document | XMLHttpRequestBodyInit | null;
   headers?: Record<string, string>;
   responseType?: XMLHttpRequestResponseType;
@@ -15,15 +17,15 @@ type TOptions = {
   withCredentials?: boolean;
 };
 
-type TResponse<T> = {
+export type TResponse<T> = {
   readonly status: number;
   readonly statusText: string;
   readonly responseType: XMLHttpRequestResponseType;
   readonly response: T;
 };
 
-type TOptionsGet = Omit<TOptions, "method" | "body">;
-type TOptionsNotGet = Omit<TOptions, "method" | "data">;
+export type TOptionsGet = Omit<TOptions, "method" | "body">;
+export type TOptionsNotGet = Omit<TOptions, "method">;
 type TRequest = <T>(url: string, options: TOptions) => Promise<TResponse<T>>;
 type TMethod<O> = <T>(url: string, options?: O) => Promise<TResponse<T>>;
 
@@ -76,7 +78,9 @@ export class HTTPTransport {
       xhr.onerror = reject;
       xhr.ontimeout = reject;
 
-      if (isGet || !body) {
+      if (!isGet && data) {
+        xhr.send(JSON.stringify(data));
+      } else if (isGet || !body) {
         xhr.send();
       } else {
         xhr.send(body);
@@ -85,8 +89,24 @@ export class HTTPTransport {
   };
 }
 
-function queryStringify(data: Record<string, string>) {
-  const queryParams = Object.entries(data).map((key, value) => `${key}=${value}`);
+const getPairs = (objLike: PlainArrayOrObject, path = ""): string[] => {
+  return Object.entries(objLike).map(([key, value]) => {
+    const deepPath = path ? `${path}[${key}]` : key;
 
-  return queryParams ? `?${queryParams.join("&")}` : "";
+    if (isArrayOrObject(value)) {
+      return getPairs(value, deepPath).join("&");
+    }
+
+    return `${deepPath}=${encodeURIComponent(String(value))}`;
+  });
+};
+
+export function queryStringify(data: PlainObject): string | never {
+  if (!isPlainObject(data)) {
+    throw new Error("Input must be an object");
+  }
+
+  const pairs = getPairs(data);
+
+  return pairs.length ? `?${pairs.join("&")}` : "";
 }

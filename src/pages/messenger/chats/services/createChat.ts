@@ -1,4 +1,4 @@
-import { chatModel } from "pages/messenger/chat";
+import { chatModel, chatServices } from "pages/messenger/chat";
 import { chatsAPI, chatsModel, chatsServices, chatsTypes } from "pages/messenger/chats";
 
 import { Overlay } from "entities";
@@ -13,10 +13,10 @@ export const createChat = async (
 ) => {
   dispatch(chatModel.setChat({ loading: true }));
 
-  const response = await chatsAPI.createChat(action);
+  const responseChat = await chatsAPI.createChat(action);
 
-  if (apiHasError(response)) {
-    dispatch(chatModel.setChat({ loading: false, error: response.reason }));
+  if (apiHasError(responseChat)) {
+    dispatch(chatModel.setChat({ loading: false, error: responseChat.reason }));
 
     return;
   }
@@ -36,7 +36,9 @@ export const createChat = async (
 
   dispatch(chatModel.setChat({ loading: false, error: null }));
 
-  dispatch(chatsServices.selectChat, response?.id);
+  dispatch(chatsServices.selectChat, responseChat?.id);
+
+  dispatch(chatServices.loadMessages, { chatId: responseChat?.id });
 
   const overlay = new Overlay();
 

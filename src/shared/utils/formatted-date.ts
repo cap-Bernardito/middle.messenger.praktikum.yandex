@@ -10,7 +10,7 @@ const getFormattedDate = (date: Date): string => {
   return `${plural(diffDays, "%d день", "%d дня", "%d дней")} назад, ${getFormattedTime(date)}`;
 };
 
-const isToday = (date: Date): boolean => getDiffDays(date) === 0;
+const isToday = (date: Date): boolean => getDiffDays(date) <= 0;
 const isYesterday = (date: Date): boolean => getDiffDays(date) === 1;
 
 export const formattedDate = (date: Date) => {
@@ -21,6 +21,8 @@ export const formattedDate = (date: Date) => {
   if (isYesterday(date)) {
     return `Вчера, ${getFormattedTime(date)}`;
   }
+
+  console.log(getFormattedDate(date));
 
   return getFormattedDate(date);
 };

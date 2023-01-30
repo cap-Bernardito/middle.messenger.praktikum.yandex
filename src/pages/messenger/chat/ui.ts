@@ -64,7 +64,7 @@ const MessagesBodyWithDialogs = withDialog(
     componentDidUpdate() {
       setTimeout(() => {
         scrollToBottom(this.getContent() as HTMLDivElement);
-      }, 10);
+      });
 
       return true;
     }

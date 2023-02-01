@@ -22,7 +22,5 @@ export const formattedDate = (date: Date) => {
     return `Вчера, ${getFormattedTime(date)}`;
   }
 
-  console.log(getFormattedDate(date));
-
   return getFormattedDate(date);
 };

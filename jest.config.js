@@ -1,4 +1,8 @@
 /** @type {import('ts-jest').JestConfigWithTsJest} */
 module.exports = {
-  preset: "ts-jest",
+  testEnvironment: "jsdom",
+  setupFiles: ["<rootDir>/__tests__/setupEnv.ts"],
+  moduleNameMapper: {
+    "^shared(.*)$": "<rootDir>/src/shared$1",
+  },
 };

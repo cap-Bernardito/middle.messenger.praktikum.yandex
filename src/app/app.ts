@@ -2,7 +2,7 @@
 import "./registerComponents";
 
 import { renderDOM } from "shared/core";
-import { SplashScreen } from "entities";
+import { SplashScreen } from "pages/splash-screen/splash-screen";
 
 import { store } from "./store";
 

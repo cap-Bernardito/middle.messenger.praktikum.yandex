@@ -1,4 +1,4 @@
-import { authModel } from "processes/auth";
+import { userState } from "processes/auth/model/store";
 
 import { chatModel } from "pages/messenger/chat";
 import { chatsModel } from "pages/messenger/chats";
@@ -7,7 +7,7 @@ import { Store } from "shared/core/store";
 
 export const initialState = {
   appIsInited: false,
-  auth: { ...authModel.userState },
+  auth: { ...userState },
   chats: { ...chatsModel.chatsState },
   chat: { ...chatModel.chatState },
   dialogs: { ...chatModel.dialogsState },

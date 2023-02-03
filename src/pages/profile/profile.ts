@@ -14,6 +14,8 @@ export class ProfilePage extends Block<TUserInfoProps> {
   static cName = "ProfilePage";
 
   constructor() {
+    super();
+
     const { user } = authModel.selectUser();
 
     if (!user) {
@@ -68,8 +70,9 @@ export class ProfilePage extends Block<TUserInfoProps> {
               title: "Выйти",
               className: "text-danger btn-link",
               htmlType: "button",
-              onClick: () => {
-                store.dispatch(authServices.logout);
+              dataTestId: "logout-btn",
+              onClick: async () => {
+                await store.dispatch(authServices.logout);
               },
             }),
           },

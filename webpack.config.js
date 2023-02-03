@@ -92,7 +92,9 @@ module.exports = {
     ],
   },
   plugins: [new CleanWebpackPlugin()].concat(
-    new Dotenv(),
+    new Dotenv({
+      path: isProd ? ".env.production" : ".env.development",
+    }),
     new HtmlWebpackPlugin({
       template: "./index.html",
     }),

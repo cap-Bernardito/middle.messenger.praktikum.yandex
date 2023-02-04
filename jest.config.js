@@ -7,7 +7,7 @@ module.exports = {
     "\\.[jt]sx?$": "babel-jest",
     "\\.hbs$": "<rootDir>/node_modules/jest-text-transformer",
   },
-  testPathIgnorePatterns: ["<rootDir>/node_modules/", "<rootDir>/src/__tests__"],
+  testPathIgnorePatterns: ["<rootDir>/node_modules/", "<rootDir>/src/__tests__", "fixtures"],
   moduleNameMapper: {
     "\\.(scss)$": "identity-obj-proxy",
     "^app(.*)$": "<rootDir>/src/app$1",

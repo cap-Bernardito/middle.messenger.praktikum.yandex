@@ -5,7 +5,7 @@ export class Router extends EventBus {
     WIDGET_TOGGLE: "widget:toggle",
   } as const;
 
-  private static _instance: Router;
+  private static _instance: TNullable<Router>;
   private _routes: Route[] = [];
   private _history = window.history;
   private _currentRoute: Route | null = null;
@@ -19,6 +19,10 @@ export class Router extends EventBus {
     }
 
     Router._instance = this;
+  }
+
+  destroy() {
+    Router._instance = null;
   }
 
   start() {

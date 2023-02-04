@@ -10,8 +10,10 @@
     "lint:js": "eslint --color --cache --ext \".js,.jsx,.ts,.tsx\" .",
     "lint:scss": "stylelint --cache --cache-location \"node_modules/.cache/stylelint/.stylelintcache\" --ignore-path .gitignore \"{**/*,*}.{css,scss}\"",
     "lint": "npm-run-all -l -p \"lint:**\"",
-    "test": "jest",
+    "test:only": "jest",
     "test:watch": "jest --watch",
+    "test:coverage": "npm run test:only -- --collectCoverageFrom=\"src/**/*.ts\" --coverage",
+    "test": "npm run test:coverage",
     "prepare": "husky install"
   },
   "repository": {

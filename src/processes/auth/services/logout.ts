@@ -1,11 +1,13 @@
-import { authAPI, authModel } from "processes/auth";
+import { authModel } from "processes/auth";
+import { authAPI } from "processes/auth/api";
 
-import { chatModel, chatServices } from "pages/messenger/chat";
 import { chatState } from "pages/messenger/chat/model";
+import { chatLib } from "pages/messenger/chat/model/lib";
+import { chatServices } from "pages/messenger/chat/services";
 import { chatsModel } from "pages/messenger/chats";
 import { chatsState } from "pages/messenger/chats/model";
 
-import { router } from "shared/core";
+import { router } from "shared/core/router/router";
 
 import { userState } from "../model";
 
@@ -18,7 +20,7 @@ export const logout = async (dispatch: Dispatch<AppState>) => {
 
   dispatch(authModel.setUser({ ...userState }));
   dispatch(chatsModel.setChats({ ...chatsState }));
-  dispatch(chatModel.setChat({ ...chatState }));
+  dispatch(chatLib.setChat({ ...chatState }));
   dispatch(chatServices.clearDialogs);
 
   router.restart();

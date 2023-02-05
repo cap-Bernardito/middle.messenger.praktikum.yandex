@@ -1,19 +1,15 @@
-import { TChat } from "pages/messenger/chats/types";
+import { chatsTypes } from "pages/messenger/chats/types";
 
 import WSTransport from "shared/utils/ws-transport";
 
 import { getWS } from "./get-ws";
 
 type sendMessagePayload = {
-  chatId: TChat["id"];
+  chatId: chatsTypes.TChat["id"];
   message: string;
 };
 
-export const sendMessage = async (
-  dispatch: Dispatch<AppState>,
-  _state: AppState,
-  { chatId, message }: sendMessagePayload
-) => {
+export const sendMessage: DispatchStateHandler<sendMessagePayload> = async (_dispatch, _state, { chatId, message }) => {
   if (!chatId) {
     return;
   }

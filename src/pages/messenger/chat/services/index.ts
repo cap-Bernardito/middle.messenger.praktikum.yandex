@@ -1,6 +1,15 @@
-export * from "./clear-dIalogs";
-export * from "./close-ws";
-export * from "./get-ws";
-export * from "./load-messages";
-export * from "./reset-load-status";
-export * from "./send-message";
+import { clearDialogs } from "./clear-dIalogs";
+import { closeWS } from "./close-ws";
+import { getWS } from "./get-ws";
+import { loadMessages } from "./load-messages";
+import { resetLoadStatus } from "./reset-load-status";
+import { sendMessage } from "./send-message";
+
+export const chatServices = {
+  clearDialogs,
+  closeWS,
+  getWS,
+  loadMessages,
+  resetLoadStatus,
+  sendMessage,
+};

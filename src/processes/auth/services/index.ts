@@ -1,4 +1,11 @@
-export * from "./login";
-export * from "./logout";
-export * from "./register";
-export * from "./reset-load-status";
+import { login } from "./login";
+import { logout } from "./logout";
+import { register } from "./register";
+import { resetLoadStatus } from "./reset-load-status";
+
+export const authServices = {
+  login,
+  logout,
+  register,
+  resetLoadStatus,
+};

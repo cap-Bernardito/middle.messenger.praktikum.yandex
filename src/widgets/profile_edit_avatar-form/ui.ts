@@ -1,7 +1,7 @@
 import { store } from "app/store";
 
 import { FormWithAuthStatus } from "widgets/form-with-auth";
-import { profileEditAvatar } from "widgets/profile_edit_avatar-form";
+import { profileEditAvatar } from "widgets/profile_edit_avatar-form/services";
 
 import { TFormProps } from "entities/form";
 

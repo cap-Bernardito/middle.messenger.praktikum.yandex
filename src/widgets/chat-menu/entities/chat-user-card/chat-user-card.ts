@@ -1,6 +1,6 @@
 import plural from "plural-ru";
 
-import { chatModel } from "pages/messenger/chat";
+import { chatLib } from "pages/messenger/chat/model/lib";
 
 import { TUserCardProps, UserCard } from "entities";
 
@@ -13,13 +13,14 @@ const withChat = connect((state) => {
 });
 
 export const ChatUserCardWithChat = withChat(
+  // @ts-ignore
   class extends UserCard {
     constructor(props: TUserCardProps) {
       super(props);
 
       this.setProps({
         message: () => {
-          const { users } = chatModel.selectChat();
+          const { users } = chatLib.selectChat();
 
           return `${plural(users, "%d участник", "%d участника", "%d участников")}`;
         },

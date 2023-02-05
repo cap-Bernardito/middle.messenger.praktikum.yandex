@@ -1,4 +1,6 @@
-import { Block, registerComponent, router } from "shared/core";
+import { Block } from "shared/core/block";
+import { registerComponent } from "shared/core/register-component";
+import { router } from "shared/core/router/router";
 
 export type TLinkProps = TPropsWithEvents<{
   value: string;

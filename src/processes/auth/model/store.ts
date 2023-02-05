@@ -1,7 +1,7 @@
-import { User } from "../types";
+import { authTypes } from "../types";
 
 export type TUserState = {
-  user: TNullable<User>;
+  user: TNullable<authTypes.User>;
   loading: boolean;
   error: TNullable<string>;
 };

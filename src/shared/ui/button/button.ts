@@ -7,6 +7,7 @@ export type TButtonProps = TPropsWithEvents<{
   title: string;
   htmlType?: "submit" | "reset" | "button";
   className?: string;
+  dataTestId?: string;
   onClick?: (event: Event) => void;
 }>;
 
@@ -28,6 +29,7 @@ export class Button extends Block<TButtonProps> {
 
     return `
     <button class="btn {{#if className}}{{className}}{{/if}}"
+      {{#if dataTestId}} data-testid="{{dataTestId}}"{{/if}}
       {{#if htmlType}} type={{htmlType}}  {{/if}}
       {{#if title}} title={{title}}  {{/if}}
       data-id="${this.id}"

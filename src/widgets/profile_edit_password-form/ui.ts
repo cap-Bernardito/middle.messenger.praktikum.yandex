@@ -1,7 +1,7 @@
 import { store } from "app/store";
 
 import { FormWithAuthStatus } from "widgets/form-with-auth";
-import { profileEditPassword } from "widgets/profile_edit_password-form";
+import { profileEditPassword } from "widgets/profile_edit_password-form/services";
 
 import { TFormProps } from "entities/form";
 

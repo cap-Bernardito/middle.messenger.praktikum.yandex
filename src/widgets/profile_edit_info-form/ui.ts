@@ -3,12 +3,11 @@ import { authModel } from "processes/auth";
 import { store } from "app/store";
 
 import { FormWithAuthStatus } from "widgets/form-with-auth";
+import { profileEditInfo } from "widgets/profile_edit_info-form/services";
 
 import { TFormProps } from "entities/form";
 
 import { Input, TInputProps } from "shared/ui";
-
-import { profileEditInfo } from ".";
 
 export function ProfileEditInfoForm(
   this: {

@@ -1,15 +1,16 @@
-import { EventBus, Route } from "..";
+import { EventBus } from "shared/core/event-bus";
+import { Route } from "shared/core/router/route";
 
 export class Router extends EventBus {
   static EVENTS = {
     WIDGET_TOGGLE: "widget:toggle",
   } as const;
 
-  private static _instance: Router;
+  private static _instance: TNullable<Router>;
   private _routes: Route[] = [];
   private _history = window.history;
   private _currentRoute: Route | null = null;
-  private _cache: Record<string, any> = {};
+  private _cache: Record<string, TRouteData | null> = {};
 
   constructor() {
     super();
@@ -19,6 +20,10 @@ export class Router extends EventBus {
     }
 
     Router._instance = this;
+  }
+
+  destroy() {
+    Router._instance = null;
   }
 
   start() {

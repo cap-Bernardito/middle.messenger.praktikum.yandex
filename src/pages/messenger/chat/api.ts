@@ -1,4 +1,4 @@
-import { chatsTypes } from "pages/messenger/chats";
+import { chatsTypes } from "pages/messenger/chats/types";
 
 import { APIError, request } from "shared/api";
 import WSTransport from "shared/utils/ws-transport";

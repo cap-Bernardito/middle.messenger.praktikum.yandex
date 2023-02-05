@@ -1,4 +1,5 @@
-import { authModel, authServices } from "processes/auth";
+import { authModel } from "processes/auth";
+import { authServices } from "processes/auth/services";
 
 import { store } from "app/store";
 
@@ -6,7 +7,8 @@ import { MyAvatar } from "widgets/my-avatar";
 
 import { templateUserInfo, TUserInfoProps } from "entities";
 
-import { Block, Link } from "shared/core";
+import { Block } from "shared/core/block";
+import { Link } from "shared/core/router/link";
 import { Button, ListV1, ListV1Item } from "shared/ui";
 import { ROUTES } from "shared/utils/constants";
 
@@ -14,6 +16,8 @@ export class ProfilePage extends Block<TUserInfoProps> {
   static cName = "ProfilePage";
 
   constructor() {
+    super();
+
     const { user } = authModel.selectUser();
 
     if (!user) {
@@ -68,8 +72,9 @@ export class ProfilePage extends Block<TUserInfoProps> {
               title: "Выйти",
               className: "text-danger btn-link",
               htmlType: "button",
-              onClick: () => {
-                store.dispatch(authServices.logout);
+              dataTestId: "logout-btn",
+              onClick: async () => {
+                await store.dispatch(authServices.logout);
               },
             }),
           },

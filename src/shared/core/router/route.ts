@@ -1,4 +1,5 @@
-import { Block, renderDOM } from "..";
+import { Block } from "shared/core/block";
+import { renderDOM } from "shared/core/render-dom";
 
 export class Route {
   private _screen: TNullable<Block> = null;

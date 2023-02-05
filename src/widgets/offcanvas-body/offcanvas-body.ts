@@ -1,9 +1,10 @@
-import { authModel, authServices } from "processes/auth";
-import { authTypes } from "processes/auth";
+import { authModel } from "processes/auth";
+import { authServices } from "processes/auth/services";
+import { authTypes } from "processes/auth/types";
 
 import { store } from "app/store";
 
-import { chatsServices } from "pages/messenger/chats";
+import { chatsServices } from "pages/messenger/chats/services";
 
 import { FormWithChatLoadStatus } from "widgets/form-with-chat";
 import { MyAvatar } from "widgets/my-avatar";

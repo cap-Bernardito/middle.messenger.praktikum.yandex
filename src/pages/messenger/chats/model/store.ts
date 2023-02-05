@@ -1,7 +1,7 @@
-import { TChat } from "pages/messenger/chats/types";
+import { chatsTypes } from "pages/messenger/chats/types";
 
 export type TChatsState = {
-  chats: TNullable<TChat[]>;
+  chats: TNullable<chatsTypes.TChat[]>;
   loading: boolean;
   error: TNullable<string>;
   activeChat: TNullable<number>;

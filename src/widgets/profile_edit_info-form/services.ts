@@ -1,15 +1,12 @@
-import { authAPI, authModel, authTypes } from "processes/auth";
+import { authModel, authTypes } from "processes/auth";
+import { authAPI } from "processes/auth/api";
 
-import { ChangeUserInfoRequestData, profileEditInfoAPI } from "widgets/profile_edit_info-form";
+import { ChangeUserInfoRequestData, profileEditInfoAPI } from "widgets/profile_edit_info-form/api";
 
 import { transformUser } from "shared/api";
 import { apiHasError } from "shared/utils";
 
-export const profileEditInfo = async (
-  dispatch: Dispatch<AppState>,
-  state: AppState,
-  action: ChangeUserInfoRequestData
-) => {
+export const profileEditInfo: DispatchStateHandler<ChangeUserInfoRequestData> = async (dispatch, _state, action) => {
   dispatch(authModel.setUser({ loading: true }));
 
   const response = await profileEditInfoAPI(action);

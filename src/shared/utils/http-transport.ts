@@ -9,7 +9,7 @@ const enum METHODS {
 
 type TOptions = {
   method: METHODS;
-  data?: Record<string, any>;
+  data?: Record<string, unknown>;
   body?: Document | XMLHttpRequestBodyInit | null;
   headers?: Record<string, string>;
   responseType?: XMLHttpRequestResponseType;

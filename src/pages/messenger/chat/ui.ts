@@ -1,15 +1,29 @@
-import { chatModel } from "pages/messenger/chat";
+import { chatLib } from "pages/messenger/chat/model/lib";
 
-import { chatMenuUi } from "widgets/chat-menu";
 import { ChatUserCardWithChat } from "widgets/chat-menu/entities/chat-user-card";
+import { chatMenuUi } from "widgets/chat-menu/ui";
 
 import { Messages, MessagesBody, MessagesHeader, TMessagesBodyProps, TMessagesProps } from "entities";
 
 import { getFile } from "shared/api";
 import { Avatar, Message } from "shared/ui";
 import { connect } from "shared/utils/connect";
+import DomUtilities from "shared/utils/dom-utilities";
 
-import { scrollToBottom } from "./utils";
+import { chatUtils } from "./utils";
+
+document.addEventListener("DOMContentLoaded", () => {
+  DomUtilities.observe({
+    // @ts-ignore
+    selector: "[data-messages-scrollable]",
+    // @ts-ignore
+    mutationCallback: (node, record, type) => {
+      if (type === "addedNodes") {
+        chatUtils.scrollToBottom(node);
+      }
+    },
+  });
+});
 
 const withChat = connect((state) => {
   return {
@@ -49,6 +63,7 @@ const withDialog = connect((state) => {
 });
 
 const MessagesBodyWithDialogs = withDialog(
+  // @ts-ignore
   class extends MessagesBody {
     constructor(props: TMessagesBodyProps) {
       super(props);
@@ -60,30 +75,23 @@ const MessagesBodyWithDialogs = withDialog(
         Object.assign(props, nextProps);
       });
     }
-
-    componentDidUpdate() {
-      setTimeout(() => {
-        scrollToBottom(this.getContent() as HTMLDivElement);
-      }, 10);
-
-      return true;
-    }
   }
 );
 
-export const MessagesWithChat = withChat(
+const MessagesWithChat = withChat(
+  // @ts-ignore
   class extends Messages {
     constructor(props: TMessagesProps) {
       super(props);
 
       this.setProps({
         placeholder: () => {
-          const { chatData } = chatModel.selectChat();
+          const { chatData } = chatLib.selectChat();
 
           return !chatData && "Выберите, кому хотели бы написать";
         },
         header: function execProps() {
-          const { chatData } = chatModel.selectChat();
+          const { chatData } = chatLib.selectChat();
 
           if (!chatData) {
             return null;
@@ -106,3 +114,7 @@ export const MessagesWithChat = withChat(
     }
   }
 );
+
+export const chatUi = {
+  MessagesWithChat,
+};

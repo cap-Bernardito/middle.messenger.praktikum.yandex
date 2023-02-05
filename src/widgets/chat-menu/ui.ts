@@ -1,20 +1,21 @@
 import { store } from "app/store";
 
-import { chatModel } from "pages/messenger/chat";
+import { chatLib } from "pages/messenger/chat/model/lib";
 
 import { FormWithChatLoadStatus } from "widgets/form-with-chat";
 
 import { Form, Modal, Overlay, TFormProps } from "entities";
 
 import { mdiAccountPlus, mdiAccountRemove, mdiDeleteSweep, mdiDotsVertical, mdiFileImageOutline } from "@mdi/js";
+import { Block } from "shared/core";
 import { Button, Input, List, ListItem, renderIcon, TInputProps } from "shared/ui";
 
 import { ChatModalHeaderWithChat } from "./entities/chat-modal-header";
-import { chatMenuServices } from ".";
+import { chatMenuServices } from "./services";
 
 const overlay = new Overlay();
 
-export const chatMenuModalButton = new Button({
+const chatMenuModalButton = new Button({
   value: `${renderIcon({ value: mdiDotsVertical })}`,
   className: "chat-toolbar__button chat-toolbar__button-hamburger link-icon",
   title: "Настройки чата",
@@ -54,13 +55,13 @@ const deleteUserModalButton = new Button({
 
 const getchatMenuModalHeader = () => new ChatModalHeaderWithChat({});
 
-const getModalFormParts = (target: any, modalRef: string) => {
+const getModalFormParts = (target: Block, modalRef: string) => {
   const form = target.refs[modalRef].refs.formRef;
 
   return Form.getFormParts(form);
 };
 
-export const chatMenuModals = function () {
+const chatMenuModals = function () {
   return [
     new Modal({
       showBackButton: false,
@@ -91,7 +92,7 @@ export const chatMenuModals = function () {
           const formBlock = getModalFormParts(this, "chatAvatarModal").form;
           const form = formBlock.getContent() as HTMLFormElement;
           const formData = new FormData(form);
-          const { chatData } = chatModel.selectChat();
+          const { chatData } = chatLib.selectChat();
 
           formData.set("chatId", String(chatData?.id));
 
@@ -146,7 +147,7 @@ export const chatMenuModals = function () {
         onSubmit: (event) => {
           event.preventDefault();
 
-          const { chatData } = chatModel.selectChat();
+          const { chatData } = chatLib.selectChat();
 
           store.dispatch(chatMenuServices.deleteChat, { chatId: chatData?.id });
         },
@@ -181,7 +182,7 @@ export const chatMenuModals = function () {
           // @ts-ignore
           const { form, fields } = getModalFormParts(this, "addUserModal");
           const { isFormValid, formData } = form.check(event, Object.values(fields));
-          const { chatData } = chatModel.selectChat();
+          const { chatData } = chatLib.selectChat();
 
           formData.chatId = String(chatData?.id);
 
@@ -238,7 +239,7 @@ export const chatMenuModals = function () {
           // @ts-ignore
           const { form, fields } = getModalFormParts(this, "deleteUserModal");
           const { isFormValid, formData } = form.check(event, Object.values(fields));
-          const { chatData } = chatModel.selectChat();
+          const { chatData } = chatLib.selectChat();
 
           formData.chatId = String(chatData?.id);
 
@@ -283,3 +284,5 @@ export const chatMenuModals = function () {
     }),
   ];
 };
+
+export const chatMenuUi = { chatMenuModalButton, chatMenuModals };

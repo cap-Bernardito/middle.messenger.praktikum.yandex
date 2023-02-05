@@ -82,6 +82,7 @@
   "dependencies": {
     "@mdi/js": "7.1.96",
     "express": "4.18.2",
+    "intersection-observer": "0.12.2",
     "nanoid": "4.0.0",
     "normalize.css": "8.0.1",
     "plural-ru": "2.0.2"

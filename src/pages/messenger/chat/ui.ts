@@ -8,8 +8,22 @@ import { Messages, MessagesBody, MessagesHeader, TMessagesBodyProps, TMessagesPr
 import { getFile } from "shared/api";
 import { Avatar, Message } from "shared/ui";
 import { connect } from "shared/utils/connect";
+import DomUtilities from "shared/utils/dom-utilities";
 
 import { scrollToBottom } from "./utils";
+
+document.addEventListener("DOMContentLoaded", () => {
+  DomUtilities.observe({
+    // @ts-ignore
+    selector: "[data-messages-scrollable]",
+    // @ts-ignore
+    mutationCallback: (node, record, type) => {
+      if (type === "addedNodes") {
+        scrollToBottom(node);
+      }
+    },
+  });
+});
 
 const withChat = connect((state) => {
   return {
@@ -59,14 +73,6 @@ const MessagesBodyWithDialogs = withDialog(
       super.setProps(nextPartialProps, (props, nextProps) => {
         Object.assign(props, nextProps);
       });
-    }
-
-    componentDidUpdate() {
-      setTimeout(() => {
-        scrollToBottom(this.getContent() as HTMLDivElement);
-      });
-
-      return true;
     }
   }
 );

@@ -31,7 +31,7 @@
 $ npm install
 
 // Запуск проекта в режиме разработки
-$ npm run watch
+$ npm run dev
 
 // Сборка проекта в папку `dist`
 $ npm run build

@@ -4,7 +4,7 @@
 
 Для организации структуры папок проекта использована методология [FSD](https://feature-sliced.design/ru/docs/reference/units/layers).
 
-## Полезные команды
+## Доступные команды
 
 ```bash
 // Установка зависимостей
@@ -18,6 +18,9 @@ $ npm run build
 
 // Сборка проекта в папку `dist` и раздача статики из нее с помощью `express`
 $ npm run start
+
+// Запуск тестов
+$ npm run test
 ```
 
 ## Макет
@@ -26,4 +29,6 @@ $ npm run start
 
 ## Ссылка на сайт
 
-[Ссылка на Netlify](https://cap-bernardito-ya-messenger.netlify.app/)
+[Ссылка на Netlify](https://cap-bernardito-ya-messenger.netlify.app)
+
+[Ссылка на Render.com](https://cap-bernardito-messenger.onrender.com)

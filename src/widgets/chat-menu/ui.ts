@@ -7,6 +7,7 @@ import { FormWithChatLoadStatus } from "widgets/form-with-chat";
 import { Form, Modal, Overlay, TFormProps } from "entities";
 
 import { mdiAccountPlus, mdiAccountRemove, mdiDeleteSweep, mdiDotsVertical, mdiFileImageOutline } from "@mdi/js";
+import { Block } from "shared/core";
 import { Button, Input, List, ListItem, renderIcon, TInputProps } from "shared/ui";
 
 import { ChatModalHeaderWithChat } from "./entities/chat-modal-header";
@@ -54,7 +55,7 @@ const deleteUserModalButton = new Button({
 
 const getchatMenuModalHeader = () => new ChatModalHeaderWithChat({});
 
-const getModalFormParts = (target: any, modalRef: string) => {
+const getModalFormParts = (target: Block, modalRef: string) => {
   const form = target.refs[modalRef].refs.formRef;
 
   return Form.getFormParts(form);

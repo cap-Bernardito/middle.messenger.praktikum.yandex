@@ -9,7 +9,7 @@ export class Router extends EventBus {
   private _routes: Route[] = [];
   private _history = window.history;
   private _currentRoute: Route | null = null;
-  private _cache: Record<string, any> = {};
+  private _cache: Record<string, TRouteData | null> = {};
 
   constructor() {
     super();

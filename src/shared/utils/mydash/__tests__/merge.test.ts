@@ -1,6 +1,6 @@
 import { _ } from "../..";
 
-const testCases: [string, PlainObject[], Record<string, any>][] = [
+const testCases: [string, PlainObject[], Record<string, unknown>][] = [
   ["as Object.assign", [{ a: 1 }, { a: 2 }, { a: 3 }], { a: 3 }],
   ["objects recursive", [{ a: { b: 2 } }, { a: { b: 3, c: 2 } }], { a: { b: 3, c: 2 } }],
   ["objects with array", [{ a: { b: [{ d: 3 }] } }, { a: { b: [{ c: 4 }] } }], { a: { b: [{ d: 3 }, { c: 4 }] } }],

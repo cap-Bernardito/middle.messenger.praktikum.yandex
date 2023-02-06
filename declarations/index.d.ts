@@ -29,7 +29,7 @@ declare global {
   export type TPropsWithRef<T extends Record<string, unknown>> = T & {
     ref?: string;
   };
-  export type TFnProps<T> = T | ((args: any) => T);
+  export type TFnProps<T> = T | ((args: unknown) => T);
 
   export type TRenderContext = { [K: string]: string | boolean };
 

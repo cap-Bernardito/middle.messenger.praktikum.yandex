@@ -1,7 +1,7 @@
 import { Block } from "shared/core/block";
 
 declare global {
-  export type TStateProps = Record<string, any>;
+  export type TStateProps = Record<string, unknown>;
 
   export type TRouteData = {
     pathname: string;
@@ -9,7 +9,7 @@ declare global {
     route: Route;
   };
 
-  export type BlockConstructable<Props = any> = {
+  export type BlockConstructable<Props = unknown> = {
     cName: string;
     new (props: Props): Block;
   };

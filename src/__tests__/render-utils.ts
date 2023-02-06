@@ -5,7 +5,7 @@ import { renderDOM } from "shared/core";
 
 import "app/registerComponents";
 
-type RenderBlockParams<T extends Record<string, any> = any> = {
+type RenderBlockParams<T extends Record<string, unknown>> = {
   Block: BlockConstructable<T>;
   props: T;
   state?: Partial<AppState>;
@@ -15,7 +15,7 @@ export function sleep(ms = 200) {
   return new Promise((r) => setTimeout(r, ms));
 }
 
-export async function renderBlock<T extends Record<string, any> = any>({
+export async function renderBlock<T extends Record<string, unknown>>({
   Block,
   props,
   state = {},

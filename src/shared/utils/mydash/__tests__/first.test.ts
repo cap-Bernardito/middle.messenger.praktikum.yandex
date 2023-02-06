@@ -1,6 +1,6 @@
 import { _ } from "../..";
 
-const testCases: any[] = [
+const testCases: [string, unknown[] | Record<string, unknown> | string, unknown][] = [
   ["first element", [10, 13, 5], 10],
   ["undefined if argument is empty array", [], undefined],
   ["undefined if argument is not array ({})", {}, undefined],
@@ -11,6 +11,7 @@ describe("Should return", () => {
   testCases.forEach((testCase) => {
     const [testName, input, expected] = testCase;
 
+    // @ts-ignore
     const result = _.first(input);
 
     it(testName, () => {

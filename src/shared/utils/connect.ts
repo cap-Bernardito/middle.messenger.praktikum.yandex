@@ -2,7 +2,7 @@ import { store } from "app/store";
 
 import { _ } from "shared/utils";
 
-export function connect<P extends Record<string, any> = any>(mapStateToProps: (state: AppState) => PlainObject) {
+export function connect<P extends Record<string, unknown>>(mapStateToProps: (state: AppState) => PlainObject) {
   return function (Component: BlockConstructable<P>) {
     // @ts-expect-error No base constructor has the specified
     return class extends Component<P> {

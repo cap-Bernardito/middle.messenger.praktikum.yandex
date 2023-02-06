@@ -7,7 +7,7 @@ import { formattedDate } from "shared/utils";
 export const transformMessage = (
   data: chatTypes.TDialogMessageDTO | { type: "date"; time: string },
   user: authTypes.User
-): any => {
+) => {
   if (data.type === "date") {
     const monthNames = [
       "Января",
@@ -60,8 +60,8 @@ export const transformMessage = (
 export const transformMessages = (
   dataArray: chatTypes.TDialogMessageDTO[],
   user: authTypes.User
-): chatTypes.TDialogMessage[] => {
-  const result: chatTypes.TDialogMessage[] = [];
+): Partial<chatTypes.TDialogMessage>[] => {
+  const result: Partial<chatTypes.TDialogMessage>[] = [];
 
   let date;
   let prevTime;

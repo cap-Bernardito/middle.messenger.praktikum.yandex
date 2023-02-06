@@ -6,11 +6,7 @@ import { Overlay } from "entities";
 import { transformChats } from "shared/api";
 import { apiHasError } from "shared/utils";
 
-export const createChat = async (
-  dispatch: Dispatch<AppState>,
-  _state: AppState,
-  action: chatsTypes.createChatRequestData
-) => {
+export const createChat: DispatchStateHandler<chatsTypes.createChatRequestData> = async (dispatch, _state, action) => {
   dispatch(chatModel.setChat({ loading: true }));
 
   const responseChat = await chatsAPI.createChat(action);

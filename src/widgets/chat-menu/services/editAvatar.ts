@@ -6,7 +6,7 @@ import { apiHasError } from "shared/utils";
 
 import { chatMenuApi } from "../api";
 
-export const chatEditAvatar = async (dispatch: Dispatch<AppState>, state: AppState, action: FormData) => {
+export const chatEditAvatar: DispatchStateHandler<FormData> = async (dispatch, _state, action) => {
   dispatch(chatModel.setChat({ loading: true }));
 
   const response = await chatMenuApi.editAvatar(action);

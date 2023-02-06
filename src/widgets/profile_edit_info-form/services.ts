@@ -5,11 +5,7 @@ import { ChangeUserInfoRequestData, profileEditInfoAPI } from "widgets/profile_e
 import { transformUser } from "shared/api";
 import { apiHasError } from "shared/utils";
 
-export const profileEditInfo = async (
-  dispatch: Dispatch<AppState>,
-  state: AppState,
-  action: ChangeUserInfoRequestData
-) => {
+export const profileEditInfo: DispatchStateHandler<ChangeUserInfoRequestData> = async (dispatch, _state, action) => {
   dispatch(authModel.setUser({ loading: true }));
 
   const response = await profileEditInfoAPI(action);

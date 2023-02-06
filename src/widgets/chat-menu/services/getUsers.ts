@@ -6,7 +6,7 @@ import { apiHasError } from "shared/utils";
 
 import { chatMenuApi, GetUserRequestData } from "../api";
 
-export const getUsers = async (dispatch: Dispatch<AppState>, state: AppState, action: GetUserRequestData) => {
+export const getUsers: DispatchStateHandler<GetUserRequestData> = async (dispatch, _state, action) => {
   const response = await chatMenuApi.getUser(action);
 
   if (apiHasError(response)) {

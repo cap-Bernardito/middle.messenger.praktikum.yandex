@@ -4,7 +4,7 @@ import { chatsModel } from "pages/messenger/chats";
 import { router } from "shared/core";
 import { ROUTES } from "shared/utils/constants";
 
-export const isChatExist = (dispatch: Dispatch<AppState>, _state: AppState, action: string) => {
+export const isChatExist: DispatchStateHandler<string> = (dispatch, _state, action: string) => {
   const { chats } = chatsModel.selectChats();
 
   if (!chats || !action) {

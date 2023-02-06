@@ -9,10 +9,10 @@ type loadMessagesPayload = {
   offset: number; // Число, которое показывает с какого сообщения нужно отдать ещё 20
 };
 
-export const loadMessages = async (
-  dispatch: Dispatch<AppState>,
-  _state: AppState,
-  { chatId, offset = 0 }: loadMessagesPayload
+export const loadMessages: DispatchStateHandler<loadMessagesPayload> = async (
+  _dispatch,
+  _state,
+  { chatId, offset = 0 }
 ) => {
   if (!chatId) {
     return;

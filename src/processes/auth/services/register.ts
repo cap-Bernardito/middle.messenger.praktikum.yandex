@@ -6,11 +6,7 @@ import { apiHasError } from "shared/utils";
 
 import { logout } from "./logout";
 
-export const register = async (
-  dispatch: Dispatch<AppState>,
-  _state: AppState,
-  action: authTypes.RegisterRequestData
-) => {
+export const register: DispatchStateHandler<authTypes.RegisterRequestData> = async (dispatch, _state, action) => {
   dispatch(authModel.setUser({ loading: true }));
 
   const response = await authAPI.register(action);

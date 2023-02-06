@@ -9,11 +9,7 @@ type sendMessagePayload = {
   message: string;
 };
 
-export const sendMessage = async (
-  dispatch: Dispatch<AppState>,
-  _state: AppState,
-  { chatId, message }: sendMessagePayload
-) => {
+export const sendMessage: DispatchStateHandler<sendMessagePayload> = async (_dispatch, _state, { chatId, message }) => {
   if (!chatId) {
     return;
   }

@@ -4,7 +4,7 @@ import { chatsModel } from "pages/messenger/chats";
 import { router } from "shared/core";
 import { ROUTES } from "shared/utils/constants";
 
-export const selectChat = (dispatch: Dispatch<AppState>, _state: AppState, action: number) => {
+export const selectChat: DispatchStateHandler<number> = (dispatch, _state, action) => {
   router.go(`${ROUTES.messenger.path}/${action}`, false);
 
   dispatch(chatsModel.setChats({ activeChat: action }));

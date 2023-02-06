@@ -8,10 +8,10 @@ type TGetChatsPayload = {
   success?: (chats: chatsTypes.TChat[]) => void;
 };
 
-export const getChats = async (
-  dispatch: Dispatch<AppState>,
-  _state: AppState,
-  { chatId, success: successLoadCb }: TGetChatsPayload
+export const getChats: DispatchStateHandler<TGetChatsPayload> = async (
+  dispatch,
+  _state,
+  { chatId, success: successLoadCb }
 ) => {
   dispatch(chatsModel.setChats({ loading: true }));
 

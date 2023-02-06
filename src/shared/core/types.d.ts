@@ -24,6 +24,12 @@ declare global {
     routeShouldMount?: (route: Route) => boolean;
     routeDidMount?: (routeData: TRouteData) => void;
   };
+
+  export type DispatchStateHandler<TAction> = (
+    dispatch: Dispatch<AppState>,
+    state: AppState,
+    action: TAction
+  ) => void | Promise<void>;
 }
 
 export {};

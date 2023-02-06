@@ -10,7 +10,7 @@ import { ROUTES } from "shared/utils/constants";
 
 import { chatMenuApi, DeleteChatRequestData } from "../api";
 
-export const deleteChat = async (dispatch: Dispatch<AppState>, state: AppState, action: DeleteChatRequestData) => {
+export const deleteChat: DispatchStateHandler<DeleteChatRequestData> = async (dispatch, _state, action) => {
   dispatch(chatModel.setChat({ loading: true }));
 
   const response = await chatMenuApi.deleteChat(action);

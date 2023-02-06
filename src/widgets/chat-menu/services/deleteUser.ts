@@ -5,10 +5,10 @@ import { apiHasError } from "shared/utils";
 import { chatMenuApi, SearchUserRequestData } from "../api";
 import { chatMenuServices } from "..";
 
-export const deleteUser = async (
-  dispatch: Dispatch<AppState>,
-  state: AppState,
-  action: SearchUserRequestData & { chatId: number }
+export const deleteUser: DispatchStateHandler<SearchUserRequestData & { chatId: number }> = async (
+  dispatch,
+  _state,
+  action
 ) => {
   dispatch(chatModel.setChat({ loading: true }));
 
@@ -21,7 +21,7 @@ export const deleteUser = async (
     return;
   }
 
-  if (response.length === 0) {
+  if (!response || response.length === 0) {
     dispatch(chatModel.setChat({ loading: false, error: "Пользователь не найден" }));
 
     return;

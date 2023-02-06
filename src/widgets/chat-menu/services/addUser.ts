@@ -5,10 +5,10 @@ import { apiHasError } from "shared/utils";
 import { chatMenuApi, SearchUserRequestData } from "../api";
 import { chatMenuServices } from "..";
 
-export const addUser = async (
-  dispatch: Dispatch<AppState>,
-  state: AppState,
-  action: SearchUserRequestData & { chatId: number }
+export const addUser: DispatchStateHandler<SearchUserRequestData & { chatId: number }> = async (
+  dispatch,
+  _state,
+  action
 ) => {
   dispatch(chatModel.setChat({ loading: true }));
 
@@ -21,7 +21,7 @@ export const addUser = async (
     return;
   }
 
-  if (response.length === 0) {
+  if (!response || response.length === 0) {
     dispatch(chatModel.setChat({ loading: false, error: "Пользователь не найден" }));
 
     return;

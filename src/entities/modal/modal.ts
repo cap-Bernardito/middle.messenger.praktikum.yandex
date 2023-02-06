@@ -19,13 +19,13 @@ export type TModalProps = TPropsWithRef<{
   overlay: Overlay;
   className?: string;
   title: string;
+  isActive?: boolean;
 }>;
 
 export class Modal extends Block<TModalProps & { btnClose: Button; backButton: Button }> {
   static cName = "Modal";
 
   private activeClass = "active";
-  private isVisible = false;
   private overlay: Overlay;
 
   constructor({ runButton, overlay, ...props }: TModalProps) {
@@ -71,18 +71,18 @@ export class Modal extends Block<TModalProps & { btnClose: Button; backButton: B
   }
 
   isOn() {
-    return this.isVisible;
+    return this.props.isActive;
   }
 
   show() {
+    this.setProps({ isActive: true });
     this.getContent().classList.add(this.activeClass);
-    this.isVisible = true;
     this.overlay.notify(Overlay.commands.show, this);
   }
 
   hide() {
+    this.setProps({ isActive: false });
     this.getContent().classList.remove(this.activeClass);
-    this.isVisible = false;
     this.overlay.notify(Overlay.commands.hide, this);
 
     router.emit(Router.EVENTS.WIDGET_TOGGLE);

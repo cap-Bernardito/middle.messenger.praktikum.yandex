@@ -2,9 +2,11 @@ import { authModel } from "processes/auth";
 
 import { store } from "app/store";
 
-import { chatAPI, chatModel } from "pages/messenger/chat";
-import { chatTypes, chatUtils } from "pages/messenger/chat";
-import { chatsTypes } from "pages/messenger/chats";
+import { chatAPI } from "pages/messenger/chat/api";
+import { chatLib } from "pages/messenger/chat/model/lib";
+import { chatTypes } from "pages/messenger/chat/types";
+import { chatUtils } from "pages/messenger/chat/utils";
+import { chatsTypes } from "pages/messenger/chats/types";
 
 import { apiHasError } from "shared/utils";
 import WSTransport from "shared/utils/ws-transport";
@@ -37,7 +39,7 @@ export const getWS = async (chatId: chatsTypes.TChat["id"] | "all") => {
   }
 
   if (apiHasError(responseToken)) {
-    store.dispatch(chatModel.setDialog(chatId, { data: null, loading: false, error: responseToken.reason }));
+    store.dispatch(chatLib.setDialog(chatId, { data: null, loading: false, error: responseToken.reason }));
 
     return;
   }
@@ -48,10 +50,10 @@ export const getWS = async (chatId: chatsTypes.TChat["id"] | "all") => {
 
   responseWSTransport
     .on(WSTransport.EVENTS.CONNECTING, () => {
-      store.dispatch(chatModel.setDialog(chatId, { loading: true, error: null }));
+      store.dispatch(chatLib.setDialog(chatId, { loading: true, error: null }));
     })
     .on(WSTransport.EVENTS.OPEN, () => {
-      store.dispatch(chatModel.setDialog(chatId, { loading: false, error: null }));
+      store.dispatch(chatLib.setDialog(chatId, { loading: false, error: null }));
     })
     .on(WSTransport.EVENTS.GOT_MESSAGE, (messages) => {
       let normalizedMessages;
@@ -67,7 +69,7 @@ export const getWS = async (chatId: chatsTypes.TChat["id"] | "all") => {
       }
 
       store.dispatch(
-        chatModel.setDialog(chatId, {
+        chatLib.setDialog(chatId, {
           data: normalizedMessages as chatTypes.TDialogMessage[],
           loading: false,
           error: null,
@@ -75,7 +77,7 @@ export const getWS = async (chatId: chatsTypes.TChat["id"] | "all") => {
       );
     })
     .on(WSTransport.EVENTS.CLOSED, () => {
-      store.dispatch(chatModel.setDialog(chatId, { data: null, loading: false, error: null }));
+      store.dispatch(chatLib.setDialog(chatId, { data: null, loading: false, error: null }));
       sockets = {};
     });
 

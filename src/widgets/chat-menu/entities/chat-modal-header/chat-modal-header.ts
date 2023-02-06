@@ -1,6 +1,6 @@
 import plural from "plural-ru";
 
-import { chatModel } from "pages/messenger/chat";
+import { chatLib } from "pages/messenger/chat/model/lib";
 
 import { TUserCardProps, UserCard } from "entities";
 
@@ -16,19 +16,20 @@ const withChat = connect((state) => {
 });
 
 export const ChatModalHeaderWithChat = withChat(
+  // @ts-ignore
   class extends UserCard {
     constructor(props: TUserCardProps) {
       super(props);
 
       this.setProps({
         message: () => {
-          const { users } = chatModel.selectChat();
+          const { users } = chatLib.selectChat();
 
           return `${plural(users, "%d участник", "%d участника", "%d участников")}`;
         },
         avatar: new Avatar({ className: "avatar_xs mr-3" }),
         name: () => {
-          const { chatData } = chatModel.selectChat();
+          const { chatData } = chatLib.selectChat();
 
           return `<div class='text-lg'>${chatData ? chatData.title : ""}</div>`;
         },
@@ -39,7 +40,7 @@ export const ChatModalHeaderWithChat = withChat(
     componentDidUpdate() {
       const avatar = this.childrenFromProps.avatar;
 
-      const { chatData } = chatModel.selectChat();
+      const { chatData } = chatLib.selectChat();
 
       if (avatar.props.img !== chatData?.avatar) {
         avatar.setProps({ img: getFile(chatData ? chatData.avatar : "") });

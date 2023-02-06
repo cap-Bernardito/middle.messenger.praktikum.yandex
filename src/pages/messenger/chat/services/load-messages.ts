@@ -1,11 +1,11 @@
-import { TChat } from "pages/messenger/chats/types";
+import { chatsTypes } from "pages/messenger/chats/types";
 
 import WSTransport from "shared/utils/ws-transport";
 
 import { getWS } from "./get-ws";
 
 type loadMessagesPayload = {
-  chatId: TChat["id"];
+  chatId: chatsTypes.TChat["id"];
   offset: number; // Число, которое показывает с какого сообщения нужно отдать ещё 20
 };
 

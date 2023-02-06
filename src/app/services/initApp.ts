@@ -1,4 +1,6 @@
-import { authAPI, authModel, authTypes } from "processes/auth";
+import { authModel } from "processes/auth";
+import { authAPI } from "processes/auth/api";
+import { authTypes } from "processes/auth/types";
 
 import { transformUser } from "shared/api";
 import { apiHasError } from "shared/utils";

@@ -1,7 +1,7 @@
-import { chatModel } from "pages/messenger/chat";
+import { chatLib } from "pages/messenger/chat/model/lib";
 import { chatsModel } from "pages/messenger/chats";
 
-import { router } from "shared/core";
+import { router } from "shared/core/router/router";
 import { ROUTES } from "shared/utils/constants";
 
 export const selectChat: DispatchStateHandler<number> = (dispatch, _state, action) => {
@@ -12,7 +12,7 @@ export const selectChat: DispatchStateHandler<number> = (dispatch, _state, actio
   const { chats } = chatsModel.selectChats();
 
   if (!chats) {
-    dispatch(chatModel.setChat({ chatData: null }));
+    dispatch(chatLib.setChat({ chatData: null }));
 
     return;
   }
@@ -20,10 +20,10 @@ export const selectChat: DispatchStateHandler<number> = (dispatch, _state, actio
   const currentChat = chats.find((chat) => Number(chat.id) === Number(action));
 
   if (!currentChat) {
-    dispatch(chatModel.setChat({ chatData: null }));
+    dispatch(chatLib.setChat({ chatData: null }));
 
     return;
   }
 
-  dispatch(chatModel.setChat({ chatData: currentChat }));
+  dispatch(chatLib.setChat({ chatData: currentChat }));
 };

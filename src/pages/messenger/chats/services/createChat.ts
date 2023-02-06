@@ -1,5 +1,9 @@
-import { chatModel, chatServices } from "pages/messenger/chat";
-import { chatsAPI, chatsModel, chatsServices, chatsTypes } from "pages/messenger/chats";
+import { chatLib } from "pages/messenger/chat/model/lib";
+import { chatServices } from "pages/messenger/chat/services";
+import { chatsModel } from "pages/messenger/chats";
+import { chatsAPI } from "pages/messenger/chats/api";
+import { selectChat } from "pages/messenger/chats/services/selectChat";
+import { chatsTypes } from "pages/messenger/chats/types";
 
 import { Overlay } from "entities";
 
@@ -7,12 +11,12 @@ import { transformChats } from "shared/api";
 import { apiHasError } from "shared/utils";
 
 export const createChat: DispatchStateHandler<chatsTypes.createChatRequestData> = async (dispatch, _state, action) => {
-  dispatch(chatModel.setChat({ loading: true }));
+  dispatch(chatLib.setChat({ loading: true }));
 
   const responseChat = await chatsAPI.createChat(action);
 
   if (apiHasError(responseChat)) {
-    dispatch(chatModel.setChat({ loading: false, error: responseChat.reason }));
+    dispatch(chatLib.setChat({ loading: false, error: responseChat.reason }));
 
     return;
   }
@@ -20,7 +24,7 @@ export const createChat: DispatchStateHandler<chatsTypes.createChatRequestData> 
   const responseChats = await chatsAPI.getChats();
 
   if (apiHasError(responseChats)) {
-    dispatch(chatModel.setChat({ loading: false, error: responseChats.reason }));
+    dispatch(chatLib.setChat({ loading: false, error: responseChats.reason }));
 
     return;
   }
@@ -30,9 +34,9 @@ export const createChat: DispatchStateHandler<chatsTypes.createChatRequestData> 
 
   dispatch(chatsModel.setChats({ chats: transformChats(responseChats as chatsTypes.TChatDTO[]) }));
 
-  dispatch(chatModel.setChat({ loading: false, error: null }));
+  dispatch(chatLib.setChat({ loading: false, error: null }));
 
-  dispatch(chatsServices.selectChat, responseChat?.id);
+  dispatch(selectChat, responseChat?.id);
 
   dispatch(chatServices.loadMessages, { chatId: responseChat?.id });
 

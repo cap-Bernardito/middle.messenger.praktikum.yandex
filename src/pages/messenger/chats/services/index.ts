@@ -1,5 +1,13 @@
-export * from "./createChat";
-export * from "./getChats";
-export * from "./isChatExist";
-export * from "./reset-load-status";
-export * from "./selectChat";
+import { createChat } from "./createChat";
+import { getChats } from "./getChats";
+import { isChatExist } from "./isChatExist";
+import { resetLoadStatus } from "./reset-load-status";
+import { selectChat } from "./selectChat";
+
+export const chatsServices = {
+  createChat,
+  getChats,
+  isChatExist,
+  resetLoadStatus,
+  selectChat,
+};

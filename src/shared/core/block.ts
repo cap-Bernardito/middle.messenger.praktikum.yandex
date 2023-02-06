@@ -3,7 +3,7 @@ import { nanoid } from "nanoid";
 
 import { _ } from "shared/utils";
 
-import { EventBus } from ".";
+import { EventBus } from "./event-bus";
 
 type EventBusEvents = TValues<typeof Block.EVENTS>;
 

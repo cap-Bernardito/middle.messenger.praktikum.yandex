@@ -1,5 +1,7 @@
-import { chatModel } from "pages/messenger/chat";
-import { chatsAPI, chatsModel, chatsTypes } from "pages/messenger/chats";
+import { chatLib } from "pages/messenger/chat/model/lib";
+import { chatsModel } from "pages/messenger/chats";
+import { chatsAPI } from "pages/messenger/chats/api";
+import { chatsTypes } from "pages/messenger/chats/types";
 
 import { transformChat, transformChats } from "shared/api";
 import { apiHasError } from "shared/utils";
@@ -7,12 +9,12 @@ import { apiHasError } from "shared/utils";
 import { chatMenuApi } from "../api";
 
 export const chatEditAvatar: DispatchStateHandler<FormData> = async (dispatch, _state, action) => {
-  dispatch(chatModel.setChat({ loading: true }));
+  dispatch(chatLib.setChat({ loading: true }));
 
   const response = await chatMenuApi.editAvatar(action);
 
   if (apiHasError(response)) {
-    dispatch(chatModel.setChat({ loading: false, error: response.reason }));
+    dispatch(chatLib.setChat({ loading: false, error: response.reason }));
 
     return;
   }
@@ -20,7 +22,7 @@ export const chatEditAvatar: DispatchStateHandler<FormData> = async (dispatch, _
   const responseChats = await chatsAPI.getChats();
 
   if (apiHasError(responseChats)) {
-    dispatch(chatModel.setChat({ loading: false, error: responseChats.reason }));
+    dispatch(chatLib.setChat({ loading: false, error: responseChats.reason }));
 
     return;
   }
@@ -30,7 +32,5 @@ export const chatEditAvatar: DispatchStateHandler<FormData> = async (dispatch, _
 
   dispatch(chatsModel.setChats({ chats: transformChats(responseChats as chatsTypes.TChatDTO[]) }));
 
-  dispatch(
-    chatModel.setChat({ loading: false, error: null, chatData: transformChat(response as chatsTypes.TChatDTO) })
-  );
+  dispatch(chatLib.setChat({ loading: false, error: null, chatData: transformChat(response as chatsTypes.TChatDTO) }));
 };

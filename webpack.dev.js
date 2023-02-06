@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 const Dotenv = require("dotenv-webpack");
 const { merge } = require("webpack-merge");
+const CircularDependencyPlugin = require("circular-dependency-plugin");
 
 const common = require("./webpack.common.js");
 
@@ -26,6 +27,13 @@ module.exports = merge(common, {
   plugins: [
     new Dotenv({
       path: ".env.development",
+    }),
+    new CircularDependencyPlugin({
+      exclude: /node_modules/,
+      include: /src/,
+      failOnError: true,
+      allowAsyncCycles: false,
+      cwd: process.cwd(),
     }),
   ],
 });

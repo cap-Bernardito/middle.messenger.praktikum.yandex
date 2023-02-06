@@ -1,7 +1,8 @@
 import { Overlay } from "entities/overlay";
 
 import { mdiArrowLeft, mdiClose } from "@mdi/js";
-import { Block, Router, router } from "shared/core";
+import { Block } from "shared/core/block";
+import { Router, router } from "shared/core/router/router";
 import { Button, renderIcon } from "shared/ui";
 
 import source from "./modal.hbs";

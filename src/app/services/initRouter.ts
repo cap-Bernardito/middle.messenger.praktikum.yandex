@@ -1,5 +1,6 @@
-import { authModel, authServices } from "processes/auth";
+import { authModel } from "processes/auth";
 import * as authLib from "processes/auth/model/lib";
+import { authServices } from "processes/auth/services";
 
 import { store } from "app/store";
 
@@ -14,12 +15,15 @@ import {
   ProfilePage,
   RegisterPage,
 } from "pages";
-import { chatModel, chatServices } from "pages/messenger/chat";
-import { chatsModel, chatsServices } from "pages/messenger/chats";
+import { chatLib } from "pages/messenger/chat/model/lib";
+import { chatServices } from "pages/messenger/chat/services";
+import { chatsModel } from "pages/messenger/chats";
+import { chatsServices } from "pages/messenger/chats/services";
 
-import { chatMenuServices } from "widgets/chat-menu";
+import { chatMenuServices } from "widgets/chat-menu/services";
 
-import { Route, Router, router } from "shared/core";
+import { Route } from "shared/core/router/route";
+import { Router, router } from "shared/core/router/router";
 import { Store } from "shared/core/store";
 import { ROUTES } from "shared/utils/constants";
 
@@ -156,7 +160,7 @@ export const initRouter = (store: Store<AppState>) => {
       router.on(Router.EVENTS.WIDGET_TOGGLE, () => {
         const { error: authError, loading: authLoading } = authModel.selectUser();
         const { error: chatsChangeError, loading: chatsChangeLoading } = chatsModel.selectChats();
-        const { error: chatChangeError, loading: chatChangeLoading } = chatModel.selectChat();
+        const { error: chatChangeError, loading: chatChangeLoading } = chatLib.selectChat();
 
         (authError || authLoading) && store.dispatch(authServices.resetLoadStatus);
         (chatsChangeError || chatsChangeLoading) && store.dispatch(chatsServices.resetLoadStatus);

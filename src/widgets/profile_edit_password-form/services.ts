@@ -1,6 +1,6 @@
 import { authModel } from "processes/auth";
 
-import { PasswordRequestData, profileEditPasswordAPI } from "widgets/profile_edit_password-form";
+import { PasswordRequestData, profileEditPasswordAPI } from "widgets/profile_edit_password-form/api";
 
 import { apiHasError } from "shared/utils";
 

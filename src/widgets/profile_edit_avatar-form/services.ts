@@ -1,6 +1,6 @@
 import { authModel, authTypes } from "processes/auth";
 
-import { profileEditAvatarAPI } from "widgets/profile_edit_avatar-form";
+import { profileEditAvatarAPI } from "widgets/profile_edit_avatar-form/api";
 
 import { transformUser } from "shared/api";
 import { apiHasError } from "shared/utils";

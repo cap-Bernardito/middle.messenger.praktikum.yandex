@@ -1,7 +1,7 @@
 import { step } from "__tests__/render-utils";
 import { getByText, waitFor } from "@testing-library/dom";
 
-import { Router } from "../router";
+import { Router } from "../router/router";
 
 import { Home, Page_1, Page_2 } from "./fixtures";
 

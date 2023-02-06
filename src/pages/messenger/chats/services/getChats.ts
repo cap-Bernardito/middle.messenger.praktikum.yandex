@@ -1,4 +1,7 @@
-import { chatsAPI, chatsModel, chatsServices, chatsTypes } from "pages/messenger/chats";
+import { chatsModel } from "pages/messenger/chats";
+import { chatsAPI } from "pages/messenger/chats/api";
+import { isChatExist } from "pages/messenger/chats/services/isChatExist";
+import { chatsTypes } from "pages/messenger/chats/types";
 
 import { transformChats } from "shared/api";
 import { apiHasError } from "shared/utils";
@@ -31,7 +34,7 @@ export const getChats: DispatchStateHandler<TGetChatsPayload> = async (
   dispatch(chatsModel.setChats({ chats, loading: false, error: null }));
 
   if (chatId) {
-    dispatch(chatsServices.isChatExist, chatId);
+    dispatch(isChatExist, chatId);
   }
 
   successLoadCb && successLoadCb(chats);

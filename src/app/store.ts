@@ -1,16 +1,16 @@
 import { userState } from "processes/auth/model/store";
 
-import { chatModel } from "pages/messenger/chat";
-import { chatsModel } from "pages/messenger/chats";
+import { chatState, dialogsState } from "pages/messenger/chat/model/store";
+import { chatsState } from "pages/messenger/chats/model/store";
 
 import { Store } from "shared/core/store";
 
 export const initialState = {
   appIsInited: false,
   auth: { ...userState },
-  chats: { ...chatsModel.chatsState },
-  chat: { ...chatModel.chatState },
-  dialogs: { ...chatModel.dialogsState },
+  chats: { ...chatsState },
+  chat: { ...chatState },
+  dialogs: { ...dialogsState },
 };
 
 export const store = new Store<AppState>(initialState);

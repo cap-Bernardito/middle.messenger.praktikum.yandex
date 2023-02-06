@@ -1,13 +1,10 @@
-import { authTypes } from "processes/auth";
+import { authTypes } from "processes/auth/types";
 
-import { chatTypes } from "pages/messenger/chat";
+import { chatTypes } from "pages/messenger/chat/types";
 
 import { formattedDate } from "shared/utils";
 
-export const transformMessage = (
-  data: chatTypes.TDialogMessageDTO | { type: "date"; time: string },
-  user: authTypes.User
-) => {
+const transformMessage = (data: chatTypes.TDialogMessageDTO | { type: "date"; time: string }, user: authTypes.User) => {
   if (data.type === "date") {
     const monthNames = [
       "Января",
@@ -57,7 +54,7 @@ export const transformMessage = (
   // };
 };
 
-export const transformMessages = (
+const transformMessages = (
   dataArray: chatTypes.TDialogMessageDTO[],
   user: authTypes.User
 ): Partial<chatTypes.TDialogMessage>[] => {
@@ -108,6 +105,8 @@ export const transformMessages = (
   return result.reverse();
 };
 
-export const scrollToBottom = (element: HTMLDivElement) => {
+const scrollToBottom = (element: HTMLDivElement) => {
   element.scrollTop = element.scrollHeight;
 };
+
+export const chatUtils = { transformMessage, transformMessages, scrollToBottom };

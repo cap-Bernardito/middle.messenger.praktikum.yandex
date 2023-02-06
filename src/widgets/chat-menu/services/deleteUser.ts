@@ -1,28 +1,29 @@
-import { chatModel } from "pages/messenger/chat";
+import { chatLib } from "pages/messenger/chat/model/lib";
 
 import { apiHasError } from "shared/utils";
 
 import { chatMenuApi, SearchUserRequestData } from "../api";
-import { chatMenuServices } from "..";
+
+import { getUsers } from "./getUsers";
 
 export const deleteUser: DispatchStateHandler<SearchUserRequestData & { chatId: number }> = async (
   dispatch,
   _state,
   action
 ) => {
-  dispatch(chatModel.setChat({ loading: true }));
+  dispatch(chatLib.setChat({ loading: true }));
 
   const { chatId, login } = action;
   const response = await chatMenuApi.searchUser({ login });
 
   if (apiHasError(response)) {
-    dispatch(chatModel.setChat({ loading: false, error: response.reason }));
+    dispatch(chatLib.setChat({ loading: false, error: response.reason }));
 
     return;
   }
 
   if (!response || response.length === 0) {
-    dispatch(chatModel.setChat({ loading: false, error: "Пользователь не найден" }));
+    dispatch(chatLib.setChat({ loading: false, error: "Пользователь не найден" }));
 
     return;
   }
@@ -33,12 +34,12 @@ export const deleteUser: DispatchStateHandler<SearchUserRequestData & { chatId: 
   });
 
   if (apiHasError(responseUsers)) {
-    dispatch(chatModel.setChat({ loading: false, error: responseUsers.reason }));
+    dispatch(chatLib.setChat({ loading: false, error: responseUsers.reason }));
 
     return;
   }
 
-  dispatch(chatModel.setChat({ loading: false, error: null }));
+  dispatch(chatLib.setChat({ loading: false, error: null }));
 
-  dispatch(chatMenuServices.getUsers, { id: chatId });
+  dispatch(getUsers, { id: chatId });
 };

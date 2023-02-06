@@ -1,4 +1,5 @@
-import { EventBus, Route } from "..";
+import { EventBus } from "shared/core/event-bus";
+import { Route } from "shared/core/router/route";
 
 export class Router extends EventBus {
   static EVENTS = {

@@ -1,6 +1,7 @@
 /static
 /dist
 /node_modules
+/coverage
 .github
 server.js
 **/*.hbs

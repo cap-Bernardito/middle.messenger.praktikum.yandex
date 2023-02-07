@@ -1,4 +1,4 @@
-import { chatTypes } from "pages/messenger/chat";
+import { chatTypes } from "pages/messenger/chat/types";
 
 import { EventBus } from "shared/core/event-bus";
 

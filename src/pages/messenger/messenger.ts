@@ -2,16 +2,21 @@ import { authModel } from "processes/auth";
 
 import { store } from "app/store";
 
-import { chatModel, chatServices, chatUi } from "pages/messenger/chat";
-import { chatsServices, chatsTypes, chatsUi } from "pages/messenger/chats";
+import { chatLib } from "pages/messenger/chat/model/lib";
+import { chatServices } from "pages/messenger/chat/services";
+import { chatUi } from "pages/messenger/chat/ui";
+import { chatsServices } from "pages/messenger/chats/services";
+import { chatsTypes } from "pages/messenger/chats/types";
+import { chatsUi } from "pages/messenger/chats/ui";
 
-import { chatMenuUi } from "widgets/chat-menu";
+import { chatMenuUi } from "widgets/chat-menu/ui";
 import { offcanvasBody, offcanvasBodyModals } from "widgets/offcanvas-body";
 
 import { ChatToolbar, Form, MessagesFooter, Offcanvas, Overlay, TMessagesProps } from "entities";
 
 import { mdiChevronRight, mdiMenu, mdiPaperclip, mdiSend } from "@mdi/js";
-import { Block, router } from "shared/core";
+import { Block } from "shared/core/block";
+import { router } from "shared/core/router/router";
 import { Button, renderIcon, Search, Textarea } from "shared/ui";
 
 const hamburger = new Button({
@@ -73,7 +78,7 @@ export class MessengerPage extends Block {
           ref: "formRef",
           onSubmit: (event) => {
             const { isFormValid, formData } = this.getForm().form.check(event, Object.values(this.getForm().fields));
-            const { chatData } = chatModel.selectChat();
+            const { chatData } = chatLib.selectChat();
 
             if (isFormValid && chatData) {
               store.dispatch(chatServices.sendMessage, {
@@ -87,7 +92,7 @@ export class MessengerPage extends Block {
           onKeydown: (event) => {
             if (event.key === "Enter") {
               const { isFormValid, formData } = this.getForm().form.check(event, Object.values(this.getForm().fields));
-              const { chatData } = chatModel.selectChat();
+              const { chatData } = chatLib.selectChat();
 
               if (isFormValid && chatData) {
                 store.dispatch(chatServices.sendMessage, {

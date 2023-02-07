@@ -1,8 +1,0 @@
-{
-  "compress": {
-    "keep_fnames": true
-  },
-  "mangle": {
-    "keep_fnames": true
-  }
-}

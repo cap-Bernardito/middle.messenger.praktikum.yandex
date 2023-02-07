@@ -1,6 +1,6 @@
 import { _ } from "../..";
 
-const testCases: any[] = [
+const testCases: [string, unknown][] = [
   ["array", [10, 13, 5]],
   ["object", { a: 1 }],
   ["null", null],

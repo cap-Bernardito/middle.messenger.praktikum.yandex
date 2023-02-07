@@ -3,7 +3,7 @@ import { nanoid } from "nanoid";
 
 import { _ } from "shared/utils";
 
-import { EventBus } from ".";
+import { EventBus } from "./event-bus";
 
 type EventBusEvents = TValues<typeof Block.EVENTS>;
 
@@ -181,7 +181,7 @@ export class Block<P extends Record<string, any> = any> {
   _makePropsProxy = (props: any): any => {
     return new Proxy(props as unknown as object, {
       get: (target: Record<string, unknown>, prop: string) => {
-        if (prop.startsWith("_")) {
+        if (target[prop] && prop.startsWith("_")) {
           throw new Error("Нет прав");
         }
 

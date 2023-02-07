@@ -1,5 +1,5 @@
-import { chatTypes } from "pages/messenger/chat";
-import { chatsTypes } from "pages/messenger/chats";
+import { chatTypes } from "pages/messenger/chat/types";
+import { chatsTypes } from "pages/messenger/chats/types";
 
 export type TChatState = {
   chatData: TNullable<chatsTypes.TChat>;

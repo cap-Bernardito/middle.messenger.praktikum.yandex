@@ -1,10 +1,10 @@
-import { chatModel } from "pages/messenger/chat";
+import { chatLib } from "pages/messenger/chat/model/lib";
 import { chatsModel } from "pages/messenger/chats";
 
-import { router } from "shared/core";
+import { router } from "shared/core/router/router";
 import { ROUTES } from "shared/utils/constants";
 
-export const isChatExist = (dispatch: Dispatch<AppState>, _state: AppState, action: string) => {
+export const isChatExist: DispatchStateHandler<string> = (dispatch, _state, action: string) => {
   const { chats } = chatsModel.selectChats();
 
   if (!chats || !action) {
@@ -19,5 +19,5 @@ export const isChatExist = (dispatch: Dispatch<AppState>, _state: AppState, acti
     return;
   }
 
-  dispatch(chatModel.setChat({ chatData: currentChat }));
+  dispatch(chatLib.setChat({ chatData: currentChat }));
 };

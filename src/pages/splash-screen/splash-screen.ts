@@ -15,9 +15,11 @@ export class SplashScreen extends Block<TSplashScreenProps> {
 
   render() {
     return `
-      {{#LayoutCentered}}
+    {{#LayoutCentered}}
+      <div data-testid="splash-text">
         {{text}}
-      {{/LayoutCentered}}
+      </div>
+    {{/LayoutCentered}}
     `;
   }
 }

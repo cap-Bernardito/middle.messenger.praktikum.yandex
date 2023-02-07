@@ -1,14 +1,10 @@
 import { authModel } from "processes/auth";
 
-import { PasswordRequestData, profileEditPasswordAPI } from "widgets/profile_edit_password-form";
+import { PasswordRequestData, profileEditPasswordAPI } from "widgets/profile_edit_password-form/api";
 
 import { apiHasError } from "shared/utils";
 
-export const profileEditPassword = async (
-  dispatch: Dispatch<AppState>,
-  state: AppState,
-  action: PasswordRequestData
-) => {
+export const profileEditPassword: DispatchStateHandler<PasswordRequestData> = async (dispatch, _state, action) => {
   dispatch(authModel.setUser({ loading: true }));
 
   const response = await profileEditPasswordAPI(action);

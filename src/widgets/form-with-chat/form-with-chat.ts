@@ -10,6 +10,7 @@ const withChatLoadStatus = connect((state) => {
 });
 
 export const FormWithChatLoadStatus = withChatLoadStatus(
+  // @ts-ignore
   class extends Form {
     constructor(props: TFormProps) {
       super(props);

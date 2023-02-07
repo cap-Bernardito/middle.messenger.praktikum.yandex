@@ -1,23 +1,25 @@
 import { store } from "app/store";
 
-import { chatsModel, chatsServices } from "pages/messenger/chats";
+import { chatsModel } from "pages/messenger/chats";
+import { chatsServices } from "pages/messenger/chats/services";
 
 import { TUserListProps, UserList } from "entities";
 
 import { getFile } from "shared/api";
-import { router } from "shared/core";
+import { router } from "shared/core/router/router";
 import { Avatar } from "shared/ui";
 import { formattedDate } from "shared/utils";
 import { connect } from "shared/utils/connect";
 
-export const withChats = connect((state) => {
+const withChats = connect((state) => {
   return {
     chatsChats: state.chats.chats,
     chatsActiveChat: state.chats.activeChat,
   };
 });
 
-export const UserListWithChats = withChats(
+const UserListWithChats = withChats(
+  // @ts-ignore
   class extends UserList {
     constructor(props: TUserListProps) {
       super(props);
@@ -50,3 +52,8 @@ export const UserListWithChats = withChats(
     }
   }
 );
+
+export const chatsUi = {
+  UserListWithChats,
+  withChats,
+};

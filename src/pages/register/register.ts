@@ -1,4 +1,5 @@
-import { authModel, authServices } from "processes/auth";
+import { authModel } from "processes/auth";
+import { authServices } from "processes/auth/services";
 
 import { store } from "app/store";
 
@@ -6,7 +7,8 @@ import { FormWithAuthStatus } from "widgets/form-with-auth";
 
 import { Form, TFormProps } from "entities/form";
 
-import { Block, Link } from "shared/core";
+import { Block } from "shared/core/block";
+import { Link } from "shared/core/router/link";
 import { Button, Input, TInputProps } from "shared/ui";
 import { ROUTES } from "shared/utils/constants";
 

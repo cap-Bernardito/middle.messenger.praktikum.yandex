@@ -3,7 +3,8 @@ import { ProfileEditInfoForm } from "widgets/profile_edit_info-form";
 
 import { Form, templateUserInfo, TUserInfoProps } from "entities";
 
-import { Block, Link } from "shared/core";
+import { Block } from "shared/core/block";
+import { Link } from "shared/core/router/link";
 import { Button } from "shared/ui";
 import { ROUTES } from "shared/utils/constants";
 

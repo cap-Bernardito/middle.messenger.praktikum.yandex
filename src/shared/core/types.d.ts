@@ -1,7 +1,7 @@
 import { Block } from "shared/core/block";
 
 declare global {
-  export type TStateProps = Record<string, any>;
+  export type TStateProps = Record<string, unknown>;
 
   export type TRouteData = {
     pathname: string;
@@ -9,7 +9,7 @@ declare global {
     route: Route;
   };
 
-  export type BlockConstructable<Props = any> = {
+  export type BlockConstructable<Props = unknown> = {
     cName: string;
     new (props: Props): Block;
   };
@@ -24,6 +24,12 @@ declare global {
     routeShouldMount?: (route: Route) => boolean;
     routeDidMount?: (routeData: TRouteData) => void;
   };
+
+  export type DispatchStateHandler<TAction> = (
+    dispatch: Dispatch<AppState>,
+    state: AppState,
+    action: TAction
+  ) => void | Promise<void>;
 }
 
 export {};

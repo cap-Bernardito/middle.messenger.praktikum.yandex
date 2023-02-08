@@ -3,26 +3,39 @@
 [![Build Status](https://github.com/cap-Bernardito/middle.messenger.praktikum.yandex/workflows/Messenger/badge.svg)](https://github.com/cap-Bernardito/middle.messenger.praktikum.yandex/actions/workflows/main.yml?query=branch%3Amain)
 
 Учебный проект, разработанный в рамках курса "Мидл фронтенд-разработчик".
+Написан на чистом JS(TS).
 
-Для организации структуры папок проекта использована методология [FSD](https://feature-sliced.design/ru/docs/reference/units/layers).
+Реализованы следующие фичи:
+
+- авторизация/регистрация/редактирование пользователей
+- создание/удаление/редактирование чатов
+- добавление/удаление пользователей из чата
+- пересылка сообщений на основе Websocket
+- роутинг
+
+В разработке используется своя реализация жизненного цикла компонент на чистом JS в связке с паттерном шины событий.
+
+Написаны собственные абстракции над XMLHttpRequest и WebSocket для упрощения взаимодействия с API.
+
+В проекте используются:
+
+- методология [FSD](https://feature-sliced.design/ru/docs/reference/units/layers) для организация структуры папок проекта
+- Typescript
+- SASS
+- Handlebars
+- Jest
+- Webpack
+- ESLint, stylelint, prettier, husky
+- GitHub Actions
+- Docker
+
+Ссылка на приложение - [Netlify](https://cap-bernardito-ya-messenger.netlify.app), [Render.com](https://cap-bernardito-messenger.onrender.com)
 
 ![Страница входа](images/app_1.jpg)
 ![Чат](images/app_2.jpg)
 ![Панель настроек](images/app_3.jpg)
 ![Настройки пользователя](images/app_4.jpg)
 ![Настройки чата](images/app_5.jpg)
-
-[Ссылка на Netlify](https://cap-bernardito-ya-messenger.netlify.app)
-
-[Ссылка на Render.com](https://cap-bernardito-messenger.onrender.com)
-
-## Использованные технологии:
-
-- TS
-- WebSockets
-- Jest
-- GitHub Actions
-- Docker
 
 ## Доступные команды
 

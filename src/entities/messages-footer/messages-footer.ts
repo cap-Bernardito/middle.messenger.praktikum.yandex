@@ -10,7 +10,7 @@ import "./messages-footer.scss";
 
 export type TMessagesFooterProps = TPropsWithEvents<
   TPropsWithRef<{
-    file: string;
+    file: Button | string;
     text: Textarea;
     button: Button;
     onSubmit?: (event: Event) => void;

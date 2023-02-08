@@ -1,7 +1,5 @@
 import { Block } from "shared/core";
 
-import source from "./list.hbs";
-
 import "./list.scss";
 
 export type TListProps = {
@@ -20,8 +18,12 @@ export class List extends Block<TListProps> {
   }
 
   render() {
-    return source;
+    return `
+<ul class="list {{{className}}}">
+  {{#each items}}
+    {{{this}}}
+  {{/each}}
+</ul>
+    `;
   }
 }
-
-export { source as templateUserList };

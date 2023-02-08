@@ -1,9 +1,11 @@
+import { authTypes } from "processes/auth/types";
+
 import { chatTypes } from "pages/messenger/chat/types";
 import { chatsTypes } from "pages/messenger/chats/types";
 
 export type TChatState = {
   chatData: TNullable<chatsTypes.TChat>;
-  users: number;
+  users: TNullable<authTypes.UserDTO[]>;
   loading: boolean;
   error: TNullable<string>;
 };
@@ -20,7 +22,7 @@ export type TDialogsState = {
 
 export const chatState: TChatState = {
   chatData: null,
-  users: 0,
+  users: null,
   loading: false,
   error: null,
 };

@@ -104,9 +104,15 @@ export class MessengerPage extends Block {
               }
             }
           },
-          file: `<a href="#" title="Приложить файл" class="link-icon link-icon-clip">${renderIcon({
-            value: mdiPaperclip,
-          })}</a>`,
+          file: new Button({
+            title: "Приложить файл",
+            value: renderIcon({ value: mdiPaperclip }),
+            className: "link-icon link-icon-clip",
+            htmlType: "button",
+            onClick(event) {
+              event.preventDefault();
+            },
+          }),
           text: new Textarea({
             name: "message",
             placeholder: "Написать собщение...",

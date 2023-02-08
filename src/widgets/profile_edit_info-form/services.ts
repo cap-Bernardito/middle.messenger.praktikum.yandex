@@ -1,5 +1,6 @@
-import { authModel, authTypes } from "processes/auth";
+import { authModel } from "processes/auth";
 import { authAPI } from "processes/auth/api";
+import { authTypes } from "processes/auth/types";
 
 import { ChangeUserInfoRequestData, profileEditInfoAPI } from "widgets/profile_edit_info-form/api";
 

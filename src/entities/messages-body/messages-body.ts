@@ -1,4 +1,4 @@
-import { chatModel } from "pages/messenger/chat";
+import { TDialog } from "pages/messenger/chat/model/store";
 
 import { Block } from "shared/core";
 import { Message } from "shared/ui";
@@ -10,7 +10,7 @@ import "./messages-body.scss";
 export type TMessagesBodyProps = {
   messages: Message[];
   placeholder?: string;
-  dialog: chatModel.TDialog;
+  dialog: TDialog;
 };
 
 export class MessagesBody extends Block<TMessagesBodyProps> {

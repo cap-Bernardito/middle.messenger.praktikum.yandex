@@ -3,6 +3,8 @@ import { userState } from "processes/auth/model/store";
 import { chatState, dialogsState } from "pages/messenger/chat/model/store";
 import { chatsState } from "pages/messenger/chats/model/store";
 
+import { searchUsersState } from "widgets/list-with-search-users/model/store";
+
 import { Store } from "shared/core/store";
 
 export const initialState = {
@@ -11,6 +13,7 @@ export const initialState = {
   chats: { ...chatsState },
   chat: { ...chatState },
   dialogs: { ...dialogsState },
+  searchUsers: { ...searchUsersState },
 };
 
 export const store = new Store<AppState>(initialState);

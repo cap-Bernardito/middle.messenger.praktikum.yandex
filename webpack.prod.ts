@@ -1,12 +1,12 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
-const TerserPlugin = require("terser-webpack-plugin");
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const Dotenv = require("dotenv-webpack");
-const { merge } = require("webpack-merge");
+import Dotenv from "dotenv-webpack";
+import MiniCssExtractPlugin from "mini-css-extract-plugin";
+import TerserPlugin from "terser-webpack-plugin";
+import webpack from "webpack";
+import { merge } from "webpack-merge";
 
-const common = require("./webpack.common.js");
+import common from "./webpack.common";
 
-module.exports = merge(common, {
+const config: webpack.Configuration = merge(common, {
   mode: "production",
   devtool: false,
   output: {
@@ -44,3 +44,5 @@ module.exports = merge(common, {
     }),
   ],
 });
+
+export default config;

@@ -22,5 +22,10 @@
     "strictNullChecks": true,
     "baseUrl": "./src"
   },
-  "include": ["./src", "./declarations"]
+  "include": ["./src", "./declarations"],
+  "ts-node": {
+    "compilerOptions": {
+      "module": "CommonJS"
+    }
+  }
 }

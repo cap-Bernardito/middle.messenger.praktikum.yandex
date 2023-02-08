@@ -61,7 +61,9 @@ const withAuthUser = connect((state) => {
     authUser: state.auth.user,
   };
 });
+// @ts-ignore
 const UserCardWithAuth = withAuthUser(UserCard);
+// @ts-ignore
 const ListV1ItemWithAuth = withAuthUser(ListV1Item);
 
 const getProfileModalHeader = (user: authTypes.User) =>

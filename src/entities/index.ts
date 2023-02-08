@@ -10,4 +10,6 @@ export * from "./overlay";
 export * from "./settings-panel";
 export * from "./user-card";
 export * from "./user-info";
+export * from "./user-item-v1";
+export * from "./user-item-v2";
 export * from "./user-list";

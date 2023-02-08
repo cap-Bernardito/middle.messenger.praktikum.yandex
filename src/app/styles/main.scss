@@ -258,7 +258,12 @@ a {
   &-icon {
     display: inline-flex;
     align-items: center;
+
+    padding: 0 !important;
+
     color: inherit !important;
+
+    background: transparent;
 
     svg {
       position: relative;

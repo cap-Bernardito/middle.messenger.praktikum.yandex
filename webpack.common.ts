@@ -1,12 +1,10 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
-const path = require("path");
-
-const HtmlWebpackPlugin = require("html-webpack-plugin");
-const { CleanWebpackPlugin } = require("clean-webpack-plugin");
+import HtmlWebpackPlugin from "html-webpack-plugin";
+import path from "path";
+import webpack from "webpack";
 
 const srcDir = path.resolve(__dirname, "src");
 
-module.exports = {
+const config: webpack.Configuration = {
   context: path.resolve(__dirname, "src"),
   entry: {
     app: "./index.ts",
@@ -14,6 +12,7 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, "dist"),
     publicPath: "/",
+    clean: true,
   },
   watchOptions: {
     ignored: /node_modules/,
@@ -59,9 +58,10 @@ module.exports = {
     ],
   },
   plugins: [
-    new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({
       template: "./index.html",
     }),
   ],
 };
+
+export default config;

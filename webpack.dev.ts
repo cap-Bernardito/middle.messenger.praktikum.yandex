@@ -1,11 +1,12 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
-const Dotenv = require("dotenv-webpack");
-const { merge } = require("webpack-merge");
-const CircularDependencyPlugin = require("circular-dependency-plugin");
+import CircularDependencyPlugin from "circular-dependency-plugin";
+import Dotenv from "dotenv-webpack";
+import webpack from "webpack";
+import webpackDevServer from "webpack-dev-server";
+import { merge } from "webpack-merge";
 
-const common = require("./webpack.common.js");
+import common from "./webpack.common";
 
-module.exports = merge(common, {
+const config: webpack.Configuration | webpackDevServer.Configuration = merge(common, {
   mode: "development",
   devtool: "source-map",
   output: {
@@ -37,3 +38,5 @@ module.exports = merge(common, {
     }),
   ],
 });
+
+export default config;

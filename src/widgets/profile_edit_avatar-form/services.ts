@@ -1,4 +1,5 @@
-import { authModel, authTypes } from "processes/auth";
+import { authModel } from "processes/auth";
+import { authTypes } from "processes/auth/types";
 
 import { profileEditAvatarAPI } from "widgets/profile_edit_avatar-form/api";
 

@@ -7,7 +7,7 @@ import "./user-card.scss";
 export type TUserCardProps = TPropsWithEvents<{
   avatar: TFnProps<Block>;
   name: TFnProps<string>;
-  message?: TFnProps<Block | string>;
+  message?: TFnProps<TNullable<Block | string>>;
   date?: string;
   counter?: string | number;
   className?: TFnProps<string>;

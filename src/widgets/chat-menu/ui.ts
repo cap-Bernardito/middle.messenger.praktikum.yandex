@@ -3,12 +3,13 @@ import { store } from "app/store";
 import { chatLib } from "pages/messenger/chat/model/lib";
 
 import { FormWithChatLoadStatus } from "widgets/form-with-chat";
+import { ListWithUsers } from "widgets/list-with-users";
 
 import { Form, Modal, Overlay, TFormProps } from "entities";
 
-import { mdiAccountPlus, mdiAccountRemove, mdiDeleteSweep, mdiDotsVertical, mdiFileImageOutline } from "@mdi/js";
+import { mdiAccountMultiple, mdiAccountPlus, mdiDeleteSweep, mdiDotsVertical, mdiFileImageOutline } from "@mdi/js";
 import { Block } from "shared/core";
-import { Button, Input, List, ListItem, renderIcon, TInputProps } from "shared/ui";
+import { Button, Input, List, ListItem, renderIcon, TInputProps, UserItemV1 } from "shared/ui";
 
 import { ChatModalHeaderWithChat } from "./entities/chat-modal-header";
 import { chatMenuServices } from "./services";
@@ -45,11 +46,11 @@ const addUserModalButton = new Button({
   className: "btn-menu",
 });
 
-const deleteUserModalButton = new Button({
-  value: `<span class="icon-square icon-square-fiolet">${renderIcon({
-    value: mdiAccountRemove,
-  })}</span> Удалить пользователя`,
-  title: "Удалить пользователя",
+const usersModalButton = new Button({
+  value: `<span class="icon-square icon-square-blue">${renderIcon({
+    value: mdiAccountMultiple,
+  })}</span> Подписчики`,
+  title: "Подписчики",
   className: "btn-menu",
 });
 
@@ -70,13 +71,39 @@ const chatMenuModals = function () {
       title: "Настройки чата",
       header: getchatMenuModalHeader(),
       ref: "chatMenuModal",
+      preBody: new List({
+        items: [usersModalButton].map((entry) => new ListItem({ body: entry })),
+        className: "list-menu",
+      }),
       body: new List({
-        items: [addUserModalButton, deleteUserModalButton, chatAvatarModalButton, deleteChatModalButton].map(
+        items: [addUserModalButton, chatAvatarModalButton, deleteChatModalButton].map(
           (entry) => new ListItem({ body: entry })
         ),
         className: "list-menu",
       }),
     }),
+
+    new Modal({
+      showBackButton: true,
+      runButton: usersModalButton,
+      overlay: overlay,
+      title: "Подписчики",
+      header: getchatMenuModalHeader(),
+      ref: "usersMenuModal",
+      body: new ListWithUsers({
+        itemTemplate: UserItemV1,
+        itemPropsMap: {
+          avatar: "avatar",
+          firstName: "first_name",
+          secondName: "second_name",
+          displayName: "display_name",
+          id: "id",
+          role: "role",
+        },
+        className: "list-menu",
+      }),
+    }),
+
     new Modal({
       showBackButton: true,
       runButton: chatAvatarModalButton,
@@ -222,63 +249,6 @@ const chatMenuModals = function () {
         ).map((inputProps) => new Input(inputProps)),
         className: "px-3 pt-3 pb-0",
         button: new Button({ value: "Пригласить", title: "Пригласить", className: "btn-form-modal" }),
-        decorated: false,
-      } as TFormProps),
-    }),
-
-    new Modal({
-      showBackButton: true,
-      runButton: deleteUserModalButton,
-      overlay: overlay,
-      title: "Удалить пользователя",
-      header: getchatMenuModalHeader(),
-      ref: "deleteUserModal",
-      body: new FormWithChatLoadStatus({
-        onSubmit: (event) => {
-          event.preventDefault();
-          // @ts-ignore
-          const { form, fields } = getModalFormParts(this, "deleteUserModal");
-          const { isFormValid, formData } = form.check(event, Object.values(fields));
-          const { chatData } = chatLib.selectChat();
-
-          formData.chatId = String(chatData?.id);
-
-          if (isFormValid) {
-            store.dispatch(chatMenuServices.deleteUser, formData);
-          }
-        },
-        fields: (
-          [
-            {
-              check: false,
-              name: "chatId",
-              type: "hidden",
-              // value: currentChat.id,
-              required: true,
-              ref: "chatIdInput",
-            },
-            {
-              label: "Имя пользователя",
-              name: "login",
-              required: true,
-              ref: "loginInput",
-              onInput: (event) => {
-                // @ts-ignore
-                const { fields } = getModalFormParts(this, "deleteUserModal");
-
-                (fields.loginInput as Input).check(event).setValue(event);
-              },
-              onBlur: (event) => {
-                // @ts-ignore
-                const { fields } = getModalFormParts(this, "deleteUserModal");
-
-                (fields.loginInput as Input).check(event).setValue(event);
-              },
-            },
-          ] as TInputProps[]
-        ).map((inputProps) => new Input(inputProps)),
-        className: "px-3 pt-3 pb-0",
-        button: new Button({ value: "Удалить", title: "Удалить", className: "btn-form-modal" }),
         decorated: false,
       } as TFormProps),
     }),

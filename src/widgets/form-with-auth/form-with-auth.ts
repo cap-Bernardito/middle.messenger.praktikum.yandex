@@ -10,6 +10,7 @@ const withAuthLoadStatus = connect((state) => {
 });
 
 export const FormWithAuthStatus = withAuthLoadStatus(
+  // @ts-ignore
   class extends Form {
     constructor(props: TFormProps) {
       super(props);

@@ -1,4 +1,4 @@
-import { authTypes } from "processes/auth";
+import { authTypes } from "processes/auth/types";
 
 import { chatLib } from "pages/messenger/chat/model/lib";
 
@@ -21,5 +21,6 @@ export const getUsers: DispatchStateHandler<GetUserRequestData> = async (dispatc
     return;
   }
 
-  dispatch(chatLib.setChat({ users: (response as authTypes.UserDTO[]).length, error: null }));
+  dispatch(chatLib.setChat({ users: null, error: null }));
+  dispatch(chatLib.setChat({ users: response as authTypes.UserDTO[], error: null }));
 };

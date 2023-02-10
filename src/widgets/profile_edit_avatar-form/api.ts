@@ -1,4 +1,4 @@
-import { authTypes } from "processes/auth";
+import { authTypes } from "processes/auth/types";
 
 import { request } from "shared/api";
 

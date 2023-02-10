@@ -18,6 +18,7 @@ const withAuthUser = connect((state) => {
 });
 
 export const MyAvatar = withAuthUser(
+  // @ts-ignore
   class extends Avatar {
     constructor(props?: TAvatarProps) {
       super(props);

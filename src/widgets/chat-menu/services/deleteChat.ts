@@ -36,7 +36,7 @@ export const deleteChat: DispatchStateHandler<DeleteChatRequestData> = async (di
 
   dispatch(chatsModel.setChats({ chats: transformChats(responseChats as chatsTypes.TChatDTO[]) }));
 
-  dispatch(chatLib.setChat({ loading: false, error: null, users: 0, chatData: null }));
+  dispatch(chatLib.setChat({ loading: false, error: null, users: null, chatData: null }));
 
   const overlay = new Overlay();
 

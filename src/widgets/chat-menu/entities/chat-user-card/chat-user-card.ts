@@ -22,7 +22,7 @@ export const ChatUserCardWithChat = withChat(
         message: () => {
           const { users } = chatLib.selectChat();
 
-          return `${plural(users, "%d участник", "%d участника", "%d участников")}`;
+          return users && `${plural(users.length, "%d участник", "%d участника", "%d участников")}`;
         },
       });
     }

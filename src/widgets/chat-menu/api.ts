@@ -1,6 +1,6 @@
-import { authTypes } from "processes/auth";
+import { authTypes } from "processes/auth/types";
 
-import { chatsTypes } from "pages/messenger/chats";
+import { chatsTypes } from "pages/messenger/chats/types";
 
 import { APIError, request } from "shared/api";
 

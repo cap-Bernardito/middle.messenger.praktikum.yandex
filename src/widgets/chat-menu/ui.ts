@@ -12,6 +12,7 @@ import { Form, Modal, Overlay, TFormProps, UserItemV1, UserItemV2 } from "entiti
 import { mdiAccountMultiple, mdiAccountPlus, mdiDeleteSweep, mdiDotsVertical, mdiFileImageOutline } from "@mdi/js";
 import { Block } from "shared/core";
 import { Button, Input, List, ListItem, renderIcon, TInputProps } from "shared/ui";
+import { debounce } from "shared/utils/utils";
 
 import { ChatModalHeaderWithChat } from "./entities/chat-modal-header";
 import { chatMenuServices } from "./services";
@@ -223,7 +224,7 @@ const chatMenuModals = function () {
               name: "login",
               required: true,
               ref: "loginInput",
-              onInput: async (event) => {
+              onInput: debounce(async (event) => {
                 // @ts-ignore
                 const { fields } = getModalFormParts(this, "addUserModal");
 
@@ -238,7 +239,7 @@ const chatMenuModals = function () {
                 }
 
                 store.dispatch(searchUsersServices.searchUsers, { login: value });
-              },
+              }, 700),
             },
           ] as TInputProps[]
         ).map((inputProps) => new Input(inputProps)),

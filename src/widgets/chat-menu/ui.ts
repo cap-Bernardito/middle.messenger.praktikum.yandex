@@ -3,13 +3,15 @@ import { store } from "app/store";
 import { chatLib } from "pages/messenger/chat/model/lib";
 
 import { FormWithChatLoadStatus } from "widgets/form-with-chat";
+import { ListWithSearchUsers } from "widgets/list-with-search-users";
+import { searchUsersServices } from "widgets/list-with-search-users/services";
 import { ListWithUsers } from "widgets/list-with-users";
 
-import { Form, Modal, Overlay, TFormProps } from "entities";
+import { Form, Modal, Overlay, TFormProps, UserItemV1, UserItemV2 } from "entities";
 
 import { mdiAccountMultiple, mdiAccountPlus, mdiDeleteSweep, mdiDotsVertical, mdiFileImageOutline } from "@mdi/js";
 import { Block } from "shared/core";
-import { Button, Input, List, ListItem, renderIcon, TInputProps, UserItemV1 } from "shared/ui";
+import { Button, Input, List, ListItem, renderIcon, TInputProps } from "shared/ui";
 
 import { ChatModalHeaderWithChat } from "./entities/chat-modal-header";
 import { chatMenuServices } from "./services";
@@ -72,13 +74,11 @@ const chatMenuModals = function () {
       header: getchatMenuModalHeader(),
       ref: "chatMenuModal",
       preBody: new List({
-        items: [usersModalButton].map((entry) => new ListItem({ body: entry })),
+        items: [usersModalButton, addUserModalButton].map((entry) => new ListItem({ body: entry })),
         className: "list-menu",
       }),
       body: new List({
-        items: [addUserModalButton, chatAvatarModalButton, deleteChatModalButton].map(
-          (entry) => new ListItem({ body: entry })
-        ),
+        items: [chatAvatarModalButton, deleteChatModalButton].map((entry) => new ListItem({ body: entry })),
         className: "list-menu",
       }),
     }),
@@ -203,52 +203,46 @@ const chatMenuModals = function () {
       title: "Пригласить пользователя",
       header: getchatMenuModalHeader(),
       ref: "addUserModal",
-      body: new FormWithChatLoadStatus({
-        onSubmit: (event) => {
-          event.preventDefault();
-          // @ts-ignore
-          const { form, fields } = getModalFormParts(this, "addUserModal");
-          const { isFormValid, formData } = form.check(event, Object.values(fields));
-          const { chatData } = chatLib.selectChat();
-
-          formData.chatId = String(chatData?.id);
-
-          if (isFormValid) {
-            store.dispatch(chatMenuServices.addUser, formData);
-          }
+      body: new ListWithSearchUsers({
+        itemTemplate: UserItemV2,
+        itemPropsMap: {
+          avatar: "avatar",
+          firstName: "first_name",
+          secondName: "second_name",
+          displayName: "display_name",
+          id: "id",
+          role: "role",
         },
+        className: "list-menu",
+      }),
+      preBody: new Form({
         fields: (
           [
-            {
-              check: false,
-              name: "chatId",
-              type: "hidden",
-              // value: currentChat.id,
-              required: true,
-              ref: "chatIdInput",
-            },
             {
               label: "Имя пользователя",
               name: "login",
               required: true,
               ref: "loginInput",
-              onInput: (event) => {
+              onInput: async (event) => {
                 // @ts-ignore
                 const { fields } = getModalFormParts(this, "addUserModal");
 
                 (fields.loginInput as Input).check(event).setValue(event);
-              },
-              onBlur: (event) => {
-                // @ts-ignore
-                const { fields } = getModalFormParts(this, "addUserModal");
 
-                (fields.loginInput as Input).check(event).setValue(event);
+                const value = (event.target as HTMLInputElement).value;
+
+                if (value.length < 3) {
+                  store.dispatch(searchUsersServices.resetSearchUsers);
+
+                  return;
+                }
+
+                store.dispatch(searchUsersServices.searchUsers, { login: value });
               },
             },
           ] as TInputProps[]
         ).map((inputProps) => new Input(inputProps)),
         className: "px-3 pt-3 pb-0",
-        button: new Button({ value: "Пригласить", title: "Пригласить", className: "btn-form-modal" }),
         decorated: false,
       } as TFormProps),
     }),

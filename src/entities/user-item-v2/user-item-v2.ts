@@ -1,13 +1,13 @@
 import { store } from "app/store";
 
-import { deleteUser } from "widgets/chat-menu/services/deleteUser";
+import { addUser } from "widgets/chat-menu/services/addUser";
 
 import { getFile } from "shared/api";
 import { Block } from "shared/core";
 
-import "./user-item-v1.scss";
+import "./user-item-v2.scss";
 
-export type TUserItemV1Props = {
+export type TUserItemV2Props = {
   avatar: string;
   firstName: string;
   secondName: string;
@@ -19,10 +19,10 @@ export type TUserItemV1Props = {
   onClick: (event: Event) => void;
 };
 
-export class UserItemV1 extends Block<TUserItemV1Props> {
-  static cName = "UserItemV1";
+export class UserItemV2 extends Block<TUserItemV2Props> {
+  static cName = "UserItemV2";
 
-  constructor({ ...props }: TUserItemV1Props) {
+  constructor({ ...props }: TUserItemV2Props) {
     super(props);
 
     this.setProps({
@@ -32,33 +32,34 @@ export class UserItemV1 extends Block<TUserItemV1Props> {
 
         const { chatId, id } = this.props;
 
-        store.dispatch(deleteUser, { chatId, userIds: [id] });
+        store.dispatch(addUser, { chatId, usersIds: [id] });
       },
     });
   }
 
   render() {
     const avatar = this.props.avatar !== "null" ? `img="${getFile(this.props.avatar)}"` : "";
+    const displayName = this.props.displayName !== "null" ? `img="${getFile(this.props.avatar)}"` : "";
 
     return `
-    <div class="user-item-v1 {{#if className}}{{className}}{{/if}}">
+    <div class="user-item-v2 {{#if className}}{{className}}{{/if}}">
 
-    <div class="user-item-v1__avatar">
+    <div class="user-item-v2__avatar">
       {{{Avatar
           ${avatar}
           className="avatar_xs"
       }}}
     </div>
 
-    <div class="user-item-v1__body">
-      <div class="user-item-v1__entry">
-        <div class="user-item-v1__text user-item-v1__text-title">{{firstName}} {{secondName}}</div>
-        <div class="user-item-v1__meta">
-          <div class="user-item-v1__date">
+    <div class="user-item-v2__body">
+      <div class="user-item-v2__entry">
+        <div class="user-item-v2__text user-item-v2__text-title">{{firstName}} {{secondName}}</div>
+        <div class="user-item-v2__meta">
+          <div class="user-item-v2__date">
             {{#if needRenderRemoveButton}}
               {{{Button
-                value="Удалить"
-                title="Удалить"
+                value="Пригласить"
+                title="Пригласить"
                 htmlType="button"
                 className="btn-link"
                 onClick=onClick
@@ -68,9 +69,15 @@ export class UserItemV1 extends Block<TUserItemV1Props> {
         </div>
       </div>
 
-      <div class="user-item-v1__entry">
-        <div class="user-item-v1__text user-item-v1__text-message">{{displayName}}</div>
+      ${
+        displayName &&
+        `
+      <div class="user-item-v2__entry">
+        <div class="user-item-v2__text user-item-v2__text-message">{{displayName}}</div>
       </div>
+      `
+      }
+
     </div>
 
   </div>

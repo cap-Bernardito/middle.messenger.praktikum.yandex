@@ -1,0 +1,94 @@
+@use "../../app/styles/variables.scss" as *;
+
+.user-item-v2 {
+  $root: &;
+
+  display: flex;
+  align-items: center;
+  max-width: 100%;
+  color: $gray-500;
+
+  &:not(.not-interactive) {
+    position: relative;
+    margin-bottom: 1px;
+    padding: 0.7em;
+    transition: all 0.25s;
+
+    &.active {
+      color: $white;
+      background: $primary;
+
+      #{$root}__date {
+        color: $white;
+      }
+
+      #{$root}__counter {
+        color: $body-color;
+        background: $gray-700;
+      }
+    }
+  }
+
+  &__avatar {
+    flex: 0 1 4.7rem;
+    margin-right: $spacer * 2;
+  }
+
+  &__body {
+    position: relative;
+    top: 0.1rem;
+
+    display: flex;
+    flex: 1 1 10rem;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  &__entry {
+    display: flex;
+    align-items: center;
+
+    &:not(:last-child) {
+      #{$root}__text {
+        margin-bottom: 0.8rem;
+      }
+    }
+  }
+
+  &__text {
+    overflow: hidden;
+    display: block;
+    flex: 1;
+
+    max-width: 20.5rem;
+    margin-right: auto;
+
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
+    &-title {
+      max-width: 16rem;
+      color: $body-color;
+    }
+  }
+
+  &__meta {
+    white-space: nowrap;
+  }
+
+  &__counter {
+    width: 1.7em;
+    height: 1.7em;
+
+    line-height: 1.8;
+    color: $white;
+    text-align: center;
+
+    background: $primary;
+    border-radius: 50%;
+  }
+
+  &:hover:not(&.active, &.not-interactive) {
+    background: rgba($gray-500, 0.1);
+  }
+}

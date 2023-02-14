@@ -1,5 +1,7 @@
 import { store } from "app/store";
 
+import { chatLib } from "pages/messenger/chat/model/lib";
+
 import { addUser } from "widgets/chat-menu/services/addUser";
 
 import { getFile } from "shared/api";
@@ -31,8 +33,12 @@ export class UserItemV2 extends Block<TUserItemV2Props> {
         event.preventDefault();
 
         const { chatId, id } = this.props;
+        const { users } = chatLib.selectChat();
+        const isExistUser = users?.some((i) => Number(i.id) === Number(id));
 
-        store.dispatch(addUser, { chatId, usersIds: [id] });
+        if (!isExistUser) {
+          store.dispatch(addUser, { chatId, usersIds: [id] });
+        }
       },
     });
   }

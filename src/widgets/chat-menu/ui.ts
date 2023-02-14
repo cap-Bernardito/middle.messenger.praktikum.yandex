@@ -217,6 +217,9 @@ const chatMenuModals = function () {
         className: "list-menu",
       }),
       preBody: new Form({
+        onSubmit: (event) => {
+          event.preventDefault();
+        },
         fields: (
           [
             {

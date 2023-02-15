@@ -39,6 +39,7 @@ export class UserItemV1 extends Block<TUserItemV1Props> {
 
   render() {
     const avatar = this.props.avatar !== "null" ? `img="${getFile(this.props.avatar)}"` : "";
+    const displayName = this.props.displayName !== "null" ? `img="${getFile(this.props.avatar)}"` : "";
 
     return `
     <div class="user-item-v1 {{#if className}}{{className}}{{/if}}">
@@ -68,9 +69,15 @@ export class UserItemV1 extends Block<TUserItemV1Props> {
         </div>
       </div>
 
+      ${
+        displayName &&
+        `
       <div class="user-item-v1__entry">
         <div class="user-item-v1__text user-item-v1__text-message">{{displayName}}</div>
       </div>
+      `
+      }
+
     </div>
 
   </div>

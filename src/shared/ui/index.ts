@@ -14,4 +14,3 @@ export * from "./list-v1";
 export * from "./message";
 export * from "./search";
 export * from "./textarea";
-export * from "./user-item-v1";

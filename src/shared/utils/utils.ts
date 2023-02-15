@@ -42,3 +42,18 @@ export const isArrayOrObject = (value: unknown): value is PlainArrayOrObject => 
 export const getObjectKeys = <T extends object>(obj: T) => Object.keys(obj) as Array<keyof T>;
 export const getObjectValues = <T extends object>(obj: T) => Object.values(obj) as Array<T[keyof T]>;
 export const getObjectEntries = <T extends object>(obj: T): Entries<T> => Object.entries(obj) as any;
+
+export function debounce(callback: (args: any) => any, delay: number) {
+  let timer: TNullable<NodeJS.Timeout> = null;
+
+  return (...args: any) => {
+    if (timer) {
+      clearTimeout(timer);
+    }
+
+    timer = setTimeout(() => {
+      // @ts-ignore
+      callback(...args);
+    }, delay);
+  };
+}

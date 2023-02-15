@@ -1,4 +1,4 @@
-@use "../../../app/styles/variables.scss" as *;
+@use "../../app/styles/variables.scss" as *;
 
 .user-item-v1 {
   $root: &;
@@ -9,13 +9,9 @@
   color: $gray-500;
 
   &:not(.not-interactive) {
-    cursor: pointer;
-
     position: relative;
-
     margin-bottom: 1px;
     padding: 0.7em;
-
     transition: all 0.25s;
 
     &.active {
